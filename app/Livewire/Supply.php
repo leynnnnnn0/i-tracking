@@ -13,7 +13,7 @@ class Supply extends Component
     public function render()
     {
         return view('livewire.supply', [
-            'data' => ModelsSupply::paginate(10)
+            'data' => ModelsSupply::latest()->paginate(10)
         ]);
     }
 
