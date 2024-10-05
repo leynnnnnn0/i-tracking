@@ -18,7 +18,9 @@ class SupplyFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'stocks' => fake()->numberBetween(1, 100)
+            'description' => fake()->paragraph(),
+            'stocks' => fake()->numberBetween(1, 100),
+            'cost_per_piece' => fake()->numberBetween(10, 1000),
         ];
     }
 }

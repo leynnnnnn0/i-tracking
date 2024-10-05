@@ -12,6 +12,8 @@ class Supply extends Model
 
     protected $fillable = [
         'name',
-        'stock'
+        'description',
+        'stock',
+        'cost_per_piece'
     ];
 }

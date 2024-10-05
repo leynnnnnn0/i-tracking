@@ -34,9 +34,9 @@
                     <x-ri-group-line class="size-7" />
                     Personnels
                 </x-nav-link>
-                <x-nav-link>
+                <x-nav-link href="/supplies">
                     <x-ri-product-hunt-line class="size-7" />
-                    Items
+                    Supplies
                 </x-nav-link>
                 <x-nav-link>
                     <x-bi-archive-fill class="size-7" />
