@@ -15,10 +15,14 @@ return new class extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->text('description');
-            $table->double('cost_per_piece');
-            $table->integer('stocks');
+            $table->string('unit');
+            $table->string('quantity');
+            $table->integer('used')->default(0);
+            $table->integer('recently_added')->default(0);
+            $table->integer('total')->default(0);
+            $table->date('expiry_date')->nullable();
+            $table->boolean('is_consumable')->default(false); // Assuming default as true for consumables
             $table->timestamps();
         });
     }

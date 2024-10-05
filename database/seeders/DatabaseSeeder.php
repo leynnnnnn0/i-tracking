@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
         AccountingOfficer::factory(10)->create();
         ResponsiblePerson::factory(10)->create();
         Equipment::factory(10)->create();
-        Supply::factory(10)->create();
+        Supply::factory(100)->create();
     }
 }

@@ -17,10 +17,14 @@ class SupplyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company(),
-            'description' => fake()->paragraph(),
-            'stocks' => fake()->numberBetween(1, 100),
-            'cost_per_piece' => fake()->numberBetween(10, 1000),
+            'description' => fake()->word(),
+            'unit' => fake()->word(),
+            'quantity' => fake()->numberBetween(1, 100),
+            'used' => fake()->numberBetween(0, 50),
+            'recently_added' => fake()->numberBetween(0, 50),
+            'total' => fake()->numberBetween(50, 150),
+            'expiry_date' => fake()->optional()->date(), 
+            'is_consumable' => fake()->boolean(),
         ];
     }
 }
