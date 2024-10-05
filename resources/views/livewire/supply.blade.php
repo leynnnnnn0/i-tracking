@@ -1,7 +1,7 @@
 <div class="space-y-5">
     <div class="flex items-center justify-between">
         <h1 class="font-bold text-2xl text-emerald-900">Supplies</h1>
-        <a href="" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Create New Supply</a>
+        <a href="/supplies/create" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Create New Supply</a>
     </div>
     <section>
         <x-table>

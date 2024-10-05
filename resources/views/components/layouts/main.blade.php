@@ -48,7 +48,7 @@
                 </x-nav-link>
             </div>
 
-            <div class="flex-1 p-5">
+            <div class="flex-1 p-5 bg-[#eaeaea]">
                 {{ $slot}}
             </div>
         </section>
