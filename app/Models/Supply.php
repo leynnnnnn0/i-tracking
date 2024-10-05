@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supply extends Model
 {
+    
     /** @use HasFactory<\Database\Factories\SupplyFactory> */
     use HasFactory;
 
