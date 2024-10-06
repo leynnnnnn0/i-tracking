@@ -7,6 +7,7 @@ use App\Livewire\Forms\SupplyForm;
 use App\Models\Category;
 use Database\Seeders\CategorySeeder;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
@@ -23,6 +24,7 @@ class Create extends Component
     public function save()
     {
         $this->form->store();
+        Toaster::success('Supply Created!');
         return $this->redirect('/supplies');
     }
 

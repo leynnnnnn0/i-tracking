@@ -6,10 +6,15 @@ use App\Helper\ColorStatus;
 use App\Models\Supply as ModelsSupply;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Masmerise\Toaster\Toaster;
 
 class Supply extends Component
 {
     use WithPagination;
+    public function mount()
+    {
+        
+    }
     public function render()
     {
         return view('livewire.supply', [

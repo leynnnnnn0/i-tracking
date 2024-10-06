@@ -7,6 +7,7 @@ use App\Livewire\Forms\SupplyForm;
 use App\Models\Category;
 use App\Models\Supply;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
@@ -30,6 +31,7 @@ class Edit extends Component
     public function edit()
     {
         $this->form->update($this->supply);
+        Toaster::success('Supply Updated!');
         return $this->redirect('/supplies');
     }
 }

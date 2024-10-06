@@ -18,6 +18,7 @@
 </head>
 
 <body class="font-poppins text-gray-900 antialiased">
+    <x-toaster-hub />
     <div class="flex flex-col min-h-screen">
         <x-navigation />
         <section class="flex-1 flex min-h-full">
