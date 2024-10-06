@@ -6,11 +6,11 @@
             <p class="text-gray-600 text-xs">Please input all the required fields.</p>
         </section>
         <section class="py-2 grid grid-cols-2 gap-5">
-            <x-form.input wire:model="form.description" name="form.description" label="Description" :isRequired="true" />
-            <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :isRequired="true" :data="$units" />
+            <x-form.input wire:model="form.description" name="form.description" label="Description" />
+            <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :data="$units" />
             <x-form.input wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
-            <x-form.select wire:model="form.category" name="form.category" label="Category" :isRequired="true" :data="$categories" />
-            <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />
+            <x-form.select wire:model="form.category" name="form.category" label="Category" :data="$categories" />
+            <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" :isRequired="false" />
             <div class="flex gap-1 flex-col">
                 <label class="text-sm text-gray-700">Is Consumable? <span class="text-red-500">*</span></label>
                 <div class="flex items-center gap-3 h-full">
@@ -28,7 +28,7 @@
         </section>
         <section class="flex justify-end gap-3">
             <a href="/supplies" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
-            <button wire:click="save" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Submit</button>
+            <x-primary-button wire:click="save">Submit</x-primary-button>
         </section>
     </div>
 </div>

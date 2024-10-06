@@ -9,6 +9,8 @@
             <x-form.input wire:model="form.description" name="form.description" label="Description" :isRequired="true" />
             <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :isRequired="true" :data="$units" />
             <x-form.input wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
+            <x-form.input wire:model="form.used" name="form.used" label="Used" type="number" />
+            <x-form.input wire:model="form.recently_added" name="form.recently_added" label="Recently Added" type="number" />
             <x-form.select wire:model="form.category" name="form.category" label="Category" :isRequired="true" :data="$categories" />
             <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />
             <div class="flex gap-1 flex-col">

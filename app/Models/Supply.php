@@ -33,6 +33,6 @@ class Supply extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'supply_categories');
+        return $this->belongsTo(Category::class, 'supply_categories');
     }
 }

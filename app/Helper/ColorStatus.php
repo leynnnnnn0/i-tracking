@@ -13,7 +13,7 @@ class ColorStatus
         };
 
         return match ($case) {
-            'low' => 'bg-red-500',
+            'low' => 'bg-red-500 text-white',
             'medium' => 'bg-yellow-500',
             'high' => 'bg-green-500'
         };
