@@ -25,6 +25,14 @@ class Supply extends Model
 
     protected $casts = [
         'expiry_date' => 'date',
-        'is_consumable' => 'boolean'
+        'is_consumable' => 'boolean',
+        'quantity' => 'integer',
+        'used' => 'integer',
+        'total' => 'integer'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'supply_categories');
+    }
 }

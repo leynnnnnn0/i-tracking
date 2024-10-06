@@ -18,12 +18,12 @@ class SupplyFactory extends Factory
     {
         return [
             'description' => fake()->word(),
-            'unit' => fake()->word(),
+            'unit' => fake()->randomElement(['pcs', 'pack']),
             'quantity' => fake()->numberBetween(1, 100),
             'used' => fake()->numberBetween(0, 50),
             'recently_added' => fake()->numberBetween(0, 50),
             'total' => fake()->numberBetween(50, 150),
-            'expiry_date' => fake()->optional()->date(), 
+            'expiry_date' => fake()->optional()->date(),
             'is_consumable' => fake()->boolean(),
         ];
     }

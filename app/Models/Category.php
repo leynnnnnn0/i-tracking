@@ -13,4 +13,9 @@ class Category extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function supplies()
+    {
+        return $this->belongsToMany(Supply::class, 'supply_categories');
+    }
 }

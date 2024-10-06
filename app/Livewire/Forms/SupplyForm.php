@@ -33,4 +33,14 @@ class SupplyForm extends Form
         $this->validate();
         Supply::create($this->all());
     }
+
+    public function setSupply(Supply $supply)
+    {
+        $this->description = $supply->description;
+        $this->unit = $supply->unit;
+        $this->quantity = $supply->quantity;
+        $this->category = $supply->categories->pluck('id');
+        $this->expiry_date = $supply->expiry_date;
+        $this->is_consumable = $supply->is_consumable;
+    }
 }

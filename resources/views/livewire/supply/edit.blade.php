@@ -1,5 +1,5 @@
 <div class="space-y-4">
-    <h1 class="font-bold text-2xl text-emerald-900">Create New Supply</h1>
+    <h1 class="font-bold text-2xl text-emerald-900">Edit Supply Details</h1>
     <div class="bg-white rounded-xl p-5">
         <section class="pb-5 border-b border-gray-300">
             <h1 class="text-gray-700 font-bold text-lg">Supply Information</h1>
@@ -28,7 +28,7 @@
         </section>
         <section class="flex justify-end gap-3">
             <a href="/supplies" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
-            <button wire:click="save" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Submit</button>
+            <button wire:click="save" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Edit</button>
         </section>
     </div>
 </div>
