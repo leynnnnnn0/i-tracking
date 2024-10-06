@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Supply;
+use App\Models\SupplyCategory;
 use Illuminate\Database\Seeder;
 
 class SupplySeeder extends Seeder
@@ -12,6 +13,10 @@ class SupplySeeder extends Seeder
      */
     public function run(): void
     {
-        
+        Supply::factory(10)->create()->each(function ($supply) {
+            SupplyCategory::factory()->create([
+                'supply_id' => $supply->id, 
+            ]);
+        });
     }
 }

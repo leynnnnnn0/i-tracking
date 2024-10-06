@@ -34,4 +34,14 @@ class Edit extends Component
         Toaster::success('Supply Updated!');
         return $this->redirect('/supplies');
     }
+
+    public function addToCategories($id)
+    {
+        $categoriesArray = $this->form->category->toArray();
+        if (in_array($id, $categoriesArray)) {
+            $this->form->category = collect(array_diff($categoriesArray, [$id]));
+            return;
+        }
+        $this->form->category->push((int)$id); 
+    }
 }

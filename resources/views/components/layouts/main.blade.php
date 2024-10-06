@@ -22,7 +22,7 @@
     <div class="flex flex-col min-h-screen">
         <x-navigation />
         <section class="flex-1 flex min-h-full">
-            <div class="w-60 bg-emerald-500 p-5 flex flex-col gap-5">
+            <div class="w-60 bg-emerald-500 flex flex-col">
                 <x-nav-link href="/dashboard" :active="request()->is('dashboard')">
                     <x-ri-dashboard-line class="size-7" />
                     Dashboard
@@ -31,11 +31,11 @@
                     <x-ri-tools-fill class="size-7" />
                     Equipments
                 </x-nav-link>
-                <x-nav-link href="/personnels">
+                <x-nav-link href="/personnels" :active="request()->is('personnels')">
                     <x-ri-group-line class=" size-7" />
                     Personnels
                 </x-nav-link>
-                <x-nav-link href="/supplies">
+                <x-nav-link href="/supplies" :active="request()->is('supplies')">
                     <x-ri-product-hunt-line class="size-7" />
                     Supplies
                 </x-nav-link>

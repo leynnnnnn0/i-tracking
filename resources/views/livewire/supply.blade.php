@@ -29,7 +29,11 @@
             <tr class="border-b border-gray-300">
                 <x-td>{{ $supply->description }}</x-td>
                 <x-td>{{ $supply->quantity }}</x-td>
-                <x-td>{{ $supply->used }}</x-td>
+                <x-td>
+                    <span class="cursor-pointer" @click="toggle({{$supply->id}})">
+                        {{ $supply->used }}
+                    </span>
+                </x-td>
                 <x-td>
                     <span class="px-3 py-1 rounded-lg text-green-500 {{ $this->getColor($supply->total) }}">
                         {{ $supply->total }}</x-td>
@@ -40,7 +44,7 @@
                     <a href="/supplies/edit/{{ $supply->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
-                    <x-bi-eye @click="toggle('{{ $supply->id }}')" class="cursor-pointer size-5 text-green-500" />
+                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                 </x-td>
             </tr>
             @endforeach
@@ -49,7 +53,7 @@
             {{ $data->links() }}
         </div>
     </section>
-    <template x-if="open && supply">
+    <!-- <template x-if="open && supply">
         <div class="flex items-center justify-center absolute bg-black/50 inset-0">
             <div class="relative bg-white rounded-lg h-fit w-[500px] p-5">
                 <x-bi-x @click="toggle" class="absolute top-3 right-3 size-7 cursor-pointer" />
@@ -92,6 +96,18 @@
                 </section>
             </div>
         </div>
+    </template> -->
+    <template x-if="open">
+        <div class="flex items-center justify-center absolute bg-black/50 inset-0">
+            <div class="relative bg-white rounded-lg h-fit w-[300px] p-5 space-y-2">
+                <x-bi-x @click="toggle" class="absolute top-3 right-3 size-5 cursor-pointer" />
+                <section class="pb-3 border-b border-gray-300">
+                    <h1 class="text-gray-700 font-bold text-lg">Add Used Value</h1>
+                </section>
+                <input wire:model="form.used" class="rounded-lg border-gray-300 w-full" type="number">
+                <x-primary-button @click="$wire.add(targetId)" class="w-full flex justify-center">Add</x-primary-button>
+            </div>
+        </div>
     </template>
 </div>
 
@@ -99,11 +115,17 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('information', () => ({
             open: false,
+            targetId: null,
+            updateUsedValue: true,
             supply: null,
             toggle(id) {
-                const result = @json($data).data.find(item => item.id == id);
-                this.supply = result;
-                this.open = !this.open
+                this.targetId = id;
+                this.open = !this.open;
+                Livewire.on('usedValueUpdated', () => {
+                    this.open = false;
+                })
+                // this.supply = result;
+                // const result = @json($data).data.find(item => item.id == id);
             }
         }))
     })

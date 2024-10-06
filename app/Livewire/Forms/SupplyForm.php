@@ -4,8 +4,12 @@ namespace App\Livewire\Forms;
 
 use App\Enum\Unit;
 use App\Models\Supply;
+use App\Models\SupplyCategory;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
+use Masmerise\Toaster\Toaster;
 
 class SupplyForm extends Form
 {
@@ -29,7 +33,7 @@ class SupplyForm extends Form
             'recently_added' => ['sometimes', 'nullable', 'required'],
             'expiry_date' => ['nullable', 'date'],
             'is_consumable' => ['required'],
-            'category' => ['required', 'exists:categories,id'],
+            'category' => ['required',  'exists:categories,id'],
             'total' => ['sometimes', 'numeric']
         ];
     }
@@ -39,15 +43,36 @@ class SupplyForm extends Form
         self::setRecentlyAdded();
         self::setTotal();
         $this->validate();
-        Supply::create($this->all());
+        DB::transaction(function () {
+            $supply = Supply::create($this->all());
+            SupplyCategory::create([
+                'supply_id' => $supply->id,
+                'category_id' => $this->category
+            ]);
+        });
     }
 
     public function update(Supply $supply)
     {
-        self::setQuantity();
         self::setTotal();
-        $this->validate();
-        $supply->update($this->all());
+        $validatedData = $this->validate();
+
+        try {
+            DB::transaction(function () use ($supply, $validatedData) {
+                $supply->update($validatedData);
+                $supply->categories()->sync($this->category);
+            });
+        } catch (Exception $e) {
+            Toaster::error('Something went wrong:(');
+        }
+    }
+
+    public function updateUsedValue(Supply $supply)
+    {
+        $supply->update([
+            'used' => $supply->used += $this->used,
+            'total' => $supply->total - $this->used
+        ]);
     }
 
     public function setSupply(Supply $supply)
@@ -55,26 +80,31 @@ class SupplyForm extends Form
         $this->description = $supply->description;
         $this->unit = $supply->unit;
         $this->quantity = $supply->quantity;
-        $this->category = 1;
-        // $supply->categories->pluck('id')
+        $this->category = $supply->categories->pluck('id');
         $this->expiry_date = $supply->expiry_date;
         $this->is_consumable = $supply->is_consumable;
         $this->used = $supply->used;
         $this->recently_added = $supply->recently_added;
     }
 
-    public function setTotal()
+    public function setTotal($quantity = null, $used = null)
     {
-        $this->total = $this->quantity - $this->used;
+        $quantity ??= $this->quantity;
+        $used ??= $this->used;
+
+        $this->total = (int)$quantity - (int)$used;
     }
 
-    public function setQuantity()
+
+    public function setQuantity($recently_added = null)
     {
-        $this->quantity += $this->recently_added;
+        $recently_added ??= $this->recently_added;
+        $this->quantity += $recently_added;
     }
 
-    public function setRecentlyAdded()
+    public function setRecentlyAdded($quantity = null)
     {
-        $this->recently_added += $this->quantity;
+        $quantity ??= $this->quantity;
+        $this->recently_added += $quantity;
     }
 }

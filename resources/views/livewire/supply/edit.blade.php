@@ -11,11 +11,16 @@
             <x-form.input wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
             <x-form.input wire:model="form.used" name="form.used" label="Used" type="number" />
             <x-form.input wire:model="form.recently_added" name="form.recently_added" label="Recently Added" type="number" />
-            <x-form.select wire:model="form.category" name="form.category" label="Category" :isRequired="true" :data="$categories" />
             <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />
+            <div class="grid grid-cols-3 gap-2">
+                @foreach ($categories as $key => $value)
+                <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category->toArray()) ? 'text-white bg-emerald-500' : ''}} text-xs border border-gray-500 rounded-lg px-2 py-1">{{ $value }}</button>
+                @endforeach
+                <x-form.error name="form.category" />
+            </div>
             <div class="flex gap-1 flex-col">
                 <label class="text-sm text-gray-700">Is Consumable? <span class="text-red-500">*</span></label>
-                <div class="flex items-center gap-3 h-full">
+                <div class="flex gap-3 h-full">
                     <div class="flex items-center gap-1">
                         <label class="text-sm text-gray-700">Yes</label>
                         <input wire:model="form.is_consumable" value="1" type="radio" name="isConsumable">
@@ -30,7 +35,7 @@
         </section>
         <section class="flex justify-end gap-3">
             <a href="/supplies" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
-            <button wire:click="edit" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Update</button>
+            <x-primary-button wire:click="edit">Edit</x-primary-button>
         </section>
     </div>
 </div>

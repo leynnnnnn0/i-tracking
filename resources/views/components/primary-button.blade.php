@@ -1,4 +1,4 @@
-<button {{ $attributes }} wire:loading.attr="disabled" class="flex items-center gap-2 px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">
+<button {{ $attributes->merge(['class' => 'flex items-center gap-2 px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300']) }} wire:loading.attr="disabled">
     {{ $slot }}
     <span wire:loading class="flex items-center justify-center">
         <svg class="animate-spin h-5 w-5 text-text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

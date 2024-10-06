@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Helper\ColorStatus;
+use App\Livewire\Forms\SupplyForm;
 use App\Models\Supply as ModelsSupply;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -11,6 +13,7 @@ use Masmerise\Toaster\Toaster;
 class Supply extends Component
 {
     use WithPagination;
+    public SupplyForm $form;
 
     public function render()
     {
@@ -30,5 +33,14 @@ class Supply extends Component
         if ($supply) {
             $supply->delete();
         }
+    }
+
+    public function add($id)
+    {
+        $supply = ModelsSupply::findOrFail($id);
+
+        $this->form->updateUsedValue($supply);
+        Toaster::success('Updated Successfully');
+        $this->dispatch('usedValueUpdated');
     }
 }
