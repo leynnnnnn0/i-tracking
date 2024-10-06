@@ -18,7 +18,7 @@
 </head>
 
 <body class="font-poppins text-gray-900 antialiased">
-    <div class="flex flex-col min-h-screen w-ful">
+    <div class="flex flex-col min-h-screen">
         <x-navigation />
         <section class="flex-1 flex min-h-full">
             <div class="w-60 bg-emerald-500 p-5 flex flex-col gap-5">

@@ -1,5 +1,5 @@
-<div class="space-y-5">
-    <div class="flex items-center justify-between">
+<div x-data="information">
+    <div class="flex items-center justify-between mb-5">
         <h1 class="font-bold text-2xl text-emerald-900">Supplies</h1>
         <a href="/supplies/create" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Create New Supply</a>
     </div>
@@ -38,7 +38,7 @@
                 <x-td class="flex items-center gap-3">
                     <x-bi-trash class="cursor-pointer size-5 text-red-500" wire:click="delete('{{$supply->id}}')" />
                     <x-bi-pencil-square class="size-5 text-blue-500" />
-                    <x-bi-eye class="size-5 text-green-500" />
+                    <x-bi-eye @click="toggle('{{ $supply->id }}')" class="cursor-pointer size-5 text-green-500" />
                 </x-td>
             </tr>
             @endforeach
@@ -47,4 +47,62 @@
             {{ $data->links() }}
         </div>
     </section>
+    <template x-if="open && supply">
+        <div class="flex items-center justify-center absolute bg-black/50 inset-0">
+            <div class="relative bg-white rounded-lg h-fit w-[500px] p-5">
+                <x-bi-x @click="toggle" class="absolute top-3 right-3 size-7 cursor-pointer" />
+                <section class="pb-3 mb-3 border-b border-gray-300">
+                    <h1 class="text-gray-700 font-bold text-lg">Supply Information</h1>
+                </section>
+                <section class="grid grid-cols-2 gap-3">
+                    <x-flex-col>
+                        <x-span-xs>Description</x-span-xs>
+                        <x-span x-text="supply.description"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Unit</x-span-xs>
+                        <x-span x-text="supply.unit"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Quanitity</x-span-xs>
+                        <x-span x-text="supply.quantity"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Used</x-span-xs>
+                        <x-span x-text="supply.used"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Recently Added</x-span-xs>
+                        <x-span x-text="supply.recently_added"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Total</x-span-xs>
+                        <x-span x-text="supply.total"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Expiry Date</x-span-xs>
+                        <x-span x-text="supply.expiry_date"></x-span>
+                    </x-flex-col>
+                    <x-flex-col>
+                        <x-span-xs>Is consumable?</x-span-xs>
+                        <x-span x-text="supply.is_consumable"></x-span>
+                    </x-flex-col>
+                </section>
+            </div>
+        </div>
+    </template>
 </div>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('information', () => ({
+            open: false,
+            supply: null,
+            toggle(id) {
+                const result = @json($data).data.find(item => item.id == id);
+                this.supply = result;
+                this.open = !this.open
+            }
+        }))
+    })
+</script>
