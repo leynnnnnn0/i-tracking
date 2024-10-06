@@ -31,7 +31,7 @@
                 <x-td>{{ $supply->quantity }}</x-td>
                 <x-td>{{ $supply->used }}</x-td>
                 <x-td>
-                    <span class="px-3 py-1 rounded-lg text-white {{ $this->getColor($supply->total) }}">
+                    <span class="px-3 py-1 rounded-lg text-green-500 {{ $this->getColor($supply->total) }}">
                         {{ $supply->total }}</x-td>
                 </span>
                 <x-td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/A' }}</x-td>

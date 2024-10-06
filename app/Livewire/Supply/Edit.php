@@ -26,4 +26,10 @@ class Edit extends Component
     {
         return view('livewire.supply.edit');
     }
+
+    public function edit()
+    {
+        $this->form->update($this->supply);
+        return $this->redirect('/supplies');
+    }
 }

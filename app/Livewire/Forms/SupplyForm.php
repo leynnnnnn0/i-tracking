@@ -34,6 +34,12 @@ class SupplyForm extends Form
         Supply::create($this->all());
     }
 
+    public function update(Supply $supply)
+    {
+        $this->validate();
+        $supply->update($this->all());
+    }
+
     public function setSupply(Supply $supply)
     {
         $this->description = $supply->description;
