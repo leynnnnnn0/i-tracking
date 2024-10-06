@@ -14,4 +14,12 @@ class Personnel extends Component
             'data' => ModelsPersonnel::latest()->paginate(10)
         ]);
     }
+
+    public function delete($id): void
+    {
+        $personnel = ModelsPersonnel::find($id);
+        if ($personnel) {
+            $personnel->delete();
+        }
+    }
 }

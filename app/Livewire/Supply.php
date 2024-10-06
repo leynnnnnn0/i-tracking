@@ -11,10 +11,7 @@ use Masmerise\Toaster\Toaster;
 class Supply extends Component
 {
     use WithPagination;
-    public function mount()
-    {
-        
-    }
+
     public function render()
     {
         return view('livewire.supply', [

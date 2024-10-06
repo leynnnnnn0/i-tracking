@@ -28,7 +28,7 @@
                     <x-td>{{ $personnel->position }}</x-td>
                     <x-td>{{ $personnel->phone_number }}</x-td>
                     <x-td class="flex items-center gap-3">
-                        <x-bi-trash class="cursor-pointer size-5 text-red-500" />
+                        <x-bi-trash wire:click="delete('{{$personnel->id}}')" class="cursor-pointer size-5 text-red-500" />
                         <a href="/supplies/edit/{{ $personnel->id}}">
                             <x-bi-pencil-square class="size-5 text-blue-500" />
                         </a>

@@ -46,4 +46,5 @@ class PersonnelForm extends Form
         $this->validate();
         Personnel::create($this->all());
     }
+
 }
