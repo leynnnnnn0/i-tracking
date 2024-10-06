@@ -17,7 +17,7 @@
             </section>
             <section class="flex justify-end gap-3">
                 <a href="/supplies" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
-                <button wire:click="edit" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Update</button>
+                <button wire:click="submit" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Update</button>
             </section>
         </div>
 </div>

@@ -10,6 +10,7 @@ use Livewire\Form;
 
 class PersonnelForm extends Form
 {
+    public $personnel_id;
     public $first_name;
     public $middle_name;
     public $last_name;
@@ -49,12 +50,19 @@ class PersonnelForm extends Form
             'gender' => ['required', 'in:Male,Female'],
             'date_of_birth' => ['required', 'date'],
             'phone_number' => ['required', 'regex:/^09\d{9}$/'],
-            'email' => ['required', 'email', 'unique:personnels,email'],
+            'email' => ['required', 'email', Rule::unique('personnels')->ignore($this->personnel_id)],
             'position' => ['required', 'in:' . implode(',', Position::values())],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
             'remarks' => ['nullable', 'string'],
         ];
+    }
+
+    public function update(Personnel $personnel)
+    {
+        $this->personnel_id = $personnel->id;
+        $this->validate();
+        $personnel->update($this->all());
     }
 
     public function store()
