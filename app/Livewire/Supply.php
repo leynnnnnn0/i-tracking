@@ -21,4 +21,12 @@ class Supply extends Component
     {
         return ColorStatus::getTotalColor($total);
     }
+
+    public function delete($id)
+    {
+        $supply = ModelsSupply::find($id);
+        if ($supply) {
+            $supply->delete();
+        }
+    }
 }

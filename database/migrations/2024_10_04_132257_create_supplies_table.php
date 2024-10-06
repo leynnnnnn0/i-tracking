@@ -22,7 +22,8 @@ return new class extends Migration
             $table->integer('recently_added')->default(0);
             $table->integer('total')->default(0);
             $table->date('expiry_date')->nullable();
-            $table->boolean('is_consumable')->default(false); // Assuming default as true for consumables
+            $table->boolean('is_consumable')->default(false);
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }

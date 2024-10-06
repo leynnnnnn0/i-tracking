@@ -36,7 +36,7 @@
                 </span>
                 <x-td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/A' }}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <x-bi-trash class="size-5 text-red-500" />
+                    <x-bi-trash class="cursor-pointer size-5 text-red-500" wire:click="delete('{{$supply->id}}')" />
                     <x-bi-pencil-square class="size-5 text-blue-500" />
                     <x-bi-eye class="size-5 text-green-500" />
                 </x-td>
