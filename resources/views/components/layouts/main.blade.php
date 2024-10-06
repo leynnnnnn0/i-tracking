@@ -31,8 +31,8 @@
                     <x-ri-tools-fill class="size-7" />
                     Equipments
                 </x-nav-link>
-                <x-nav-link>
-                    <x-ri-group-line class="size-7" />
+                <x-nav-link href="/personnels">
+                    <x-ri-group-line class=" size-7" />
                     Personnels
                 </x-nav-link>
                 <x-nav-link href="/supplies">
