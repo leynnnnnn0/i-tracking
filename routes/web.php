@@ -3,6 +3,8 @@
 use App\Livewire\Dashboard;
 use App\Livewire\Equipments;
 use App\Livewire\Personel;
+use App\Livewire\Personnel;
+use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Supply;
 use App\Livewire\Supply\Create;
 use App\Livewire\Supply\Edit;
@@ -20,7 +22,8 @@ Route::prefix('supplies')->name('supplies.')->group(function () {
 });
 
 Route::prefix('personnels')->name('personnels.')->group(function () {
-    Route::get('/', Personel::class)->name('index');
+    Route::get('/', Personnel::class)->name('index');
+    Route::get('/create', PersonnelCreate::class)->name('index');
 });
 
 Route::view('profile', 'profile')

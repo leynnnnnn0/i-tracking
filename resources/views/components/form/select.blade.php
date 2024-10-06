@@ -1,4 +1,4 @@
-@props(['label', 'isRequired' => false, 'data' => [], 'name'])
+@props(['label', 'isRequired' => true, 'data' => [], 'name'])
 <div class="flex flex-col gap-1">
     <label class="text-sm text-gray-700">{{ $label }}
         @if ($isRequired)
