@@ -29,7 +29,7 @@
                     <x-td>{{ $personnel->phone_number }}</x-td>
                     <x-td class="flex items-center gap-3">
                         <x-bi-trash wire:click="delete('{{$personnel->id}}')" class="cursor-pointer size-5 text-red-500" />
-                        <a href="/supplies/edit/{{ $personnel->id}}">
+                        <a href="/personnels/edit/{{ $personnel->id}}">
                             <x-bi-pencil-square class="size-5 text-blue-500" />
                         </a>
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
