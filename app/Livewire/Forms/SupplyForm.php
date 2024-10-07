@@ -45,10 +45,7 @@ class SupplyForm extends Form
         $this->validate();
         DB::transaction(function () {
             $supply = Supply::create($this->all());
-            SupplyCategory::create([
-                'supply_id' => $supply->id,
-                'category_id' => $this->category
-            ]);
+            $supply->categories()->attach($this->category);
         });
     }
 
@@ -65,6 +62,17 @@ class SupplyForm extends Form
         } catch (Exception $e) {
             Toaster::error('Something went wrong:(');
         }
+    }
+
+    public function updateQuantity(Supply $supply)
+    {
+        $totalQuantity = (int) $this->recently_added + $supply->quantity;
+        $total = $totalQuantity - $supply->used;
+        $supply->update([
+            'quantity' => $totalQuantity,
+            'recently_added' => $this->recently_added,
+            'total' => $total
+        ]);
     }
 
     public function updateUsedValue(Supply $supply)

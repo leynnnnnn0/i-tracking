@@ -42,6 +42,6 @@ class Edit extends Component
             $this->form->category = collect(array_diff($categoriesArray, [$id]));
             return;
         }
-        $this->form->category->push((int)$id); 
+        $this->form->category->push((int)$id);
     }
 }

@@ -43,4 +43,12 @@ class Supply extends Component
         Toaster::success('Updated Successfully');
         $this->dispatch('usedValueUpdated');
     }
+
+    public function addQuantity($id)
+    {
+        $supply = ModelsSupply::findOrFail($id);
+        $this->form->updateQuantity($supply);
+        Toaster::success('Quantity Updated');
+        $this->dispatch('quantityValueUpdated');
+    }
 }

@@ -9,8 +9,16 @@
             <x-form.input wire:model="form.description" name="form.description" label="Description" />
             <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :data="$units" />
             <x-form.input wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
-            <x-form.select wire:model="form.category" name="form.category" label="Category" :data="$categories" />
             <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" :isRequired="false" />
+
+            <div class="grid grid-cols-3 gap-2">
+                <x-form.label class="col-span-3">Categories <span class="text-red-500">*</span></x-form.label>
+                @foreach ($categories as $key => $value)
+                <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category) ? 'text-white bg-emerald-500' : ''}} text-xs border border-gray-500 rounded-lg px-2 py-1">{{ $value }}</button>
+                @endforeach
+                <x-form.error name="form.category" />
+            </div>
+
             <div class="flex gap-1 flex-col">
                 <label class="text-sm text-gray-700">Is Consumable? <span class="text-red-500">*</span></label>
                 <div class="flex items-center gap-3 h-full">

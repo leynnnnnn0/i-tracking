@@ -6,31 +6,25 @@
     <section>
         <x-table>
             <x-tr>
-                <x-th>
-                    Description
-                </x-th>
-                <x-th>
-                    Quantity
-                </x-th>
-                <x-th>
-                    Used
-                </x-th>
-                <x-th>
-                    Total
-                </x-th>
-                <x-th>
-                    Expiry Date
-                </x-th>
-                <x-th>
-                    Actions
-                </x-th>
+                <x-th>Id</x-th>
+                <x-th>Description</x-th>
+                <x-th>Quantity</x-th>
+                <x-th>Used</x-th>
+                <x-th>Total</x-th>
+                <x-th>Expiry Date</x-th>
+                <x-th>Actions</x-th>
             </x-tr>
             @foreach ($data as $supply)
             <tr class="border-b border-gray-300">
+                <x-td>{{ $supply->id }}</x-td>
                 <x-td>{{ $supply->description }}</x-td>
-                <x-td>{{ $supply->quantity }}</x-td>
                 <x-td>
-                    <span class="cursor-pointer" @click="toggle({{$supply->id}})">
+                    <span class="cursor-pointer" @click="showAddQuantityModal({{$supply->id}})">
+                        {{ $supply->quantity }}
+                    </span>
+                </x-td>
+                <x-td>
+                    <span class=" cursor-pointer" @click="toggle({{$supply->id}})">
                         {{ $supply->used }}
                     </span>
                 </x-td>
@@ -109,6 +103,18 @@
             </div>
         </div>
     </template>
+    <template x-if="showAddQuantity">
+        <div class="flex items-center justify-center absolute bg-black/50 inset-0">
+            <div class="relative bg-white rounded-lg h-fit w-[300px] p-5 space-y-2">
+                <x-bi-x @click="showAddQuantityModal" class="absolute top-3 right-3 size-5 cursor-pointer" />
+                <section class="pb-3 border-b border-gray-300">
+                    <h1 class="text-gray-700 font-bold text-lg">Add Quantity</h1>
+                </section>
+                <input wire:model="form.recently_added" class="rounded-lg border-gray-300 w-full" type="number">
+                <x-primary-button @click="$wire.addQuantity(targetId)" class="w-full flex justify-center">Add</x-primary-button>
+            </div>
+        </div>
+    </template>
 </div>
 
 <script>
@@ -116,16 +122,21 @@
         Alpine.data('information', () => ({
             open: false,
             targetId: null,
-            updateUsedValue: true,
+            showAddQuantity: false,
             supply: null,
+            showAddQuantityModal(id) {
+                this.targetId = id;
+                this.showAddQuantity = !this.showAddQuantity;
+                Livewire.on('quantityValueUpdated', () => {
+                    this.showAddQuantity = false;
+                })
+            },
             toggle(id) {
                 this.targetId = id;
                 this.open = !this.open;
                 Livewire.on('usedValueUpdated', () => {
                     this.open = false;
                 })
-                // this.supply = result;
-                // const result = @json($data).data.find(item => item.id == id);
             }
         }))
     })
