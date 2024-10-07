@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\BorrowedLog;
 use App\Livewire\Dashboard;
 use App\Livewire\Equipments;
 use App\Livewire\Others;
@@ -19,6 +20,7 @@ Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard')
 Route::prefix('equipments')->name('equipments.')->group(function () {
     Route::get('/', Equipments::class)->name('index');
     Route::get('/create', \App\Livewire\Equipments\Create::class)->name('create');
+    Route::get('/edit/{id}', \App\Livewire\Equipments\Edit::class)->name('edit');
 });
 
 Route::prefix('supplies')->name('supplies.')->group(function () {
@@ -31,6 +33,10 @@ Route::prefix('personnels')->name('personnels.')->group(function () {
     Route::get('/', Personnel::class)->name('index');
     Route::get('/create', PersonnelCreate::class)->name('create');
     Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
+});
+
+Route::prefix('borrowed-logs')->name('borrowed-logs.')->group(function () {
+    Route::get('/', BorrowedLog::class)->name('index');
 });
 
 Route::get('/others', Others::class)->name('others');

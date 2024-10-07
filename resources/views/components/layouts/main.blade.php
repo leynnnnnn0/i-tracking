@@ -47,12 +47,15 @@
                     <x-ri-user-line class="size-7" />
                     Users
                 </x-nav-link>
+                <x-nav-link href="/borrowed-logs" :active="request()->is('borrowed-logs')">
+                    <x-bi-pass class="size-7" />
+                    Borrowed Logs
+                </x-nav-link>
                 <x-nav-link href="/others" :active="request()->is('others')">
                     <x-ri-more-line class="size-7" />
                     Others
                 </x-nav-link>
             </div>
-
             <div class="flex-1 p-5 bg-[#eaeaea]">
                 {{ $slot}}
             </div>

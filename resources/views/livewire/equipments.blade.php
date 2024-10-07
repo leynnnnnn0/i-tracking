@@ -16,7 +16,7 @@
             <x-td>Yes</x-td>
             <x-td class="flex items-center gap-2">
                 <x-bi-trash class="cursor-pointer size-5 text-red-500" />
-                <a>
+                <a href="/equipments/edit/{{ $equipment->id }}">
                     <x-bi-pencil-square class="size-5 text-blue-500" />
                 </a>
                 <x-bi-eye class="cursor-pointer size-5 text-green-500" />

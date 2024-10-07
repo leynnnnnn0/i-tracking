@@ -28,4 +28,9 @@ class Equipment extends Model
     {
         return $this->belongsTo(ResponsiblePerson::class, 'responsible_person_id');
     }
+
+    public function borrowed_log()
+    {
+        return $this->hasMany(BorrowedEquipment::class);
+    }
 }

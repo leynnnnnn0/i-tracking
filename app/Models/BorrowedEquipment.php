@@ -30,4 +30,14 @@ class BorrowedEquipment extends Model
             'is_returned' => 'boolean'
         ];
     }
+
+    public function equipment()
+    {
+        return $this->belongsTo(Equipment::class);
+    }
+
+    public function getBorrowerAttributes()
+    {
+        return "$this->borrower_first_name $this->borrower_last_name";
+    }
 }

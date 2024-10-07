@@ -3,6 +3,7 @@
 namespace App\Livewire\Equipments;
 
 use App\Livewire\Forms\EquipmentForm;
+use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;

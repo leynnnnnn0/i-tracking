@@ -1,5 +1,5 @@
 <div class="space-y-4">
-    <x-plain-heading>Create New Equipment</x-plain-heading>
+    <x-plain-heading>Edit Equipment Details</x-plain-heading>
 
     <div class="bg-white rounded-xl p-5">
         <section class="pb-5 border-b border-gray-300">
@@ -23,7 +23,7 @@
         </section>
         <section class="flex justify-end gap-3">
             <a href="/equipments" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
-            <x-primary-button wire:click="submit">Submit</x-primary-button>
+            <x-primary-button wire:click="update">Update</x-primary-button>
         </section>
     </div>
 </div>
