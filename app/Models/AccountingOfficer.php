@@ -18,4 +18,14 @@ class AccountingOfficer extends Model
         'email',
         'phone_number'
     ];
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
+    }
 }

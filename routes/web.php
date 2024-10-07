@@ -2,6 +2,7 @@
 
 use App\Livewire\Dashboard;
 use App\Livewire\Equipments;
+use App\Livewire\Others;
 use App\Livewire\Personel;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
@@ -27,6 +28,8 @@ Route::prefix('personnels')->name('personnels.')->group(function () {
     Route::get('/create', PersonnelCreate::class)->name('create');
     Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
 });
+
+Route::get('/others', Others::class)->name('others');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

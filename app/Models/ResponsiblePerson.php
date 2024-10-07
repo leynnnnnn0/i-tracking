@@ -18,4 +18,9 @@ class ResponsiblePerson extends Model
         'email',
         'phone_number'
     ];
+
+    public function getFullNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
+    }
 }

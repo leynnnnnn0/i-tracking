@@ -93,10 +93,10 @@
     </template> -->
     <template x-if="open">
         <div class="flex items-center justify-center absolute bg-black/50 inset-0">
-            <div class="relative bg-white rounded-lg h-fit w-[300px] p-5 space-y-2">
+            <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2">
                 <x-bi-x @click="toggle" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">
-                    <h1 class="text-gray-700 font-bold text-lg">Add Used Value</h1>
+                    <h1 class="text-gray-700 font-bold text-lg">Add Used Value for item #<span x-text="targetId"></span></h1>
                 </section>
                 <input wire:model="form.used" class="rounded-lg border-gray-300 w-full" type="number">
                 <x-primary-button @click="$wire.add(targetId)" class="w-full flex justify-center">Add</x-primary-button>
@@ -105,10 +105,10 @@
     </template>
     <template x-if="showAddQuantity">
         <div class="flex items-center justify-center absolute bg-black/50 inset-0">
-            <div class="relative bg-white rounded-lg h-fit w-[300px] p-5 space-y-2">
+            <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2">
                 <x-bi-x @click="showAddQuantityModal" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">
-                    <h1 class="text-gray-700 font-bold text-lg">Add Quantity</h1>
+                    <h1 class="text-gray-700 font-bold text-lg">Add Quantity for item #<span x-text="targetId"></span></h1>
                 </section>
                 <input wire:model="form.recently_added" class="rounded-lg border-gray-300 w-full" type="number">
                 <x-primary-button @click="$wire.addQuantity(targetId)" class="w-full flex justify-center">Add</x-primary-button>
@@ -123,7 +123,6 @@
             open: false,
             targetId: null,
             showAddQuantity: false,
-            supply: null,
             showAddQuantityModal(id) {
                 this.targetId = id;
                 this.showAddQuantity = !this.showAddQuantity;
