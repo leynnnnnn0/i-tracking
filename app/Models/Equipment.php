@@ -23,4 +23,9 @@ class Equipment extends Model
             'is_borrowed' => 'boolean'
         ];
     }
+
+    public function responsible_person()
+    {
+        return $this->belongsTo(ResponsiblePerson::class, 'responsible_person_id');
+    }
 }
