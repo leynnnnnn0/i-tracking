@@ -4,16 +4,16 @@ namespace App\Livewire;
 
 use App\Models\Equipment;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Equipments extends Component
 {
-    public $equipments;
-    public function mount()
-    {
-        $this->equipments = Equipment::with('responsible_person')->latest()->get();
-    }
+    use WithPagination;
+
     public function render()
     {
-        return view('livewire.equipments');
+        return view('livewire.equipments', [
+            'equipments' => Equipment::with('responsible_person', 'borrowed_log')->latest()->paginate(10)
+        ]);
     }
 }

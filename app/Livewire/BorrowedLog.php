@@ -2,13 +2,16 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Masmerise\Toaster\Toaster;
 
 class BorrowedLog extends Component
 {
     use WithPagination;
+   
 
     public function render()
     {

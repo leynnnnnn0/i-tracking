@@ -33,4 +33,9 @@ class Equipment extends Model
     {
         return $this->hasMany(BorrowedEquipment::class);
     }
+
+    public function getIsAvailbleAttribute()
+    {
+        return $this->borrowed_log->count() >= 1 ? 'No' : 'Yes';
+    }
 }

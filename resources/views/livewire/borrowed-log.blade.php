@@ -1,5 +1,5 @@
 <section class="space-y-3">
-    <x-index-header heading="Borrowed Equipment Log" buttonName="Add new log" location="/borrowed-equipment/create" />
+    <x-index-header heading="Borrowed Equipment Log" buttonName="Add new log" location="/borrowed-logs/create" />
     <x-table>
         <x-tr>
             <x-th>Equipment</x-th>
@@ -18,7 +18,7 @@
             <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
             <x-td class="flex items-center gap-3">
                 <x-bi-trash class="cursor-pointer size-5 text-red-500" />
-                <a href="/supplies/edit/">
+                <a href="/borrowed-logs/edit/">
                     <x-bi-pencil-square class="size-5 text-blue-500" />
                 </a>
                 <x-bi-eye class="cursor-pointer size-5 text-green-500" />
