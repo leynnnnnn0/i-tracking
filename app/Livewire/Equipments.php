@@ -10,7 +10,7 @@ class Equipments extends Component
     public $equipments;
     public function mount()
     {
-        $this->equipments = Equipment::with('responsible_person')->get();
+        $this->equipments = Equipment::with('responsible_person')->latest()->get();
     }
     public function render()
     {
