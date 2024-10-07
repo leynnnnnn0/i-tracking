@@ -43,7 +43,7 @@
                     <x-bi-archive-fill class="size-7" />
                     Archive
                 </x-nav-link>
-                <x-nav-link>
+                <x-nav-link href="/users" :active="request()->is('users')">
                     <x-ri-user-line class="size-7" />
                     Users
                 </x-nav-link>

@@ -28,10 +28,12 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'first_name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => 'testtest'
+            'password' => 'testtest',
+            'role' => 'Admin'
         ]);
 
-        User::factory(10)->create();
+        User::factory(20)->create();
+
         Office::factory(10)->create();
         AccountingOfficer::factory(10)->create();
         ResponsiblePerson::factory(10)->create();
@@ -49,7 +51,5 @@ class DatabaseSeeder extends Seeder
         Department::factory(5)->create();
         Personnel::factory(100)->create();
         BorrowedEquipment::factory(20)->create();
-
-        
     }
 }

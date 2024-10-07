@@ -2,10 +2,8 @@
 
 namespace App\Livewire\Forms;
 
-use App\Livewire\BorrowedLog;
 use App\Models\BorrowedEquipment;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class BorrowEquipmentForm extends Form

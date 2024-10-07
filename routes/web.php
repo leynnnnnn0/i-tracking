@@ -12,12 +12,17 @@ use App\Livewire\Personnel\Edit as PersonnelEdit;
 use App\Livewire\Supply;
 use App\Livewire\Supply\Create;
 use App\Livewire\Supply\Edit;
-
+use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
-
 Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
+
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/', User::class)->name('index');
+    Route::get('/create', User\Create::class)->name('create');
+});
+
 Route::prefix('equipments')->name('equipments.')->group(function () {
     Route::get('/', Equipments::class)->name('index');
     Route::get('/create', \App\Livewire\Equipments\Create::class)->name('create');

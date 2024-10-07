@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone_number',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -47,6 +48,12 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'date_of_birth' => 'date'
         ];
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
     }
 }
