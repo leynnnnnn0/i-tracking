@@ -9,8 +9,9 @@ use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
-    public $equipments;
+    
     public BorrowEquipmentForm $form;
+    public $equipments;
 
     public function mount()
     {

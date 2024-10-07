@@ -6,7 +6,7 @@
             <x-th>Borrower</x-th>
             <x-th>Start Date</x-th>
             <x-th>End Date</x-th>
-            <x-th>Is_returned?</x-th>
+            <x-th>Is Returned?</x-th>
             <x-th>Actions</x-th>
         </x-tr>
         @foreach ($logs as $log)
@@ -18,7 +18,7 @@
             <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
             <x-td class="flex items-center gap-3">
                 <x-bi-trash class="cursor-pointer size-5 text-red-500" />
-                <a href="/borrowed-logs/edit/">
+                <a href="/borrowed-logs/edit/{{ $log->id }}">
                     <x-bi-pencil-square class="size-5 text-blue-500" />
                 </a>
                 <x-bi-eye class="cursor-pointer size-5 text-green-500" />

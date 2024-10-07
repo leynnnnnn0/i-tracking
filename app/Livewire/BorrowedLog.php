@@ -16,7 +16,7 @@ class BorrowedLog extends Component
     public function render()
     {
         return view('livewire.borrowed-log', [
-            'logs' => BorrowedEquipment::with('equipment')->paginate(10)
+            'logs' => BorrowedEquipment::with('equipment')->latest()->paginate(10)
         ]);
     }
 }

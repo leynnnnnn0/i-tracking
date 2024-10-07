@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('borrower_last_name');
             $table->string('borrower_email');
             $table->string('borrower_phone_number');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->boolean('is_returned');
             $table->timestamps();
         });

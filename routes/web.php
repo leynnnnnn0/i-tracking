@@ -2,6 +2,7 @@
 
 use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
+use App\Livewire\BorrowerLog\Edit as BorrowerLogEdit;
 use App\Livewire\Dashboard;
 use App\Livewire\Equipments;
 use App\Livewire\Others;
@@ -38,6 +39,7 @@ Route::prefix('personnels')->name('personnels.')->group(function () {
 Route::prefix('borrowed-logs')->name('borrowed-logs.')->group(function () {
     Route::get('/', BorrowedLog::class)->name('index');
     Route::get('/create', BorrowerLogCreate::class)->name('create');
+    Route::get('/edit/{id}', BorrowerLogEdit::class)->name('edit');
 });
 
 Route::get('/others', Others::class)->name('others');
