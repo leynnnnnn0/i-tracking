@@ -24,8 +24,8 @@
             <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
             <x-td>{{ $equipment->name }}</x-td>
             <x-td>
-                <span class="px-2 py-1 border border-green-500 bg-green-500 bg-opacity-50 rounded-sm text-white font-bold">
-                    {{ $equipment->is_availble }}
+                <span class="px-2 py-1 border bg-opacity-75 rounded-lg text-white font-bold {{ $equipment->is_available === 'Yes' ? 'border-green-500 bg-green-500' : 'border-red-500 bg-red-500'}}">
+                    {{ $equipment->is_available }}
                 </span>
             </x-td>
             <x-td class="flex items-center gap-2">
