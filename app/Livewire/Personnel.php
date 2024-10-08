@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Enum\Gender;
 use App\Models\Personnel as ModelsPersonnel;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Personnel extends Component
 {
@@ -15,11 +16,11 @@ class Personnel extends Component
         ]);
     }
 
+
     public function delete($id): void
     {
-        $personnel = ModelsPersonnel::find($id);
-        if ($personnel) {
-            $personnel->delete();
-        }
+        ModelsPersonnel::findOrFail($id)->delete();
+        Toaster::success('Successfully Deleted!');
+        $this->dispatch('Data Deleted');
     }
 }
