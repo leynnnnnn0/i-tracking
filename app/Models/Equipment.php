@@ -41,4 +41,6 @@ class Equipment extends Model
     {
         return $this->borrowed_log->count() >= 1 ? 'No' : 'Yes';
     }
+
+
 }

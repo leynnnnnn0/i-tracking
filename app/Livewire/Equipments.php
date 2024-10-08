@@ -12,16 +12,34 @@ class Equipments extends Component
 {
     use WithPagination;
     public $showDeleteModal = false;
+    public $query = 'All';
 
     public function mount()
     {
         $this->showDeleteModal = false;
     }
 
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
     public function render()
     {
+        switch ($this->query) {
+            case 'All':
+                $equipments = Equipment::with('responsible_person', 'borrowed_log')->latest()->paginate(10);
+                break;
+            case 'Available':
+                $equipments = Equipment::where('is_borrowed', false)->latest()->paginate(10);
+                break;
+            case 'Borrowed':
+                $equipments = Equipment::where('is_borrowed', true)->latest()->paginate(10);
+                break;
+        }
+
         return view('livewire.equipments', [
-            'equipments' => Equipment::with('responsible_person', 'borrowed_log')->latest()->paginate(10)
+            'equipments' => $equipments
         ]);
     }
 

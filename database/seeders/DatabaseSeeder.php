@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Livewire\BorrowedLog;
 use App\Models\AccountingOfficer;
 use App\Models\BorrowedEquipment;
 use App\Models\Category;
@@ -37,7 +38,14 @@ class DatabaseSeeder extends Seeder
         Office::factory(10)->create();
         AccountingOfficer::factory(10)->create();
         ResponsiblePerson::factory(10)->create();
-        Equipment::factory(100)->create();
+        Equipment::factory(100)
+            ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
+            ->afterCreating(function ($equipment) {
+                if ($equipment->borrowed_log->count() > 0) {
+                    $equipment->update(['is_borrowed' => true]);
+                }
+            })
+            ->create();
         Supply::factory(100)->create();
         Category::factory(5)->create();
 
@@ -50,6 +58,6 @@ class DatabaseSeeder extends Seeder
 
         Department::factory(5)->create();
         Personnel::factory(100)->create();
-        BorrowedEquipment::factory(20)->create();
+        // BorrowedEquipment::factory(20)->create();
     }
 }
