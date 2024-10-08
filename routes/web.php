@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ActivityLog;
 use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
 use App\Livewire\BorrowerLog\Edit as BorrowerLogEdit;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
+Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', User::class)->name('index');

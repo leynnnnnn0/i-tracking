@@ -20,8 +20,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('delete-post', function ($user) {
-            return $user->role === 'Admin';
+        Gate::define('delete-data', function ($user) {
+            return $user->role === 'test';
         });
     }
 }
