@@ -18,12 +18,35 @@ class Supply extends Component
     use WithPagination;
     public ActivityLogForm $activityLogForm;
     public SupplyForm $form;
+    public $query = 'All';
 
     public function render()
     {
+
+        switch ($this->query) {
+            case 'All':
+                $data = ModelsSupply::latest()->paginate(10);
+                break;
+            case 'High':
+                $data = ModelsSupply::where('total', '>', 20)->latest()->paginate(10);
+                break;
+            case 'Medium':
+                $data = ModelsSupply::where([['total', '>', 10], ['total', '<=', 20]])
+                    ->latest()
+                    ->paginate(10);
+                break;
+            case 'Low':
+                $data = ModelsSupply::where('total', '<=', 10)->latest()->paginate(10);
+                break;
+        }
         return view('livewire.supply', [
-            'data' => ModelsSupply::latest()->paginate(10)
+            'data' => $data
         ]);
+    }
+
+    public function setQuery($query)
+    {
+        $this->query = $query;
     }
 
     public function getColor($total)

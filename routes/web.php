@@ -23,6 +23,7 @@ Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', User::class)->name('index');
     Route::get('/create', User\Create::class)->name('create');
+    Route::get('/edit/{id}', User\Edit::class)->name('edit');
 });
 
 Route::prefix('equipments')->name('equipments.')->group(function () {

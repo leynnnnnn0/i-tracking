@@ -16,13 +16,15 @@ class SupplyFactory extends Factory
      */
     public function definition(): array
     {
+        $quantity = fake()->numberBetween(1, 50);
+        $used = fake()->numberBetween(0, $quantity);
         return [
             'description' => fake()->word(),
             'unit' => fake()->randomElement(['pcs', 'pack']),
-            'quantity' => fake()->numberBetween(1, 100),
-            'used' => fake()->numberBetween(0, 50),
-            'recently_added' => fake()->numberBetween(0, 50),
-            'total' => fake()->numberBetween(50, 150),
+            'quantity' => $quantity,
+            'used' => $used,
+            'recently_added' => $quantity,
+            'total' => $quantity - $used,
             'expiry_date' => fake()->optional()->date(),
             'is_consumable' => fake()->boolean(),
         ];
