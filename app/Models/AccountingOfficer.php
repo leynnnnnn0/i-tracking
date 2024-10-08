@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AccountingOfficer extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountingOfficerFactory> */
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'office_id',

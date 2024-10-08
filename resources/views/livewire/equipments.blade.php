@@ -23,7 +23,11 @@
             <x-td>{{ $equipment->uid }}</x-td>
             <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
             <x-td>{{ $equipment->name }}</x-td>
-            <x-td>{{ $equipment->is_availble }}</x-td>
+            <x-td>
+                <span class="px-2 py-1 border border-green-500 bg-green-500 bg-opacity-50 rounded-sm text-white font-bold">
+                    {{ $equipment->is_availble }}
+                </span>
+            </x-td>
             <x-td class="flex items-center gap-2">
                 <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                 <a href="/equipments/edit/{{ $equipment->id }}">

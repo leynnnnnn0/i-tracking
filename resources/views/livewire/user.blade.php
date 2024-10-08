@@ -37,6 +37,10 @@
         @endforeach
     </x-table>
 
+    <div>
+        {{ $users->links()}}
+    </div>
+
     <!-- Modal -->
     <template x-if="showDeleteModal">
         <x-delete-modal @click="$wire.delete(targetId)" />

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }

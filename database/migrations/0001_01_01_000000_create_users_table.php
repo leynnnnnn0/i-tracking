@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', UserRole::values());
+            $table->softDeletes('deleted_at', precision: 0);
             $table->rememberToken();
             $table->timestamps();
         });

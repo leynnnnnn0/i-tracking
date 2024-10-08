@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Supply::class)->constrained();
             $table->foreignIdFor(Category::class)->constrained();
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }

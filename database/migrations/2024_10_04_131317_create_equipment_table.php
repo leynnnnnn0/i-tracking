@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('uid')->unique();
             $table->string('name');
             $table->boolean('is_borrowed')->default(false);
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }

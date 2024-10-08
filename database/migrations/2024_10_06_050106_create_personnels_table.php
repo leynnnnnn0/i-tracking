@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->text('remarks')->nullable();
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }
