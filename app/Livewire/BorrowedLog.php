@@ -19,4 +19,11 @@ class BorrowedLog extends Component
             'logs' => BorrowedEquipment::with('equipment')->latest()->paginate(10)
         ]);
     }
+
+    public function delete($id): void
+    {
+        BorrowedEquipment::findOrFail($id)->delete();
+        Toaster::success('Successfully Deleted!');
+        $this->dispatch('Data Deleted');
+    }
 }

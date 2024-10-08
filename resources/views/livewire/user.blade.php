@@ -1,4 +1,14 @@
-<section class="space-y-3">
+<div x-data="{
+        showDeleteModal: false,
+        targetId: null,
+        openDeleteModal(id) {
+        this.showDeleteModal = true;
+        this.targetId = id;
+        Livewire.on('Data Deleted', () => {
+            this.showDeleteModal = false;
+        })
+        }
+    }">
     <x-index-header heading="Users" buttonName="Add New User" location="/users/create" />
     <x-table>
         <x-tr>
@@ -16,8 +26,19 @@
             <x-td>{{ $user->phone_number }}</x-td>
             <x-td>{{ $user->email }}</x-td>
             <x-td>{{ $user->role }}</x-td>
-            <x-td></x-td>
+            <x-td class="flex items-center gap-3">
+                <x-bi-trash @click="openDeleteModal({{ $user->id }})" class="cursor-pointer size-5 text-red-500" />
+                <a href="/users/edit/{{ $user->id}}">
+                    <x-bi-pencil-square class="size-5 text-blue-500" />
+                </a>
+                <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+            </x-td>
         </tr>
         @endforeach
     </x-table>
-</section>
+
+    <!-- Modal -->
+    <template x-if="showDeleteModal">
+        <x-delete-modal @click="$wire.delete(targetId)" />
+    </template>
+</div>

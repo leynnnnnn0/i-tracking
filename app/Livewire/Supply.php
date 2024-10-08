@@ -27,13 +27,6 @@ class Supply extends Component
         return ColorStatus::getTotalColor($total);
     }
 
-    public function delete($id)
-    {
-        $supply = ModelsSupply::find($id);
-        if ($supply) {
-            $supply->delete();
-        }
-    }
 
     public function add($id)
     {
@@ -42,6 +35,13 @@ class Supply extends Component
         $this->form->updateUsedValue($supply);
         Toaster::success('Updated Successfully');
         $this->dispatch('usedValueUpdated');
+    }
+
+    public function delete($id)
+    {
+        ModelsSupply::find($id)->delete();
+        Toaster::success('Successfully Deleted!');
+        $this->dispatch('Data Deleted');
     }
 
     public function addQuantity($id)

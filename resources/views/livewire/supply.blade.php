@@ -10,6 +10,13 @@
                     this.showAddQuantity = false;
                 })
             },
+            openDeleteModal(id) {
+                this.showDeleteModal = true;
+                this.targetId = id;
+                Livewire.on('Data Deleted', () => {
+                    this.showDeleteModal = false;
+                })
+                },
             toggle(id) {
                 this.targetId = id;
                 this.open = !this.open;
@@ -52,7 +59,7 @@
                 </span>
                 <x-td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/A' }}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="showDeleteModal = true" />
+                    <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="openDeleteModal({{ $supply->id }})" />
                     <a href="/supplies/edit/{{ $supply->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
@@ -92,6 +99,6 @@
 
     <!-- Modal -->
     <template x-if="showDeleteModal">
-        <x-delete-modal wire:click="delete" />
+        <x-delete-modal @click="$wire.delete(targetId)" />
     </template>
 </div>
