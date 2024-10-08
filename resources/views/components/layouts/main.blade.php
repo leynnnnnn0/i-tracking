@@ -55,6 +55,10 @@
                     <x-ri-history-fill class="size-7" />
                     Activity Log
                 </x-nav-link>
+                <x-nav-link href="/missing-equipments" :active="request()->is('missing-equipments')">
+                    <x-bi-question-circle class="size-7" />
+                    Missing Equipments
+                </x-nav-link>
                 <x-nav-link href="/others" :active="request()->is('others')">
                     <x-ri-more-line class="size-7" />
                     Others

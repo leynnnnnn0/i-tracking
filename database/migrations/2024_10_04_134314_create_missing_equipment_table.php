@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Equipment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,11 @@ return new class extends Migration
     {
         Schema::create('missing_equipment', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Equipment::class)->constrained();
+            $table->enum('status', ['found', 'lost', 'under_investigation', 'presumed_lost', 'condemned']);
+            $table->text('description')->nullable();
+            $table->string('reported_by');
+            $table->date('reported_date');
             $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
 use App\Livewire\BorrowerLog\Edit as BorrowerLogEdit;
 use App\Livewire\Dashboard;
 use App\Livewire\Equipments;
+use App\Livewire\MissingEquipment;
 use App\Livewire\Others;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
@@ -19,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
 Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
+
+Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
+    Route::get('/', MissingEquipment::class)->name('index');
+    Route::get('/create', MissingEquipment\Create::class)->name('create');
+});
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', User::class)->name('index');

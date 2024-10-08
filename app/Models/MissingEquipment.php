@@ -14,6 +14,16 @@ class MissingEquipment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        
+        'equipment_id',
+        'status',
+        'description',
+        'reported_by',
+        'reported_date',
     ];
+
+    public function casts(){
+        return [
+            'reported_date' => 'date',
+        ];
+    }
 }
