@@ -6,16 +6,13 @@ class ColorStatus
 {
     public static function getTotalColor($total): string
     {
-        $case = match (true) {
-            $total < 10 => 'low',
-            $total < 50 => 'medium',
-            default => 'high'
-        };
-
-        return match ($case) {
-            'low' => 'bg-red-500 text-white',
-            'medium' => 'bg-yellow-500',
-            'high' => 'bg-green-500'
-        };
+        switch ($total) {
+            case $total < 10:
+                return 'bg-red-500 border-red-500';
+            case $total < 20:
+                return 'bg-orange-500 border-orange-500';
+            default:
+                return 'bg-green-500 border-green-500';
+        }
     }
 }

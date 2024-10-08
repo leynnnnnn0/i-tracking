@@ -29,7 +29,7 @@ class SupplyForm extends Form
             'description' => ['required', 'string', 'min:2'],
             'unit' => ['required', Rule::in(Unit::values())],
             'quantity' => ['required', 'numeric'],
-            'used' => ['sometimes', 'required'],
+            'used' => ['sometimes', 'required', 'lte:total'],
             'recently_added' => ['sometimes', 'nullable', 'required'],
             'expiry_date' => ['nullable', 'date'],
             'is_consumable' => ['required'],
@@ -38,15 +38,24 @@ class SupplyForm extends Form
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'used.lte' => 'The used quantity must be less than or equal to the total quantity'
+        ];
+    }
+
     public function store()
     {
         self::setRecentlyAdded();
         self::setTotal();
         $this->validate();
-        DB::transaction(function () {
+        $supply = null;
+        DB::transaction(function () use (&$supply) {
             $supply = Supply::create($this->all());
             $supply->categories()->attach($this->category);
         });
+        return $supply;
     }
 
     public function update(Supply $supply)
@@ -61,6 +70,8 @@ class SupplyForm extends Form
             });
         } catch (Exception $e) {
             Toaster::error('Something went wrong:(');
+        } finally {
+            return $supply->fresh();
         }
     }
 
@@ -83,9 +94,10 @@ class SupplyForm extends Form
             throw new Exception('The total used value cannot exceed the total supply available.');
         }
         $supply->update([
-            'used' => $supply->used += $this->used,
+            'used' => $totalUsed,
             'total' => $supply->total - $this->used
         ]);
+        $this->reset();
 
         return $supply->fresh();
     }
@@ -100,6 +112,7 @@ class SupplyForm extends Form
         $this->is_consumable = $supply->is_consumable;
         $this->used = $supply->used;
         $this->recently_added = $supply->recently_added;
+        $this->total = $supply->total;
     }
 
     public function setTotal($quantity = null, $used = null)

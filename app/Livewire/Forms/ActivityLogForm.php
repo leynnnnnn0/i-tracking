@@ -31,15 +31,37 @@ class ActivityLogForm extends Form
         ];
     }
 
-    public function setActivityLog(Model $before, $after, $desciption, $action_type)
+    public function setActivityLog($before, $after, $desciption, $action_type)
     {
         $this->user_id = auth()->user()->id;
         $this->action_type = $action_type;
         $this->description = $desciption;
-        $this->model_type = $before::class;
-        $this->model_id = $before->id;
-        $this->before_data = $before->toArray();
-        $this->after_data = $after;
+        $this->before_data = !$before ? $before : $before->toArray();
+        $this->after_data = !$after ? $after : $after->toArray();
+        self::setModelType($before, $after);
+        self::setId($before, $after);
+    }
+
+    public function setId($before, $after)
+    {
+        if ($before) {
+            $this->model_id = $before->id;
+        } elseif ($after) {
+            $this->model_id = $after->id;
+        } else {
+            $this->model_id = 'N/A';
+        }
+    }
+
+    public function setModelType($before, $after)
+    {
+        if ($before) {
+            $this->model_type = $before::class;
+        } elseif ($after) {
+            $this->model_type = $after::class;
+        } else {
+            $this->model_type = 'N/A';
+        }
     }
     public function store()
     {
