@@ -35,6 +35,7 @@
                 <x-th>Description</x-th>
                 <x-th>Quantity</x-th>
                 <x-th>Used</x-th>
+                <x-th>Recently Added</x-th>
                 <x-th>Total</x-th>
                 <x-th>Expiry Date</x-th>
                 <x-th>Actions</x-th>
@@ -53,6 +54,7 @@
                         {{ $supply->used }}
                     </span>
                 </x-td>
+                <x-td>{{ $supply->recently_added }}</x-td>
                 <x-td>
                     <span class="px-3 py-1 rounded-lg text-white font-bold {{ $this->getColor($supply->total) }}">
                         {{ $supply->total }}</x-td>
@@ -64,7 +66,7 @@
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                </x-td> 
+                </x-td>
             </tr>
             @endforeach
         </x-table>

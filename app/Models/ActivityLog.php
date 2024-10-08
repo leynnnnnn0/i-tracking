@@ -22,7 +22,12 @@ class ActivityLog extends Model
     ];
 
     protected $casts = [
-        'before_data' => 'array', 
-        'after_data' => 'array',  
+        'before_data' => 'array',
+        'after_data' => 'array',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -51,8 +51,8 @@
                     <x-bi-pass class="size-7" />
                     Borrowed Logs
                 </x-nav-link>
-                <x-nav-link href="/activity-log" :active="request()->is('activity-log')">
-                    <x-bi-pass class="size-7" />
+                <x-nav-link href="/activity-logs" :active="request()->is('activity-log')">
+                    <x-ri-history-fill class="size-7" />
                     Activity Log
                 </x-nav-link>
                 <x-nav-link href="/others" :active="request()->is('others')">

@@ -11,7 +11,7 @@ use Masmerise\Toaster\Toaster;
 class BorrowedLog extends Component
 {
     use WithPagination;
-   
+
 
     public function render()
     {

@@ -1,6 +1,10 @@
 <div class="space-y-4">
     <x-plain-heading>Edit Personnel Information</x-plain-headi>
         <div class="bg-white rounded-xl p-5">
+            <section class="pb-5 border-b border-gray-300">
+                <h1 class="text-gray-700 font-bold text-lg">Personnel Information</h1>
+                <p class="text-gray-600 text-xs">Please input all the required fields.</p>
+            </section>
             <section class="py-2 grid grid-cols-2 gap-5">
                 <x-form.input label="First Name" name="form.first_name" wire:model="form.first_name" />
                 <x-form.input label="Middle Name" name="form.middle_name" :isRequired="false" wire:model="form.middle_name" />
@@ -12,7 +16,7 @@
                 <x-form.select label="Position" :data="$positions" name="form.position" wire:model="form.position" />
                 <x-form.input label="Start Date" name="form.start_date" type="date" wire:model="form.start_date" />
                 <x-form.input label="End Date" name="form.end_date" type="date" wire:model="form.end_date" :isRequired="false" />
-                <x-form.input label="Remarks" name="form.remarks" wire:model="form.remarks" :isRequired="false" />
+                <x-form.text-area label="Remarks" name="form.remarks" wire:model="form.remarks" :isRequired="false" />
                 <x-form.select label="Department" :data="$departments" name="form.department_id" wire:model="form.department_id" />
             </section>
             <section class="flex justify-end gap-3">

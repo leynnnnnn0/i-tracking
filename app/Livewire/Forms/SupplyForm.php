@@ -73,14 +73,21 @@ class SupplyForm extends Form
             'recently_added' => $this->recently_added,
             'total' => $total
         ]);
+        return $supply->fresh();
     }
 
     public function updateUsedValue(Supply $supply)
     {
+        $totalUsed = $supply->used += $this->used;
+        if ($totalUsed > $supply->total) {
+            throw new Exception('The total used value cannot exceed the total supply available.');
+        }
         $supply->update([
             'used' => $supply->used += $this->used,
             'total' => $supply->total - $this->used
         ]);
+
+        return $supply->fresh();
     }
 
     public function setSupply(Supply $supply)

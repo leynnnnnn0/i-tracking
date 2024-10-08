@@ -12,7 +12,7 @@ class ActivityLog extends Component
     public function render()
     {
         return view('livewire.activity-log', [
-            'logs' => ModelsActivityLog::latest()->paginate(10)
+            'logs' => ModelsActivityLog::with('user')->latest()->paginate(10)
         ]);
     }
 }
