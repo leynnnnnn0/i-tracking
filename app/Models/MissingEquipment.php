@@ -24,6 +24,7 @@ class MissingEquipment extends Model
     public function casts(){
         return [
             'reported_date' => 'date',
+
         ];
     }
 }

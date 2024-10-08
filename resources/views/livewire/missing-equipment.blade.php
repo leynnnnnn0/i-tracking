@@ -16,7 +16,7 @@
             @foreach ($data as $report)
             <tr class="border-b border-gray-300">
                 <x-td>{{ $report->equipment_id}}</x-td>
-                <x-td>{{ $report->status}}</x-td>
+                <x-td>{{ Str::headline($report->status)}}</x-td>
                 <x-td>{{ $report->reported_by}}</x-td>
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
                 <x-td></x-td>
