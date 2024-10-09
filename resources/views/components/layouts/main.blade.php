@@ -20,7 +20,7 @@
 <body class="font-poppins text-gray-900 antialiased">
     <x-toaster-hub />
     <div class="flex flex-col min-h-screen">
-        <x-navigation />
+        <livewire:navigation />
         <section class="flex-1 flex min-h-full">
             <div class="w-60 bg-emerald-500 flex flex-col">
                 <x-nav-link href="/dashboard" :active="request()->is('dashboard')">
