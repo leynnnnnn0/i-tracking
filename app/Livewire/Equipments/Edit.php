@@ -8,6 +8,7 @@ use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -36,9 +37,11 @@ class Edit extends Component
     public function update()
     {
         try {
-            $equipment = $this->form->update($this->equipment);
-            $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
-            $this->activityLogForm->store();
+            DB::transaction(function () {
+                $equipment = $this->form->update($this->equipment);
+                $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
+                $this->activityLogForm->store();
+            });
             Toaster::success('Updated Successfully!');
             return $this->redirect('/equipments');
         } catch (Exception $e) {
