@@ -42,5 +42,6 @@ class EquipmentForm extends Form
         $this->equipment_id = $equipment->id;
         $this->validate();
         $equipment->update($this->all());
+        return $equipment->fresh();
     }
 }

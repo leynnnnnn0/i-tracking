@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Masmerise\Toaster\Toast;
 use Masmerise\Toaster\Toaster;
 
 class Equipments extends Component
@@ -53,9 +52,9 @@ class Equipments extends Component
     {
         try {
             DB::transaction(function () use ($id) {
-                $before = Equipment::findOrFail($id);
-                $after = $before->delete();
-                $this->form->setActivityLog($before, null, 'Equipment Deletion', 'Delete');
+                $equipment = Equipment::findOrFail($id);
+                $equipment->delete();
+                $this->form->setActivityLog($equipment, null, 'Delete Equipment', 'Delete');
                 $this->form->store();
                 Toaster::success('Successfully Deleted!');
                 $this->dispatch('Data Deleted');

@@ -24,6 +24,7 @@ Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
 Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
     Route::get('/', MissingEquipment::class)->name('index');
     Route::get('/create', MissingEquipment\Create::class)->name('create');
+    Route::get('/edit/{id}', MissingEquipment\Edit::class)->name('edit');
 });
 
 Route::prefix('users')->name('users.')->group(function () {

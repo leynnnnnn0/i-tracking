@@ -2,15 +2,19 @@
 
 namespace App\Livewire\Equipments;
 
+use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
+use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
+use Exception;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
     public EquipmentForm $form;
+    public ActivityLogForm $activityLogForm;
 
     public $persons;
     public Equipment $equipment;
@@ -31,8 +35,14 @@ class Edit extends Component
 
     public function update()
     {
-        $this->form->update($this->equipment);
-        Toaster::success('Updated Successfully!');
-        return $this->redirect('/equipments');
+        try {
+            $equipment = $this->form->update($this->equipment);
+            $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
+            $this->activityLogForm->store();
+            Toaster::success('Updated Successfully!');
+            return $this->redirect('/equipments');
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 }

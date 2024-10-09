@@ -19,7 +19,12 @@
                 <x-td>{{ Str::headline($report->status)}}</x-td>
                 <x-td>{{ $report->reported_by}}</x-td>
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
-                <x-td></x-td>
+                <x-td class="flex items-center gap-3">
+                    <a href="/missing-equipments/edit/{{ $report->id}}">
+                        <x-bi-pencil-square class="size-5 text-blue-500" />
+                    </a>
+                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                </x-td>
             </tr>
             @endforeach
         </x-table>

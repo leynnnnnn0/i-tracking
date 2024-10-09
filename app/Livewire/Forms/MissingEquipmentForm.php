@@ -14,6 +14,15 @@ class MissingEquipmentForm extends Form
     public $description;
     public $reported_by;
     public $reported_date;
+
+    public function setMissingEquipmentForm(MissingEquipment $missingEquipment)
+    { 
+        $this->equipment_id = $missingEquipment->equipment_id;
+        $this->status = $missingEquipment->status;
+        $this->description = $missingEquipment->description;
+        $this->reported_by = $missingEquipment->reported_by;
+        $this->reported_date = $missingEquipment->reported_date->format('Y-m-d');
+    }
     public function rules()
     {
         return [
@@ -29,5 +38,12 @@ class MissingEquipmentForm extends Form
     {
         $this->validate();
         MissingEquipment::create($this->all());
+    }
+
+    public function update(MissingEquipmentForm $missingEquipmentForm)
+    {
+        $this->validate();
+
+        $missingEquipmentForm->update($missingEquipmentForm);
     }
 }
