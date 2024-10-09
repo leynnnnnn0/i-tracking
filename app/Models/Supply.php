@@ -37,4 +37,15 @@ class Supply extends Model
     {
         return $this->belongsToMany(Category::class, 'supply_categories');
     }
+
+    public function getNotificationIdentificationAttribute()
+    {
+        return "Supply #$this->id";
+    }
+
+    public function getNotificationMessageAttribute()
+    {
+        return "This item only have $this->total $this->unit left.";
+    }
+
 }
