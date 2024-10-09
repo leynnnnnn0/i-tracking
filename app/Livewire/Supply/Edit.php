@@ -8,6 +8,7 @@ use App\Livewire\Forms\SupplyForm;
 use App\Models\Category;
 use App\Models\Supply;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -33,9 +34,11 @@ class Edit extends Component
     public function edit()
     {
         try {
-            $after = $this->form->update($this->supply);
-            $this->activityLogForm->setActivityLog($this->supply, $after, 'Updated Supply', 'Update');
-            $this->activityLogForm->store();
+            DB::transaction(function () {
+                $after = $this->form->update($this->supply);
+                $this->activityLogForm->setActivityLog($this->supply, $after, 'Updated Supply', 'Update');
+                $this->activityLogForm->store();
+            });
             Toaster::success('Supply Updated!');
             return $this->redirect('/supplies');
         } catch (Exception $e) {

@@ -52,7 +52,7 @@ class UserForm extends Form
     public function store()
     {
         $this->validate();
-        User::create($this->all());
+        return User::create($this->all());
     }
 
     public function update(User $user)
@@ -60,5 +60,6 @@ class UserForm extends Form
         $this->user_id = $user->id;
         $this->validate();
         $user->update($this->all());
+        return $user->fresh();
     }
 }

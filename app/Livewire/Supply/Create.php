@@ -28,13 +28,17 @@ class Create extends Component
 
     public function save()
     {
-        DB::transaction(function () {
-            $supply = $this->form->store();
-            $this->activityLogForm->setActivityLog(null, $supply, 'Supply Created', 'Create');
-            $this->activityLogForm->store();
-            Toaster::success('Created Successfully.');
-            return $this->redirect('/supplies');
-        });
+        try {
+            DB::transaction(function () {
+                $supply = $this->form->store();
+                $this->activityLogForm->setActivityLog(null, $supply, 'Supply Created', 'Create');
+                $this->activityLogForm->store();
+                Toaster::success('Created Successfully.');
+                return $this->redirect('/supplies');
+            });
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 
     public function addToCategories($id)

@@ -4,14 +4,18 @@ namespace App\Livewire\Personnel;
 
 use App\Enum\Gender;
 use App\Enum\Position;
+use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\PersonnelForm;
 use App\Models\Department;
 use App\Models\Personnel;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
+    public ActivityLogForm $activityLogForm;
     public PersonnelForm $form;
     public $genders;
     public $positions;
@@ -33,8 +37,16 @@ class Edit extends Component
 
     public function submit()
     {
-        $this->form->update($this->personnel);
-        Toaster::success('Updated Successfully!');
-        return $this->redirect('/personnels');
+        try {
+            DB::transaction(function () {
+                $personnel = $this->form->update($this->personnel);
+                $this->activityLogForm->setActivityLog($this->personnel, $personnel, 'Update Personnel', 'Update');
+                $this->activityLogForm->store();
+            });
+            Toaster::success('Updated Successfully!');
+            return $this->redirect('/personnels');
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 }

@@ -63,11 +63,12 @@ class PersonnelForm extends Form
         $this->personnel_id = $personnel->id;
         $this->validate();
         $personnel->update($this->all());
+        return $personnel->fresh();
     }
 
     public function store()
     {
         $this->validate();
-        Personnel::create($this->all());
+        return Personnel::create($this->all());
     }
 }
