@@ -14,12 +14,14 @@ use App\Livewire\Personnel\Edit as PersonnelEdit;
 use App\Livewire\Supply;
 use App\Livewire\Supply\Create;
 use App\Livewire\Supply\Edit;
+use App\Livewire\SupplyHistory;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
 Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
+Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
 
 Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
     Route::get('/', MissingEquipment::class)->name('index');

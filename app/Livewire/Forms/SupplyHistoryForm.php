@@ -3,7 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Models\SupplyHistory;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class SupplyHistoryForm extends Form

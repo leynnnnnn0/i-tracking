@@ -17,4 +17,9 @@ class SupplyHistory extends Model
         'total_added',
         'total',
     ];
+
+    public function supply()
+    {
+        $this->belongsTo(Supply::class);
+    }
 }
