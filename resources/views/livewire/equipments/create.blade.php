@@ -77,10 +77,6 @@
                 step="0.01"
                 wire:model="form.total_amount" />
 
-            <x-form.select label="Status"
-                :data="$statuses"
-                name="form.status"
-                wire:model="form.status" />
         </section>
         <section class="flex justify-end gap-3">
             <a href="/equipments" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 //PDF
 Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf'])->name('supplies-pdf');
+Route::get('/equipments-pdf', [PdfController::class, 'equipmentListPdf'])->name('equipment-pdf');
 Route::get('test', [PdfController::class, 'index']);
 
 

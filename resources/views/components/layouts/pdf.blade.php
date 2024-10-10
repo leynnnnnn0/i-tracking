@@ -7,8 +7,10 @@
     <style>
         /* Reset default margins and padding for printing */
         @page {
-            margin: 1cm;
+            margin: 0.5cm;
+            /* Adjust margins to prevent overflow */
         }
+
 
         /* Table styles */
         .print-table {
@@ -17,6 +19,19 @@
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
             font-size: 12px;
+            table-layout: fixed;
+            /* Ensure consistent layout */
+        }
+
+        .print-table th,
+        td {
+            font-size: 10px;
+            /* Adjust the size to your preference */
+            font-weight: bold;
+            background-color: #f2f2f2;
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
         }
 
         /* Header styles */
@@ -33,6 +48,8 @@
             border: 1px solid #000;
             padding: 8px;
             vertical-align: top;
+            word-wrap: break-word;
+            /* Ensures content wraps */
         }
 
         /* Alternate row colors */
@@ -40,20 +57,20 @@
             background-color: #f9f9f9;
         }
 
-        /* Optional: Add page break rules */
+        /* Ensure rows don't break across pages */
         .print-table tr {
             page-break-inside: avoid;
-        }
-
-        /* Optional: Style for specific columns */
-        .print-table .numeric {
-            text-align: right;
         }
 
         /* Optional: Footer row styles */
         .print-table tfoot tr {
             font-weight: bold;
             background-color: #f2f2f2;
+        }
+
+        /* Numeric alignment */
+        .print-table .numeric {
+            text-align: right;
         }
     </style>
 </head>

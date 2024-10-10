@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -17,10 +18,19 @@ class PdfController extends Controller
         return $pdf->setPaper('a4', 'landscape')->download('supplies.pdf');
     }
 
+    public function equipmentListPdf()
+    {
+        $data = Equipment::all();
+        $pdf = Pdf::loadView('pdf.EquipmentList', [
+            'data' => $data
+        ]);
+        return $pdf->setPaper('a4', 'landscape')->download('equipments.pdf');
+    }
+
     public function index()
     {
-        return view('pdf.SupplyList', [
-            'data' => Supply::all()->toArray()
+        return view('pdf.EquipmentList', [
+            'data' => Equipment::all()
         ]);
     }
 }

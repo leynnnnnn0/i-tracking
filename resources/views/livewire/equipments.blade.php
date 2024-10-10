@@ -9,7 +9,7 @@
         })
         }
     }">
-    <x-index-header heading="Equipments" buttonName="Add New Equipment" location="/equipments/create" />
+    <x-index-header heading="Equipments" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
     <div class="space-y-3">
 
         <x-filter-tab>
@@ -44,6 +44,12 @@
                     <button data-toggle="modal" data-target="#exampleModalCenter">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </button>
+                    @if($equipment->status != 'Borrowed')
+                    <a href="" class="underline text-orange-500 text-xs">Mark as Borrowed</a>
+                    @endif
+                    @if($equipment->status == 'Borrowed')
+                    <a href="" class="underline text-emerald-500 text-xs">Mark as Returned</a>
+                    @endif
                 </x-td>
             </tr>
             @endforeach
