@@ -21,7 +21,7 @@ class BorrowedEquipment extends Model
         'borrower_email',
         'start_date',
         'end_date',
-        'is_returned'
+        'returned_date'
     ];
 
 
@@ -30,8 +30,13 @@ class BorrowedEquipment extends Model
         return [
             'start_date' => 'date',
             'end_date' => 'date',
-            'is_returned' => 'boolean'
+            'returned_date' => 'date'
         ];
+    }
+
+    public function getIsReturnedAttribute()
+    {
+        return $this->returned_date ? true : false;
     }
 
     public function equipment()

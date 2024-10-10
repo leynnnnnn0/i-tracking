@@ -5,7 +5,9 @@ namespace App\Livewire;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\ActivityLog;
+use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -44,6 +46,25 @@ class Equipments extends Component
         $this->borrowEquipmentForm->store();
         Toaster::success('Successfully Created!');
         $this->dispatch('borrowLogCreated');
+    }
+
+    public function updateStatus($id)
+    { 
+        try {
+            DB::transaction(function () use ($id) {
+                $log = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
+                $log->update([
+                    'returned_date' => Carbon::today()->format('Y-m-d')
+                ]);
+                Equipment::find($id)->update([
+                    'status' => 'Active'
+                ]);
+            });
+            Toaster::success('Status Updated!');
+            $this->dispatch('Status Updated');
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 
     public function setQuery($query)

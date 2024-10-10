@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignIdFor(Equipment::class)->constrained()->cascadeOnDelete();
             $table->string('borrower_first_name');
             $table->string('borrower_last_name');
-            $table->string('borrower_email');
-            $table->string('borrower_phone_number');
+            $table->string('borrower_email')->nullable();
+            $table->string('borrower_phone_number')->nullable();
             $table->date('start_date');
-            $table->date('end_date');
-            $table->boolean('is_returned');
+            $table->date('end_date')->nullable();
+            $table->date('returned_date')->nullable();
             $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });

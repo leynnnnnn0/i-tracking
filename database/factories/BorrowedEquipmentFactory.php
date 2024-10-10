@@ -27,7 +27,7 @@ class BorrowedEquipmentFactory extends Factory
             'borrower_phone_number' => fake()->phoneNumber(),
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'is_returned' => fake()->randomElement([true, false]),
+            'returned_date' => null
         ];
     }
 }

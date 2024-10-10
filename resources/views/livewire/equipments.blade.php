@@ -1,7 +1,16 @@
 <div x-data="{
         showFormModal: false,
         showDeleteModal: false,
+        showConfirmationModal: false,
         targetId: null,
+        openConfirmationModal(id) {
+            this.showConfirmationModal = true;
+            this.targetId = id;
+            $dispatch('setTargetId', { id: id })
+            Livewire.on('Status Updated', () => {
+            this.showConfirmationModal = false;
+            })
+        },
         openFormModal(id) {
             this.showFormModal = true;
             this.targetId = id;
@@ -57,7 +66,7 @@
                     <button @click="openFormModal({{ $equipment->id }})" class="underline text-orange-500 text-xs">Mark as Borrowed</button>
                     @endif
                     @if($equipment->status == 'Borrowed')
-                    <a href="" class="underline text-emerald-500 text-xs">Mark as Returned</a>
+                    <button @click="openConfirmationModal({{ $equipment->id }})" class="underline text-emerald-500 text-xs">Mark as Returned</button>
                     @endif
                 </x-td>
             </tr>
@@ -68,7 +77,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Create Form Modal -->
     @if ($equipmentsList)
     <template x-if="showFormModal">
         <x-form-modal heading="Borrow Equipment Form">
@@ -79,13 +88,13 @@
             <x-form.input label="Borrower Last Name"
                 name="borrowEquipmentForm.borrower_last_name" wire:model="borrowEquipmentForm.borrower_last_name" />
             <x-form.input label="Phone Number"
-                name="borrowEquipmentForm.borrower_phone_number" wire:model="borrowEquipmentForm.borrower_phone_number" />
+                name="borrowEquipmentForm.borrower_phone_number" wire:model="borrowEquipmentForm.borrower_phone_number" :isRequired="false" />
             <x-form.input label="Email"
-                name="borrowEquipmentForm.borrower_email" type="email" wire:model="borrowEquipmentForm.borrower_email" />
+                name="borrowEquipmentForm.borrower_email" type="email" wire:model="borrowEquipmentForm.borrower_email" :isRequired="false" />
             <x-form.input label="Start Date"
                 name="borrowEquipmentForm.start_date" type="date" wire:model="borrowEquipmentForm.start_date" />
             <x-form.input label="End Date"
-                name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" />
+                name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" :isRequired="false" />
             <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
                 <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</button>
                 <x-primary-button wire:click="submit">Submit</x-primary-button>
@@ -93,14 +102,14 @@
         </x-form-modal>
     </template>
     @endif
+
+    <!-- Delete Modal -->
     <template x-if="showDeleteModal">
         <x-delete-modal @click="$wire.delete(targetId)" />
-
-
     </template>
 
-
-
-
-
+    <!-- Update Modal -->
+    <template x-if="showConfirmationModal">
+        <x-confirmation-modal @click="$wire.updateStatus(targetId)" message="Are you sure you want this to mark this as returned?" />
+    </template>
 </div>
