@@ -20,6 +20,11 @@ class Supply extends Component
     public SupplyForm $form;
     public $query = 'All';
 
+    public function generate_pdf()
+    {
+        
+    }
+
     public function render()
     {
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use App\Livewire\ActivityLog;
 use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
@@ -17,6 +18,11 @@ use App\Livewire\Supply\Edit;
 use App\Livewire\SupplyHistory;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
+
+//PDF
+Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf']);
+Route::get('test', [PdfController::class, 'index']);
+
 
 Route::view('/', 'welcome');
 Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
