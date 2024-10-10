@@ -16,7 +16,15 @@ class SupplyHistory extends Model
         'total_used',
         'total_added',
         'total',
+        'created_at'
     ];
+
+    public function casts()
+    {
+        return [
+            'created_at' => 'datetime'
+        ];
+    }
 
     public function supply()
     {

@@ -27,7 +27,10 @@
     <section class="space-y-3">
         <div class="flex items-center justify-between mb-5">
             <h1 class="font-bold text-2xl text-emerald-900">Supplies</h1>
-            <a href="/supplies/create" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Create New Supply</a>
+            <div class="flex items-center gap-3">
+                <a href="/supplies-pdf" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Export as PDF</a>
+                <a href="/supplies/create" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Create New Supply</a>
+            </div>
         </div>
 
         <x-filter-tab>

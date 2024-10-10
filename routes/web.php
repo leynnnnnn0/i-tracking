@@ -20,7 +20,7 @@ use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 //PDF
-Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf']);
+Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf'])->name('supplies-pdf');
 Route::get('test', [PdfController::class, 'index']);
 
 

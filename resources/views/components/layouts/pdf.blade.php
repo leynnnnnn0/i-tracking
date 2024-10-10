@@ -2,22 +2,63 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="UTF-8">
+    <title>Print Table</title>
+    <style>
+        /* Reset default margins and padding for printing */
+        @page {
+            margin: 1cm;
+        }
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        /* Table styles */
+        .print-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        /* Header styles */
+        .print-table thead th {
+            background-color: #f2f2f2;
+            border: 1px solid #000;
+            padding: 8px;
+            font-weight: bold;
+            text-align: left;
+        }
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        /* Cell styles */
+        .print-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        /* Alternate row colors */
+        .print-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Optional: Add page break rules */
+        .print-table tr {
+            page-break-inside: avoid;
+        }
+
+        /* Optional: Style for specific columns */
+        .print-table .numeric {
+            text-align: right;
+        }
+
+        /* Optional: Footer row styles */
+        .print-table tfoot tr {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 
-<body class="font-poppins text-gray-900 antialiased">
+<body>
     {{ $slot }}
 </body>
 
