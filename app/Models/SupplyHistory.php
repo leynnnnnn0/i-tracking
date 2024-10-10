@@ -20,6 +20,6 @@ class SupplyHistory extends Model
 
     public function supply()
     {
-        $this->belongsTo(Supply::class);
+        return $this->belongsTo(Supply::class);
     }
 }

@@ -50,10 +50,11 @@
                     <x-th>Actions</x-th>
                 </x-tr>
                 @foreach ($data as $supply)
+                <tr class="border-b border-gray-300">
                     <x-td>{{ $supply->id }}</x-td>
                     <x-td>{{ $supply->description }}</x-td>
                     <x-td>
-                        <span class="cursor-pointer" @click="showAddQuantityModal({{$supply->id}})">
+                        <span class=" cursor-pointer" @click="showAddQuantityModal({{$supply->id}})">
                             {{ $supply->quantity }}
                         </span>
                     </x-td>
