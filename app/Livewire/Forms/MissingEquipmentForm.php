@@ -16,7 +16,7 @@ class MissingEquipmentForm extends Form
     public $reported_date;
 
     public function setMissingEquipmentForm(MissingEquipment $missingEquipment)
-    { 
+    {
         $this->equipment_id = $missingEquipment->equipment_id;
         $this->status = $missingEquipment->status;
         $this->description = $missingEquipment->description;
@@ -27,7 +27,7 @@ class MissingEquipmentForm extends Form
     {
         return [
             'equipment_id' => ['required', 'exists:equipment,id'],
-            'status' => ['required', 'string', 'in:found,lost,under_investigation,presumed_lost,condemned '],
+            'status' => ['required', 'string', 'in:found,lost,under investigation,presumed lost,condemned'],
             'description' => ['nullable', 'string', 'max:255'],
             'reported_by' => ['required', 'string', 'max:100'],
             'reported_date' => ['required', 'date'],
@@ -40,10 +40,10 @@ class MissingEquipmentForm extends Form
         MissingEquipment::create($this->all());
     }
 
-    public function update(MissingEquipmentForm $missingEquipmentForm)
+    public function update(MissingEquipment $missingEquipment)
     {
         $this->validate();
 
-        $missingEquipmentForm->update($missingEquipmentForm);
+        $missingEquipment->update($this->all());
     }
 }
