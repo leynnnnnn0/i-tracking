@@ -18,9 +18,11 @@ class Equipments extends Component
     public ActivityLogForm $form;
     public $showDeleteModal = false;
     public $query = 'All';
+    public $equipment;
 
     public function mount()
     {
+        $this->equipment = Equipment::findOrFail(1);
         $this->showDeleteModal = false;
     }
 
@@ -35,11 +37,14 @@ class Equipments extends Component
             case 'All':
                 $equipments = Equipment::with('responsible_person', 'borrowed_log')->latest()->paginate(10);
                 break;
-            case 'Available':
-                $equipments = Equipment::where('is_borrowed', false)->latest()->paginate(10);
+            case 'Active':
+                $equipments = Equipment::with('responsible_person')->where('status', 'Active')->latest()->paginate(10);
                 break;
             case 'Borrowed':
-                $equipments = Equipment::where('is_borrowed', true)->latest()->paginate(10);
+                $equipments = Equipment::with('responsible_person')->where('status', 'Borrowed')->latest()->paginate(10);
+                break;
+            case 'Condemnd':
+                $equipments = Equipment::with('responsible_person')->where('status', 'Condemnd')->latest()->paginate(10);
                 break;
         }
 

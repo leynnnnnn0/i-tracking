@@ -14,8 +14,9 @@
 
         <x-filter-tab>
             <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Available'" wire:click="setQuery('Available')">Available</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Active'" wire:click="setQuery('Active')">Active</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Condemnd'" wire:click="setQuery('Condemnd')">Codemnd</x-filter-tab-button>
         </x-filter-tab>
         <x-table>
             <x-tr>
@@ -55,4 +56,21 @@
     <template x-if="showDeleteModal">
         <x-delete-modal @click="$wire.delete(targetId)" />
     </template>
+
+    <div class="flex items-center justify-center fixed inset-0 min-h-screen bg-black/50 hidden">
+        <div class="bg-white shadow-lg rounded-lg p-5 w-auto h-auto space-y-3">
+            <section class="border-b border-gray-300 pb-5">
+                <h1 class="text-emerald-900 text-lg font-bold">Information</h1>
+            </section>
+            <section class="grid grid-cols-2 gap-5">
+                @foreach ($equipment->getAttributes() as $attribute => $value)
+                <div class="flex flex-col">
+                    <x-span-xs>{{ Str::headline($attribute)}}</x-span-xs>
+                    <x-span>{{ $value }}</x-span>
+                </div>
+                @endforeach
+
+            </section>
+        </div>
+    </div>
 </div>
