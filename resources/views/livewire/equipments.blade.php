@@ -1,6 +1,15 @@
 <div x-data="{
+        showFormModal: false,
         showDeleteModal: false,
         targetId: null,
+        openFormModal(id) {
+            this.showFormModal = true;
+            this.targetId = id;
+            $dispatch('setTargetId', { id: id })
+            Livewire.on('borrowLogCreated', () => {
+            this.showFormModal = false;
+            })
+        },
         openDeleteModal(id) {
         this.showDeleteModal = true;
         this.targetId = id;
@@ -45,7 +54,7 @@
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </button>
                     @if($equipment->status != 'Borrowed')
-                    <a href="" class="underline text-orange-500 text-xs">Mark as Borrowed</a>
+                    <button @click="openFormModal({{ $equipment->id }})" class="underline text-orange-500 text-xs">Mark as Borrowed</button>
                     @endif
                     @if($equipment->status == 'Borrowed')
                     <a href="" class="underline text-emerald-500 text-xs">Mark as Returned</a>
@@ -58,25 +67,40 @@
             {{ $equipments->links() }}
         </div>
     </div>
+
     <!-- Modal -->
+    @if ($equipmentsList)
+    <template x-if="showFormModal">
+        <x-form-modal heading="Borrow Equipment Form">
+            <x-form.select label="Equipment"
+                name="borrowEquipmentForm.equipment_id" :data="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" />
+            <x-form.input label="Borrower First Name"
+                name="borrowEquipmentForm.borrower_first_name" wire:model="borrowEquipmentForm.borrower_first_name" />
+            <x-form.input label="Borrower Last Name"
+                name="borrowEquipmentForm.borrower_last_name" wire:model="borrowEquipmentForm.borrower_last_name" />
+            <x-form.input label="Phone Number"
+                name="borrowEquipmentForm.borrower_phone_number" wire:model="borrowEquipmentForm.borrower_phone_number" />
+            <x-form.input label="Email"
+                name="borrowEquipmentForm.borrower_email" type="email" wire:model="borrowEquipmentForm.borrower_email" />
+            <x-form.input label="Start Date"
+                name="borrowEquipmentForm.start_date" type="date" wire:model="borrowEquipmentForm.start_date" />
+            <x-form.input label="End Date"
+                name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" />
+            <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
+                <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</button>
+                <x-primary-button wire:click="submit">Submit</x-primary-button>
+            </section>
+        </x-form-modal>
+    </template>
+    @endif
     <template x-if="showDeleteModal">
         <x-delete-modal @click="$wire.delete(targetId)" />
+
+
     </template>
 
-    <div class="flex items-center justify-center fixed inset-0 min-h-screen bg-black/50 hidden">
-        <div class="bg-white shadow-lg rounded-lg p-5 w-auto h-auto space-y-3">
-            <section class="border-b border-gray-300 pb-5">
-                <h1 class="text-emerald-900 text-lg font-bold">Information</h1>
-            </section>
-            <section class="grid grid-cols-2 gap-5">
-                @foreach ($equipment->getAttributes() as $attribute => $value)
-                <div class="flex flex-col">
-                    <x-span-xs>{{ Str::headline($attribute)}}</x-span-xs>
-                    <x-span>{{ $value }}</x-span>
-                </div>
-                @endforeach
 
-            </section>
-        </div>
-    </div>
+
+
+
 </div>

@@ -50,7 +50,7 @@ class BorrowEquipmentForm extends Form
         DB::transaction(function () {
             $borrowedItem = BorrowedEquipment::create($this->all());
             $borrowedItem->equipment()->update([
-                'is_borrowed' => true
+                'Status' => 'Borrowed'
             ]);
         });
     }

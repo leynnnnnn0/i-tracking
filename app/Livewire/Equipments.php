@@ -3,11 +3,13 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\ActivityLogForm;
+use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\ActivityLog;
 use App\Models\Equipment;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -16,14 +18,32 @@ class Equipments extends Component
 {
     use WithPagination;
     public ActivityLogForm $form;
+    public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
     public $query = 'All';
-    public $equipment;
+    public $targetId;
+    public $equipmentsList;
+
 
     public function mount()
     {
-        $this->equipment = Equipment::findOrFail(1);
         $this->showDeleteModal = false;
+    }
+
+    #[On('setTargetId')]
+    public function setTargetId($id)
+    {
+        $this->targetId = $id;
+        $this->equipmentsList = Equipment::find($this->targetId)->pluck('name', 'id');
+        $this->borrowEquipmentForm->equipment_id = $id;
+    }
+
+    public function submit()
+    {
+
+        $this->borrowEquipmentForm->store();
+        Toaster::success('Successfully Created!');
+        $this->dispatch('borrowLogCreated');
     }
 
     public function setQuery($query)
