@@ -15,7 +15,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->equipments = Equipment::where('is_borrowed', false)->get()->pluck('name', 'id');
+        $this->equipments = Equipment::where('status', 'Active')->get()->pluck('name', 'id');
     }
     public function render()
     {
