@@ -20,7 +20,7 @@
                 <x-td>{{ $data->total_added }}</x-td>
                 <x-td>{{ $data->total }}</x-td>
                 <x-td>
-
+                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                 </x-td>
             </tr>
             @endforeach
