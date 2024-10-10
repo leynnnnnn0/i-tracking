@@ -2,11 +2,11 @@
 
 namespace App\Enum;
 
-enum Unit: string
+enum EquipmentStatus: string
 {
-    case pcs = 'pcs';
-    case pack = 'pack';
-    case unit = 'unit';
+    case ACTIVE = 'Active';
+    case BORROWED = 'Borrowed';
+    case CONDEMND = 'Condomend';
 
     public static function values()
     {

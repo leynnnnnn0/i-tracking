@@ -2,6 +2,10 @@
 
 namespace App\Livewire\Equipments;
 
+use App\Enum\EquipmentStatus;
+use App\Enum\OperatingUnitAndProject;
+use App\Enum\OrganizationUnit;
+use App\Enum\Unit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
 use App\Livewire\Forms\MissingEquipmentForm;
@@ -20,8 +24,18 @@ class Edit extends Component
     public $persons;
     public Equipment $equipment;
 
+    public $statuses;
+    public $organizations;
+    public $operating_units;
+    public $units;
+
+
     public function mount($id)
     {
+        $this->units = Unit::values();
+        $this->statuses = EquipmentStatus::values();
+        $this->organizations = OrganizationUnit::values();
+        $this->operating_units = OperatingUnitAndProject::values();
         $this->persons = ResponsiblePerson::select('id', 'first_name', 'last_name')
             ->get()
             ->pluck('full_name', 'id');

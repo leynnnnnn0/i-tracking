@@ -19,22 +19,22 @@
         </x-filter-tab>
         <x-table>
             <x-tr>
-                <x-th>Unique ID</x-th>
-                <x-th>Responsible Person</x-th>
+                <x-th>Organization Unit</x-th>
+                <x-th>Operating Unit/Project</x-th>
+                <x-th>PN</x-th>
                 <x-th>Name</x-th>
-                <x-th>Is Available?</x-th>
+                <x-th>Responsible Person</x-th>
+                <x-th>Status</x-th>
                 <x-th>Actions</x-th>
             </x-tr>
             @foreach ($equipments as $equipment)
             <tr class="border-b border-gray-300">
-                <x-td>{{ $equipment->uid }}</x-td>
-                <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
+                <x-td>{{ $equipment->organization_unit }}</x-td>
+                <x-td>{{ $equipment->operating_unit_project }}</x-td>
+                <x-td>{{ $equipment->property_number }}</x-td>
                 <x-td>{{ $equipment->name }}</x-td>
-                <x-td>
-                    <span class="px-2 py-1 border bg-opacity-75 rounded-lg text-white font-bold {{ $equipment->is_available === 'Yes' ? 'border-green-500 bg-green-500' : 'border-red-500 bg-red-500'}}">
-                        {{ $equipment->is_available }}
-                    </span>
-                </x-td>
+                <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
+                <x-td>{{ $equipment->status }}</x-td>
                 <x-td class="flex items-center gap-2">
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                     <a href="/equipments/edit/{{ $equipment->id }}">

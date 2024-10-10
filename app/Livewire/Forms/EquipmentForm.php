@@ -10,26 +10,61 @@ class EquipmentForm extends Form
 {
     public $equipment_id;
     public $responsible_person_id;
-    public $uid;
+    public $organization_unit;
+    public $operating_unit_project;
+    public $property_number;
+    public $quantity;
+    public $unit;
     public $name;
-    public $is_borrowed = false;
+    public $description;
+    public $date_acquired;
+    public $fund;
+    public $ppe_class;
+    public $estimated_useful_time;
+    public $unit_price;
+    public $total_amount;
+    public $status = 'Active';
 
     public function rules()
     {
         return [
-            'uid' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
             'responsible_person_id' => ['required', 'exists:responsible_people,id'],
+            'organization_unit' => ['required', 'min:2'],
+            'operating_unit_project' => ['nullable', 'string'],
+            'property_number' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
+            'quantity' => ['required', 'integer', 'min:1'],
+            'unit' => ['required', 'string', 'min:1'],
             'name' => ['required', 'min:2'],
-            'is_borrowed' => ['required']
+            'description' => ['nullable', 'string'],
+            'date_acquired' => ['required', 'date'],
+            'fund' => ['nullable', 'string'],
+            'ppe_class' => ['nullable', 'string'],
+            'estimated_useful_time' => ['nullable', 'string'],
+            'unit_price' => ['required', 'numeric', 'min:0'],
+            'total_amount' => ['required', 'numeric', 'min:0'],
+            'status' => ['required', 'string']
         ];
     }
     public function setEquipment(Equipment $equipment)
     {
-        $this->uid = $equipment->uid;
-        $this->name = $equipment->name;
+        $this->equipment_id = $equipment->id;
         $this->responsible_person_id = $equipment->responsible_person_id;
-        $this->is_borrowed = $equipment->is_borrowed;
+        $this->organization_unit = $equipment->organization_unit;
+        $this->operating_unit_project = $equipment->operating_unit_project;
+        $this->property_number = $equipment->property_number;
+        $this->quantity = $equipment->quantity;
+        $this->unit = $equipment->unit;
+        $this->name = $equipment->name;
+        $this->description = $equipment->description;
+        $this->date_acquired = $equipment->date_acquired->format('Y-m-d');
+        $this->fund = $equipment->fund;
+        $this->ppe_class = $equipment->ppe_class;
+        $this->estimated_useful_time = $equipment->estimated_useful_time;
+        $this->unit_price = $equipment->unit_price;
+        $this->total_amount = $equipment->total_amount;
+        $this->status = $equipment->status;
     }
+
 
     public function store()
     {

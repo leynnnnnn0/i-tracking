@@ -2,11 +2,10 @@
 
 namespace App\Enum;
 
-enum Unit: string
+
+enum OrganizationUnit: string
 {
-    case pcs = 'pcs';
-    case pack = 'pack';
-    case unit = 'unit';
+    case RAndE = "R & E";
 
     public static function values()
     {

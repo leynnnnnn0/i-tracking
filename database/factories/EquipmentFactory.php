@@ -18,9 +18,20 @@ class EquipmentFactory extends Factory
     {
         return [
             'responsible_person_id' => fake()->numberBetween(1, 10),
-            'uid' => fake()->uuid(),
-            'name' => fake()->company(),
-            'is_borrowed' => fake()->randomElement([true, false])
+            'organization_unit' => 'R & E',  // Fixed value
+            'operating_unit_project' => 'OVPRE',  // Fixed value
+            'property_number' => fake()->unique()->numerify('PN#####'),
+            'quantity' => fake()->numberBetween(1, 100),
+            'unit' => fake()->randomElement(['pcs', 'unit', 'pack']),
+            'name' => fake()->word(),
+            'description' => fake()->sentence(),
+            'date_acquired' => fake()->date(),
+            'fund' => fake()->word(),
+            'ppe_class' => fake()->word(),
+            'estimated_useful_time' => fake()->numberBetween(1, 10) . ' years',
+            'unit_price' => fake()->randomFloat(2, 10, 1000), // Random price between 10 and 1000
+            'total_amount' => fake()->randomFloat(2, 10, 1000), // Random total amount
+            'status' => 'Active',
         ];
     }
 }

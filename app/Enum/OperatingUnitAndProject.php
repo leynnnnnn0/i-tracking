@@ -2,12 +2,9 @@
 
 namespace App\Enum;
 
-enum Unit: string
+enum OperatingUnitAndProject : string
 {
-    case pcs = 'pcs';
-    case pack = 'pack';
-    case unit = 'unit';
-
+    case OVPRE = 'OVPRE';
     public static function values()
     {
         $data = array_column(self::cases(), 'value');

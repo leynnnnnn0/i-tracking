@@ -15,15 +15,29 @@ class Equipment extends Model
 
     protected $fillable = [
         'responsible_person_id',
-        'uid',
+        'organization_unit',
+        'operating_unit_project',
+        'property_number',
+        'quantity',
+        'unit',
         'name',
-        'is_borrowed'
+        'description',
+        'date_acquired',
+        'fund',
+        'ppe_class',
+        'estimated_useful_time',
+        'unit_price',
+        'total_amount',
+        'status'
     ];
 
     public function casts()
     {
         return [
-            'is_borrowed' => 'boolean'
+            'is_borrowed' => 'boolean',
+            'date_acquired' => 'date',
+            'unit_price' => 'double',
+            'total_amount' => 'double'
         ];
     }
 
@@ -41,7 +55,4 @@ class Equipment extends Model
     {
         return $this->borrowed_log->count() >= 1 ? 'No' : 'Yes';
     }
-
-    
-
 }

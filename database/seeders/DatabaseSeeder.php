@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
             ->afterCreating(function ($equipment) {
                 if ($equipment->borrowed_log->count() > 0) {
-                    $equipment->update(['is_borrowed' => true]);
+                    $equipment->update(['status' => 'Borrowed']);
                 }
             })
             ->create();
