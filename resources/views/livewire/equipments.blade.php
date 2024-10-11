@@ -36,6 +36,23 @@
             <x-filter-tab-button :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Condemnd'" wire:click="setQuery('Condemnd')">Codemnd</x-filter-tab-button>
         </x-filter-tab>
+        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
+            <div>
+                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+                <x-form.filter-select :data="$responsiblePersons" wire:model.live="responsiblePersonId">
+                    <option value="">Responsible Person</option>
+                </x-form.filter-select>
+                <x-form.filter-select :data="$operatingUnits" wire:model.live="operatingUnit">
+                    <option value="">Operating Unit</option>
+                </x-form.filter-select>
+                <x-form.filter-select :data="$organizationUnits" wire:model.live="organizationUnit">
+                    <option value="">Organization Unit</option>
+                </x-form.filter-select>
+            </div>
+            <div class="flex items-center gap-3">
+                <button wire:click="resetFilter" class="border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
+            </div>
+        </div>
         <x-table>
             <x-tr>
                 <x-th>Organization Unit</x-th>

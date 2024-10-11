@@ -2,15 +2,16 @@
 
 namespace App\Livewire;
 
+use App\Enum\OperatingUnitAndProject;
+use App\Enum\OrganizationUnit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
-use App\Models\ActivityLog;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
+use App\Models\ResponsiblePerson;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -25,11 +26,71 @@ class Equipments extends Component
     public $query = 'All';
     public $targetId;
     public $equipmentsList;
+    public $operatingUnits;
+    public $organizationUnits;
+    public $responsiblePersons;
+    // Filter
+    public $keyword;
+    public $responsiblePersonId;
+    public $operatingUnit;
+    public $organizationUnit;
 
+    public function resetFilter()
+    {
+        $this->keyword = null;
+        $this->responsiblePersonId = null;
+        $this->operatingUnit = null;
+        $this->organizationUnit = null;
+    }
 
     public function mount()
     {
+        $this->operatingUnits = OperatingUnitAndProject::values();
+        $this->organizationUnits = OrganizationUnit::values();
+        $this->responsiblePersons = ResponsiblePerson::get()->pluck('full_name', 'id');
         $this->showDeleteModal = false;
+    }
+
+    public function render()
+    {
+        $query = Equipment::query()
+            ->with('responsible_person', 'borrowed_log');
+
+        if ($this->query !== 'All') {
+            $query->where('status', $this->query);
+        }
+
+        if ($this->keyword) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->keyword . '%')
+                    ->orWhere('property_number', 'like', '%' . $this->keyword . '%')
+                    ->orWhere('description', 'like', '%' . $this->keyword . '%')
+                    ->orWhereHas('responsible_person', function ($subQuery) {
+                        $subQuery->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $this->keyword . '%')
+                            ->orWhere('first_name', 'like', '%' . $this->keyword . '%')
+                            ->orWhere('last_name', 'like', '%' . $this->keyword . '%')
+                            ->orWhere('middle_name', 'like', '%' . $this->keyword . '%');
+                    });
+            });
+        }
+
+        if ($this->responsiblePersonId) {
+            $query->where('responsible_person_id', $this->responsiblePersonId);
+        }
+
+        if ($this->operatingUnit) {
+            $query->where('operating_unit_project', $this->operatingUnit);
+        }
+
+        if ($this->organizationUnit) {
+            $query->where('organization_unit', $this->organizationUnit);
+        }
+
+        $equipments = $query->latest()->paginate(10);
+
+        return view('livewire.equipments', [
+            'equipments' => $equipments
+        ]);
     }
 
     #[On('setTargetId')]
@@ -49,7 +110,7 @@ class Equipments extends Component
     }
 
     public function updateStatus($id)
-    { 
+    {
         try {
             DB::transaction(function () use ($id) {
                 $log = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
@@ -70,28 +131,6 @@ class Equipments extends Component
     public function setQuery($query)
     {
         $this->query = $query;
-    }
-
-    public function render()
-    {
-        switch ($this->query) {
-            case 'All':
-                $equipments = Equipment::with('responsible_person', 'borrowed_log')->latest()->paginate(10);
-                break;
-            case 'Active':
-                $equipments = Equipment::with('responsible_person')->where('status', 'Active')->latest()->paginate(10);
-                break;
-            case 'Borrowed':
-                $equipments = Equipment::with('responsible_person')->where('status', 'Borrowed')->latest()->paginate(10);
-                break;
-            case 'Condemnd':
-                $equipments = Equipment::with('responsible_person')->where('status', 'Condemnd')->latest()->paginate(10);
-                break;
-        }
-
-        return view('livewire.equipments', [
-            'equipments' => $equipments
-        ]);
     }
 
     public function delete($id)
