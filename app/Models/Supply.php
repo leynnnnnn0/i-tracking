@@ -44,14 +44,20 @@ class Supply extends Model
         return $this->belongsToMany(Category::class, 'supply_categories');
     }
 
-    public function getNotificationIdentificationAttribute()
+    public function getNotificationTitleAttribute()
     {
-        return "Supply #$this->id";
+        return "Supply #$this->id ($this->description)";
     }
 
     public function getNotificationMessageAttribute()
     {
-        return "This item only have $this->total $this->unit left.";
+        if ($this->total < 10) {
+            return "This item only have $this->total $this->unit left.";
+        }
+        if ($this->expiry_date < now()) {
+            return "This item is already expired.";
+        } else {
+            return "This item will expire on " . $this->expiry_date->diffForHumans();
+        }
     }
-
 }

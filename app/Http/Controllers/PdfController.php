@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Masmerise\Toaster\Toaster;
 
 class PdfController extends Controller
 {
