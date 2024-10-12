@@ -5,10 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
+use Masmerise\Toaster\Toaster;
 
 class PdfController extends Controller
 {
+
+    public function handleEquipmentNewResponsiblePerson($equipment_id, $previous_responsible_person)
+    {
+        $equipment = Equipment::with('responsible_person')->findOrFail($equipment_id);
+        $pdf = Pdf::loadView('pdf.EquipmentNewResponsiblePerson', [
+            'equipment' => $equipment,
+            'previous_responsible_person' => $previous_responsible_person
+        ]);
+        return $pdf->setPaper('a4')->download('newResponsiblePerson.pdf');
+    }
+
     public function supplyListPdf()
     {
         $data = Supply::all()->toArray();
@@ -29,8 +40,6 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.EquipmentList', [
-            'data' => Equipment::all()
-        ]);
+        return view('pdf.EquipmentNewResponsiblePerson');
     }
 }

@@ -23,6 +23,7 @@ class Edit extends Component
 
     public $persons;
     public Equipment $equipment;
+    public $previous_responsible_person;
 
     public $statuses;
     public $organizations;
@@ -39,7 +40,7 @@ class Edit extends Component
         $this->persons = ResponsiblePerson::select('id', 'first_name', 'last_name')
             ->get()
             ->pluck('full_name', 'id');
-        $this->equipment = Equipment::findOrFail($id);
+        $this->equipment = Equipment::with('responsible_person')->findOrFail($id);
         $this->form->setEquipment($this->equipment);
     }
 
@@ -50,14 +51,18 @@ class Edit extends Component
 
     public function update()
     {
+        $this->previous_responsible_person = $this->equipment->responsible_person->full_name;
         try {
             DB::transaction(function () {
                 $equipment = $this->form->update($this->equipment);
                 $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
                 $this->activityLogForm->store();
             });
-            Toaster::success('Updated Successfully!');
-            return $this->redirect('/equipments');
+            Toaster::success('Updated Successfully');
+            return redirect()->route('responsible-person-pdf', [
+                'equipment_id' => $this->equipment->id,
+                'previous_responsible_person' => $this->previous_responsible_person
+            ]);
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
         }

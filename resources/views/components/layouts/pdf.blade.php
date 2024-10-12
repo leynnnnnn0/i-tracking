@@ -3,14 +3,32 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Print Table</title>
     <style>
         /* Reset default margins and padding for printing */
+        * {
+            font-family: 'Poppins', 'sans-serif';
+        }
+
+        .equipmentNewOwnerPdf {
+            margin: 5px;
+        }
+
+   
+        section {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         @page {
             margin: 0.5cm;
             /* Adjust margins to prevent overflow */
         }
-
 
         /* Table styles */
         .print-table {
@@ -28,7 +46,6 @@
             font-size: 10px;
             /* Adjust the size to your preference */
             font-weight: bold;
-            background-color: #f2f2f2;
             border: 1px solid #000;
             padding: 8px;
             text-align: left;
