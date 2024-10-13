@@ -132,4 +132,6 @@
     <template x-if="showConfirmationModal">
         <x-confirmation-modal @click="$wire.updateStatus(targetId)" message="Are you sure you want this to mark this as returned?" />
     </template>
+
+
 </div>

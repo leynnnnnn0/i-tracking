@@ -1,4 +1,4 @@
-@props(['message']);
+@props(['title' => 'Are you sure?','message']);
 <div class="flex items-center justify-center absolute bg-black/50 inset-0 animated fadeIn faster" id="modal-id">
     <div class="absolut opacity-80 inset-0 z-0"></div>
     <div class="w-full max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg bg-white">
@@ -6,7 +6,7 @@
         <div class="">
             <!--body-->
             <div class="text-center p-5 flex flex-col items-center justify-center">
-                <div class="flex justify-center"> 
+                <div class="flex justify-center">
                     <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -16,7 +16,7 @@
                     </svg>
                 </div>
 
-                <h2 class="text-xl font-bold py-4">Are you sure?</h2>
+                <h2 class="text-xl font-bold py-4">{{ $title}}</h2>
                 <p class="text-sm text-gray-500 px-8">{{ $message }}</p>
             </div>
             <!--footer-->

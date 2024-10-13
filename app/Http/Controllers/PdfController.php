@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Event;
 
 class PdfController extends Controller
 {

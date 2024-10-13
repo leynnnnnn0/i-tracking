@@ -13,6 +13,7 @@ use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -57,14 +58,33 @@ class Edit extends Component
                 $equipment = $this->form->update($this->equipment);
                 $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
                 $this->activityLogForm->store();
+                $this->equipment = $this->equipment->fresh();
             });
-            Toaster::success('Updated Successfully');
-            return redirect()->route('responsible-person-pdf', [
-                'equipment_id' => $this->equipment->id,
-                'previous_responsible_person' => $this->previous_responsible_person
-            ]);
+
+            if ($this->previous_responsible_person !== $this->equipment->responsible_person->full_name) {
+                redirect()->route('responsible-person-pdf', [
+                    'equipment_id' => $this->equipment->id,
+                    'previous_responsible_person' => $this->previous_responsible_person
+                ]);
+            }
+
+            $this->dispatch('show-success-message');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
         }
+    }
+
+    #[On('show-success-message')]
+    public function showSuccessMessage()
+    {
+        Toaster::success('Updated Successfully');
+    }
+
+    public function downloadNewResponsiblePersonPdf()
+    {
+        return redirect()->route('responsible-person-pdf', [
+            'equipment_id' => $this->equipment->id,
+            'previous_responsible_person' => $this->previous_responsible_person
+        ]);
     }
 }

@@ -35,6 +35,8 @@ class Equipments extends Component
     public $operatingUnit;
     public $organizationUnit;
 
+    public $showPdfModal = false;
+
     public function resetFilter()
     {
         $this->keyword = null;
@@ -147,5 +149,10 @@ class Equipments extends Component
         } catch (Exception $e) {
             Toaster::error('Something Went Wrong!');
         }
+    }
+    #[On('show-pdf-confirmation-message')]
+    public function pdfModal()
+    {
+        $this->showPdfModal = true;
     }
 }
