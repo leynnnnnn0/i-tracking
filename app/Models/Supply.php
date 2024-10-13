@@ -49,6 +49,11 @@ class Supply extends Model
         return "Supply #$this->id ($this->description)";
     }
 
+    public function getDeleteNameAttribute()
+    {
+        return $this->description;
+    }
+
     public function getNotificationMessageAttribute()
     {
         if ($this->total < 10) {

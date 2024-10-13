@@ -37,4 +37,9 @@ class Personnel extends Model
     {
         return "$this->first_name $this->last_name";
     }
+
+    public function getDeleteNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
+    }
 }

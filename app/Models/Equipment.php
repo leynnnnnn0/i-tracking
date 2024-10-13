@@ -41,6 +41,11 @@ class Equipment extends Model
         ];
     }
 
+    public function getDeleteNameAttribute()
+    {
+        return $this->name;
+    }
+
     public function responsible_person()
     {
         return $this->belongsTo(ResponsiblePerson::class, 'responsible_person_id');
