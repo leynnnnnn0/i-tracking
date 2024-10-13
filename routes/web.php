@@ -20,60 +20,62 @@ use App\Livewire\SupplyHistory;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
-//PDF
-Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf'])->name('supplies-pdf');
-Route::get('/equipments-pdf', [PdfController::class, 'equipmentListPdf'])->name('equipment-pdf');
+Route::middleware('auth')->group(function () {
+    //PDF
+    Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf'])->name('supplies-pdf');
+    Route::get('/equipments-pdf', [PdfController::class, 'equipmentListPdf'])->name('equipment-pdf');
 
-Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', [PdfController::class, 'handleEquipmentNewResponsiblePerson'])->name('responsible-person-pdf');
-Route::get('test', [PdfController::class, 'index']);
+    Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', [PdfController::class, 'handleEquipmentNewResponsiblePerson'])->name('responsible-person-pdf');
+    Route::get('test', [PdfController::class, 'index']);
 
 
-Route::view('/', 'welcome');
-Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
-Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
-Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
+    Route::view('/', 'welcome');
+    Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
+    Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
+    Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
 
-Route::prefix('delete-archives')->name('delete-archives.')->group(function () {
-    Route::get('/', DeleteArchives::class)->name('index');
+    Route::prefix('delete-archives')->name('delete-archives.')->group(function () {
+        Route::get('/', DeleteArchives::class)->name('index');
+    });
+
+    Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
+        Route::get('/', MissingEquipment::class)->name('index');
+        Route::get('/create', MissingEquipment\Create::class)->name('create');
+        Route::get('/edit/{id}', MissingEquipment\Edit::class)->name('edit');
+    });
+
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', User::class)->name('index');
+        Route::get('/create', User\Create::class)->name('create');
+        Route::get('/edit/{id}', User\Edit::class)->name('edit');
+    });
+
+    Route::prefix('equipments')->name('equipments.')->group(function () {
+        Route::get('/', Equipments::class)->name('index');
+        Route::get('/create', \App\Livewire\Equipments\Create::class)->name('create');
+        Route::get('/edit/{id}', \App\Livewire\Equipments\Edit::class)->name('edit');
+    });
+
+    Route::prefix('supplies')->name('supplies.')->group(function () {
+        Route::get('/', Supply::class)->name('index');
+        Route::get('/create', Create::class)->name('create');
+        Route::get('/edit/{id}', Edit::class)->name('edit');
+    });
+
+    Route::prefix('personnels')->name('personnels.')->group(function () {
+        Route::get('/', Personnel::class)->name('index');
+        Route::get('/create', PersonnelCreate::class)->name('create');
+        Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
+    });
+
+    Route::prefix('borrowed-logs')->name('borrowed-logs.')->group(function () {
+        Route::get('/', BorrowedLog::class)->name('index');
+        Route::get('/create', BorrowerLogCreate::class)->name('create');
+        Route::get('/edit/{id}', BorrowerLogEdit::class)->name('edit');
+    });
+
+    Route::get('/others', Others::class)->name('others');
 });
-
-Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
-    Route::get('/', MissingEquipment::class)->name('index');
-    Route::get('/create', MissingEquipment\Create::class)->name('create');
-    Route::get('/edit/{id}', MissingEquipment\Edit::class)->name('edit');
-});
-
-Route::prefix('users')->name('users.')->group(function () {
-    Route::get('/', User::class)->name('index');
-    Route::get('/create', User\Create::class)->name('create');
-    Route::get('/edit/{id}', User\Edit::class)->name('edit');
-});
-
-Route::prefix('equipments')->name('equipments.')->group(function () {
-    Route::get('/', Equipments::class)->name('index');
-    Route::get('/create', \App\Livewire\Equipments\Create::class)->name('create');
-    Route::get('/edit/{id}', \App\Livewire\Equipments\Edit::class)->name('edit');
-});
-
-Route::prefix('supplies')->name('supplies.')->group(function () {
-    Route::get('/', Supply::class)->name('index');
-    Route::get('/create', Create::class)->name('create');
-    Route::get('/edit/{id}', Edit::class)->name('edit');
-});
-
-Route::prefix('personnels')->name('personnels.')->group(function () {
-    Route::get('/', Personnel::class)->name('index');
-    Route::get('/create', PersonnelCreate::class)->name('create');
-    Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
-});
-
-Route::prefix('borrowed-logs')->name('borrowed-logs.')->group(function () {
-    Route::get('/', BorrowedLog::class)->name('index');
-    Route::get('/create', BorrowerLogCreate::class)->name('create');
-    Route::get('/edit/{id}', BorrowerLogEdit::class)->name('edit');
-});
-
-Route::get('/others', Others::class)->name('others');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

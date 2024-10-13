@@ -2,15 +2,21 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enum\EquipmentStatus;
+use App\Enum\MissingStatus;
+use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class MissingEquipmentForm extends Form
 {
 
     public $equipment_id;
-    public $status = 'lost';
+    public $status = 'Reported';
     public $description;
     public $reported_by;
     public $reported_date;
@@ -27,7 +33,7 @@ class MissingEquipmentForm extends Form
     {
         return [
             'equipment_id' => ['required', 'exists:equipment,id'],
-            'status' => ['required', 'string', 'in:found,lost,under investigation,presumed lost,condemned'],
+            'status' => ['required', 'string', Rule::in(MissingStatus::values())],
             'description' => ['nullable', 'string', 'max:255'],
             'reported_by' => ['required', 'string', 'max:100'],
             'reported_date' => ['required', 'date'],
@@ -43,7 +49,17 @@ class MissingEquipmentForm extends Form
     public function update(MissingEquipment $missingEquipment)
     {
         $this->validate();
-
-        $missingEquipment->update($this->all());
+        try {
+            DB::transaction(function () use ($missingEquipment) {
+                $missingEquipment->update($this->all());
+                $missingEquipment = $missingEquipment->fresh();
+                if ($missingEquipment->status === 'Reported to SPMO')
+                    Equipment::find($missingEquipment->equipment_id)->update([
+                        'status' => EquipmentStatus::CONDEMND->value
+                    ]);
+            });
+        } catch (Exception $e) {
+            dd($e);
+        }
     }
 }

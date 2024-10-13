@@ -34,7 +34,7 @@
             <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Active'" wire:click="setQuery('Active')">Active</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Condemnd'" wire:click="setQuery('Condemnd')">Codemnd</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Condemnd'" wire:click="setQuery('Condemnd')">Condemnd</x-filter-tab-button>
         </x-filter-tab>
 
         <!-- Filter -->
@@ -58,6 +58,7 @@
         <!-- Table -->
         <x-table>
             <x-tr>
+                <x-th>ID</x-th>
                 <x-th>Organization Unit</x-th>
                 <x-th>Operating Unit/Project</x-th>
                 <x-th>PN</x-th>
@@ -68,12 +69,17 @@
             </x-tr>
             @foreach ($equipments as $equipment)
             <tr class="border-b border-gray-300">
+                <x-td>{{ $equipment->id }}</x-td>
                 <x-td>{{ $equipment->organization_unit }}</x-td>
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
                 <x-td>{{ $equipment->property_number }}</x-td>
                 <x-td>{{ $equipment->name }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
-                <x-td>{{ $equipment->status }}</x-td>
+                <x-td>
+                    <span class="px-3 py-1 border text-white font-bold bg-opacity-75 rounded-lg {{ App\Enum\EquipmentStatus::getColor($equipment->status)}}">
+                        {{ $equipment->status }}
+                    </span>
+                </x-td>
                 <x-td class="flex items-center gap-2">
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                     <a href="/equipments/edit/{{ $equipment->id }}">
