@@ -52,6 +52,7 @@ class Create extends Component
     }
     public function render()
     {
+        $this->form->total_amount = (int) $this->form->quantity * (float) $this->form->unit_price;
         return view('livewire.equipments.create');
     }
 }

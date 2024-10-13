@@ -31,7 +31,7 @@
             <x-form.input label="Quantity"
                 name="form.quantity"
                 type="number"
-                wire:model="form.quantity" />
+                wire:model.lazy="form.quantity" />
 
             <x-form.select label="Unit"
                 :data="$units"
@@ -69,7 +69,7 @@
                 name="form.unit_price"
                 type="number"
                 step="0.01"
-                wire:model="form.unit_price" />
+                wire:model.lazy="form.unit_price" />
 
             <x-form.input label="Total Amount"
                 name="form.total_amount"
