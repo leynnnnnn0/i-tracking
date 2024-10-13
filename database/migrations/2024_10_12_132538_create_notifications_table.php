@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->string('title');
             $table->string('message');
-            $table->boolean('is_read');
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
     }

@@ -25,7 +25,7 @@ class SupplyFactory extends Factory
             'used' => $used,
             'recently_added' => $quantity,
             'total' => $quantity - $used,
-            'expiry_date' => fake()->optional()->date(),
+            'expiry_date' => fake()->dateTimeBetween('2024-10-01', '2025-10-01'),
             'is_consumable' => fake()->boolean(),
         ];
     }
