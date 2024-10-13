@@ -29,7 +29,7 @@ class SupplyForm extends Form
             'description' => ['required', 'string', 'min:2'],
             'unit' => ['required', Rule::in(Unit::values())],
             'quantity' => ['required', 'numeric'],
-            'used' => ['sometimes', 'required', 'lte:total'],
+            'used' => ['sometimes', 'required', 'lte:quantity'],
             'recently_added' => ['sometimes', 'nullable', 'required'],
             'expiry_date' => ['nullable', 'date'],
             'is_consumable' => ['required'],
@@ -90,7 +90,7 @@ class SupplyForm extends Form
     public function updateUsedValue(Supply $supply)
     {
         $totalUsed = $supply->used += $this->used;
-        if ($totalUsed > $supply->total) {
+        if ($totalUsed > $supply->quantity) {
             throw new Exception('The total used value cannot exceed the total supply available.');
         }
         $supply->update([
