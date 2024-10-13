@@ -18,18 +18,17 @@ class Edit extends Component
     {
         $this->borrowedEquipment = BorrowedEquipment::findOrFail($id);
         $this->form->setBorrowEquipment($this->borrowedEquipment);
-        $this->equipments = Equipment::where('is_borrowed', false)->get()->pluck('name', 'id');
-        
+        $this->equipments = Equipment::where('status', 'Borrowed')->get()->pluck('name', 'id');
     }
     public function render()
     {
         return view('livewire.borrower-log.edit');
     }
 
-    public function update() {
+    public function update()
+    {
         $this->form->update($this->borrowedEquipment);
         Toaster::success('Updated Successfully!');
         return $this->redirect('/borrowed-logs');
-
     }
 }
