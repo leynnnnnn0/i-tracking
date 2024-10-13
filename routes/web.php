@@ -6,6 +6,7 @@ use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
 use App\Livewire\BorrowerLog\Edit as BorrowerLogEdit;
 use App\Livewire\Dashboard;
+use App\Livewire\DeleteArchives;
 use App\Livewire\Equipments;
 use App\Livewire\MissingEquipment;
 use App\Livewire\Others;
@@ -31,6 +32,10 @@ Route::view('/', 'welcome');
 Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
 Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
 Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
+
+Route::prefix('delete-archives')->name('delete-archives.')->group(function () {
+    Route::get('/', DeleteArchives::class)->name('index');
+});
 
 Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
     Route::get('/', MissingEquipment::class)->name('index');
