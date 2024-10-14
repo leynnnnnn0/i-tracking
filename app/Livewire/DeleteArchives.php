@@ -13,15 +13,20 @@ use ReflectionClass;
 class DeleteArchives extends Component
 {
     public $deleteHistory;
-    public function render()
+    public $modelClasses;
+
+    public function mount()
     {
-        $modelClasses = [
+        $this->modelClasses = [
             'equipments' => Equipment::class,
             'supplies' => Supply::class,
             'personnels' => Personnel::class
         ];
+    }
+    public function render()
+    {
 
-        $deletedItems = collect($modelClasses)->flatMap(function ($modelClass, $type) {
+        $deletedItems = collect($this->modelClasses)->flatMap(function ($modelClass, $type) {
             return $modelClass::onlyTrashed()->get()->map(function ($item) use ($type) {
                 $item->type = $type;
                 return $item;
@@ -33,19 +38,20 @@ class DeleteArchives extends Component
     public function delete($id, $type)
     {
         Gate::authorize('can-handle-delete-archives');
-        $modelClasses = [
-            'equipments' => Equipment::class,
-            'supplies' => Supply::class,
-            'personnels' => Personnel::class
-        ];
-        $modelClass = $modelClasses[$type];
+
+        $modelClass = $this->modelClasses[$type];
         $modelClass::withTrashed()->findOrFail($id)->forceDelete();
 
         Toaster::success('Deleted Successfully');
     }
 
-    public function restore($id)
+    public function restore($id, $type)
     {
+        Gate::authorize('can-handle-delete-archives');
+
+        $modelClass = $this->modelClasses[$type];
+        $modelClass::withTrashed()->findOrFail($id)->restore();
+
         Toaster::success('Restored Successfully');
     }
 }

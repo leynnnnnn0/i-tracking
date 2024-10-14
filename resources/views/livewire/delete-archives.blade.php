@@ -19,7 +19,7 @@
                     <button wire:click="delete({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-red-500">
                         <x-bi-trash class="cursor-pointer size-5 text-red-500" /> Delete Permanently
                     </button>
-                    <button class="hover:underline flex items-center gap-1 text-xs text-blue-500">
+                    <button wire:click="restore({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-blue-500">
                         <x-ri-history-fill class="size-5" /> Restore
                     </button>
                 </x-td>
