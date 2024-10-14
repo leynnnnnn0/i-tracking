@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('supply_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Supply::class)->constrained();
+            $table->foreignIdFor(Supply::class)->constrained()->cascadeOnDelete();
             $table->integer('total_quantity');
             $table->integer('total_used');
             $table->integer('total_added');
