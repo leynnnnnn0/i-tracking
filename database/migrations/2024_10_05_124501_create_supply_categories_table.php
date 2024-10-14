@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('supply_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Supply::class)->constrained();
-            $table->foreignIdFor(Category::class)->constrained();
+            $table->foreignIdFor(Supply::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });

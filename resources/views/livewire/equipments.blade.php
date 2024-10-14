@@ -88,7 +88,7 @@
                     <button data-toggle="modal" data-target="#exampleModalCenter">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </button>
-                    @if($equipment->status != 'Borrowed')
+                    @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemnd')
                     <button @click="openFormModal({{ $equipment->id }})" class="underline text-orange-500 text-xs">Mark as Borrowed</button>
                     @endif
                     @if($equipment->status == 'Borrowed')
