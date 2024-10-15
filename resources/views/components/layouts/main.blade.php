@@ -22,7 +22,7 @@
     <div class="flex flex-col min-h-screen">
         <livewire:navigation />
         <section class="flex-1 flex min-h-full">
-            <div class="w-60 bg-emerald-500 flex flex-col">
+            <div class="min-w-60 bg-emerald-500 flex flex-col">
                 <x-nav-link href="/dashboard" :active="request()->is('dashboard')">
                     <x-ri-dashboard-line class="size-5" />
                     Dashboard

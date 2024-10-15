@@ -32,7 +32,7 @@ class Supply extends Component
                 'Low' => $query->where('total', '<=', 10)
             };
         }
-
+        
         if ($this->keyword) {
             $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
         }
