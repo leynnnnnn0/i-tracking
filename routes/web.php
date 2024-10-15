@@ -16,6 +16,7 @@ use App\Livewire\Personnel\Edit as PersonnelEdit;
 use App\Livewire\Supply;
 use App\Livewire\Supply\Create;
 use App\Livewire\Supply\Edit;
+use App\Livewire\Supply\View;
 use App\Livewire\SupplyHistory;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Supply::class)->name('index');
         Route::get('/create', Create::class)->name('create');
         Route::get('/edit/{id}', Edit::class)->name('edit');
+        Route::get('/view/{id}', View::class)->name('view');
     });
 
     Route::prefix('personnels')->name('personnels.')->group(function () {
