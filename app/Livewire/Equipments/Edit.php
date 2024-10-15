@@ -60,18 +60,24 @@ class Edit extends Component
                 $this->activityLogForm->store();
                 $this->equipment = $this->equipment->fresh();
             });
-
+            Toaster::success('Updated Successfully.');
             if ($this->previous_responsible_person !== $this->equipment->responsible_person->full_name) {
-                redirect()->route('responsible-person-pdf', [
-                    'equipment_id' => $this->equipment->id,
-                    'previous_responsible_person' => $this->previous_responsible_person
-                ]);
+                $this->dispatch('download-pdf');
+            } else {
+                return $this->redirect('/equipments');
             }
-
-            $this->dispatch('show-success-message');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
         }
+    }
+
+    #[On('download-pdf')]
+    public function downloadPdf()
+    {
+        redirect()->route('responsible-person-pdf', [
+            'equipment_id' => $this->equipment->id,
+            'previous_responsible_person' => $this->previous_responsible_person
+        ]);
     }
 
     #[On('show-success-message')]

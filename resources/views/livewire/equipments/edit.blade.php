@@ -83,15 +83,5 @@
             <x-primary-button wire:click="update">Update</x-primary-button>
         </section>
     </div>
-
-    
-
 </div>
 
-<script>
-    document.addEventListener('livewire:initialized', () => {
-        Livewire.on('show-pdf-confirmation-message', (data) => {
-            console.log('test');
-        });
-    })
-</script>
