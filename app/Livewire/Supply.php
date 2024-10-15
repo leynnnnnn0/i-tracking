@@ -32,7 +32,7 @@ class Supply extends Component
                 'Low' => $query->where('total', '<=', 10)
             };
         }
-        
+
         if ($this->keyword) {
             $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
         }
@@ -41,6 +41,18 @@ class Supply extends Component
         return view('livewire.supply', [
             'data' => $supplies
         ]);
+    }
+
+    public function downloadPdf()
+    {
+        $params = [
+            'filter' => $this->query,
+            'keyword' => $this->keyword
+        ];
+        $params = array_filter($params, function ($value) {
+            return $value !== null && $value !== '';
+        });
+        return redirect()->route('supplies-pdf', $params);
     }
 
     public function setQuery($query)
@@ -57,7 +69,6 @@ class Supply extends Component
     {
         return ColorStatus::getTotalColor($total);
     }
-
 
     public function add($id)
     {

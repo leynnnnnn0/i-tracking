@@ -25,13 +25,7 @@
                 })
             }}">
     <section class="space-y-3">
-        <div class="flex items-center justify-between mb-5">
-            <h1 class="font-bold text-2xl text-emerald-900">Supplies</h1>
-            <div class="flex items-center gap-3">
-                <a href="/supplies-pdf" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Export as PDF</a>
-                <a href="/supplies/create" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Create New Supply</a>
-            </div>
-        </div>
+        <x-index-header heading="Supplies" buttonName="Create New Supply" location="/supplies/create" wire:click="downloadPdf" />
 
         <x-filter-tab>
             <x-filter-tab-button :active="$query === 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
@@ -83,13 +77,15 @@
                     </span>
                     <x-td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/A' }}</x-td>
                     <x-td class="flex items-center gap-3">
-                        <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="openDeleteModal({{ $supply->id }})" />
-                        <a href="/supplies/edit/{{ $supply->id}}">
-                            <x-bi-pencil-square class="size-5 text-blue-500" />
-                        </a>
                         <a href="/supplies/view/{{ $supply->id}}">
                             <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                         </a>
+                        <a href="/supplies/edit/{{ $supply->id}}">
+                            <x-bi-pencil-square class="size-5 text-blue-500" />
+                        </a>
+                        <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="openDeleteModal({{ $supply->id }})" />
+
+
                     </x-td>
                 </tr>
                 @endforeach

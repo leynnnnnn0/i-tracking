@@ -1,4 +1,6 @@
 <x-layouts.pdf>
+    <h4 class="center">List of Supplies</h4>
+    <h5 class="center">As of {{ Carbon\Carbon::today()->format('F d, Y')}}</h5>
     <table class="print-table">
         <thead>
             <tr>
@@ -9,18 +11,20 @@
                 <th>Recently Added</th>
                 <th>Total</th>
                 <th>Expiry Date</th>
+                <th>Is Consumable?</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $supply)
+            @foreach ($supplies as $supply)
             <tr>
-                <td>{{ $supply['id'] }}</td>
-                <td>{{ $supply['description'] }}</td>
-                <td>{{ $supply['quantity'] }}</td>
-                <td>{{ $supply['used'] }}</td>
-                <td>{{ $supply['recently_added'] }}</td>
-                <td>{{ $supply['total'] }}</td>
-                <td>{{ Carbon\Carbon::parse($supply['expiry_date'])->format('F d, Y')  }}</td>
+                <td>{{ $supply->id }}</td>
+                <td>{{ $supply->description }}</td>
+                <td>{{ $supply->quantity }}</td>
+                <td>{{ $supply->used }}</td>
+                <td>{{ $supply->recently_added }}</td>
+                <td>{{ $supply->total }}</td>
+                <td>{{ $supply->expiry_date->format('F d, Y') }}</td>
+                <td>{{ $supply->is_consumable ? 'Yes' : 'No' }}</td>
             </tr>
             @endforeach
         </tbody>

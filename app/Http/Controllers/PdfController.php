@@ -23,11 +23,25 @@ class PdfController extends Controller
         return $pdf->setPaper('a4')->download('newResponsiblePerson.pdf');
     }
 
-    public function supplyListPdf()
+    public function supplyListPdf(Request $request)
     {
-        $data = Supply::all()->toArray();
+        $query = Supply::query();
+        if ($request->filter) {
+            $query = match ($request->filter) {
+                'High' => $query->where('total', '>', 20),
+                'Medium' => $query->where([['total', '>', 10], ['total', '<=', 20]]),
+                'Low' => $query->where('total', '<=', 10)
+            };
+        }
+
+        if ($request->keyword) {
+            if ($request->keyword) {
+                $query->whereAny(['description', 'id'], 'like', '%' . $request->keyword . '%');
+            }
+        }
+        $supplies = $query->get();
         $pdf = Pdf::loadView('pdf.SupplyList', [
-            'data' => $data
+            'supplies' => $supplies
         ]);
         return $pdf->setPaper('a4', 'landscape')->download('supplies.pdf');
     }
@@ -110,6 +124,6 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.PersonnelList');
+        return view('pdf.SupplyList');
     }
 }
