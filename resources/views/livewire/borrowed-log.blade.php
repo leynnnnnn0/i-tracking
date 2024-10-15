@@ -39,17 +39,21 @@
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
                 <x-td class="flex items-center gap-3">
-                    @if($log->is_returned)
-                    <x-bi-trash @click="openDeleteModal({{ $log->id }})" class="cursor-pointer size-5 text-red-500" />
-                    @endif
+                    <a href="/borrowed-logs/view/{{ $log->id }}">
+                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                    </a>
+
                     <a href="/borrowed-logs/edit/{{ $log->id }}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
-                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                    @if($log->is_returned)
+                    <x-bi-trash @click="openDeleteModal({{ $log->id }})" class="cursor-pointer size-5 text-red-500" />
+                    @endif
+
                     @if(!$log->is_returned)
-                    <button @click="openConfirmationModal({{ $log->id }})" class="hover:underline text-red-500 text-xs">
+                    <x-text-button @click="openConfirmationModal({{ $log->id }})" class="text-green-500">
                         Returned
-                    </button>
+                    </x-text-button>
                     @endif
                 </x-td>
             </tr>

@@ -89,7 +89,7 @@
                     </a>
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                     @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemned')
-                    <x-text-button @click="openFormModal({{ $equipment->id }})" @click="openConfirmationModal({{ $equipment->id }})" class="text-orange-500">Borrowed</x-text-button>
+                    <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrowed</x-text-button>
                     @endif
                     @if($equipment->status == 'Borrowed')
                     <x-text-button @click="openConfirmationModal({{ $equipment->id }})" class="text-emerald-500">Returned</x-text-button>
@@ -110,7 +110,7 @@
     <template x-if="showFormModal">
         <x-form-modal heading="Borrow Equipment Form">
             <x-form.select label="Equipment"
-                name="borrowEquipmentForm.equipment_id" :data="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" />
+                name="borrowEquipmentForm.equipment_id" :data="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" disabled />
             <x-form.input label="Borrower First Name"
                 name="borrowEquipmentForm.borrower_first_name" wire:model="borrowEquipmentForm.borrower_first_name" />
             <x-form.input label="Borrower Last Name"
@@ -122,7 +122,7 @@
             <x-form.input label="Start Date"
                 name="borrowEquipmentForm.start_date" type="date" wire:model="borrowEquipmentForm.start_date" />
             <x-form.input label="End Date"
-                name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" :isRequired="false" />
+                name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" />
             <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
                 <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</button>
                 <x-primary-button wire:click="submit">Submit</x-primary-button>

@@ -39,6 +39,11 @@ class BorrowedEquipment extends Model
         return $this->returned_date ? true : false;
     }
 
+    public function getFullNameAttribute()
+    {
+        return "$this->borrower_first_name $this->borrower_last_name";
+    }
+
     public function equipment()
     {
         return $this->belongsTo(Equipment::class);
