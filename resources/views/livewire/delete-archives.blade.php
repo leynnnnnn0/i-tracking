@@ -1,4 +1,16 @@
-<div>
+<div x-data="{
+    showDeleteModal: false,
+    targetId: null,
+    type: null,
+    openDeleteModal(id, type){
+        Livewire.on('Data Deleted', () => {
+            this.showDeleteModal = false;
+        })
+        this.showDeleteModal = true;
+        this.targetId = id;
+        this.type = type;
+    }
+}">
     <section class="space-y-3">
         <x-plain-heading>Delete Archives</x-plain-heading>
         <x-table>
@@ -16,7 +28,7 @@
                 <x-td>{{ $item->delete_name  }}</x-td>
                 <x-td>{{ Carbon\Carbon::parse($item->deleted_at)->format('F j, Y \a\t h:i a') }}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <button wire:click="delete({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-red-500">
+                    <button @click="openDeleteModal({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-red-500">
                         <x-bi-trash class="cursor-pointer size-5 text-red-500" /> Delete Permanently
                     </button>
                     <button wire:click="restore({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-blue-500">
@@ -30,4 +42,10 @@
 
         </div>
     </section>
+
+
+    <!-- Delete Modal -->
+    <template x-if="showDeleteModal">
+        <x-delete-modal @click="$wire.delete(targetId, type)" />
+    </template>
 </div>

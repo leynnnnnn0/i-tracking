@@ -7,11 +7,13 @@ use App\Models\Personnel;
 use App\Models\Supply;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use ReflectionClass;
 
 class DeleteArchives extends Component
 {
+    use WithPagination;
     public $deleteHistory;
     public $modelClasses;
 
@@ -42,7 +44,9 @@ class DeleteArchives extends Component
         $modelClass = $this->modelClasses[$type];
         $modelClass::withTrashed()->findOrFail($id)->forceDelete();
 
+
         Toaster::success('Deleted Successfully');
+        $this->dispatch('Data Deleted');
     }
 
     public function restore($id, $type)
