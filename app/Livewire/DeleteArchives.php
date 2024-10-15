@@ -57,5 +57,6 @@ class DeleteArchives extends Component
         $modelClass::withTrashed()->findOrFail($id)->restore();
 
         Toaster::success('Restored Successfully');
+        $this->dispatch('Data Restored');
     }
 }
