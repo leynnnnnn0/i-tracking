@@ -11,13 +11,18 @@
         /* Reset default margins and padding for printing */
         * {
             font-family: 'Poppins', 'sans-serif';
+            width: 100%;
         }
 
         .equipmentNewOwnerPdf {
             margin: 5px;
         }
 
-   
+        .center {
+            text-align: center;
+            margin: 0;
+        }
+
         section {
             width: 100%;
             display: flex;
@@ -32,6 +37,7 @@
 
         /* Table styles */
         .print-table {
+            margin-top: 20px;
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;

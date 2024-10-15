@@ -1,6 +1,8 @@
 <x-layouts.pdf>
+    <h4 class="center">List of Properties</h4>
+    <h5 class="center">As of {{ Carbon\Carbon::today()->format('F d, Y')}}</h5>
     @if($isResponsiblePersonFiltered)
-    <h1>{{ $isResponsiblePersonFiltered }}</h1>
+    <span>Responsible Person: {{ $isResponsiblePersonFiltered }}</span>
     @endif
     <table class="print-table">
         <thead>

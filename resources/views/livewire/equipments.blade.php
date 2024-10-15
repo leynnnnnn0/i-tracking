@@ -27,8 +27,7 @@
         })
         }
     }">
-    <x-index-header heading="Equipments" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
-    <button wire:click="downloadPdf">print</button>
+    <x-index-header wire:click="downloadPdf" heading="Equipments" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
     <div class="space-y-3">
         <!-- Filter tab -->
         <x-filter-tab>
@@ -86,9 +85,9 @@
                     <a href="/equipments/edit/{{ $equipment->id }}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
-                    <button data-toggle="modal" data-target="#exampleModalCenter">
+                    <a href="/equipments/view/{{ $equipment->id }}">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </button>
+                    </a>
                     @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemned')
                     <button @click="openFormModal({{ $equipment->id }})" class="underline text-orange-500 text-xs">Mark as Borrowed</button>
                     @endif

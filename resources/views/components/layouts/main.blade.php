@@ -68,7 +68,7 @@
                     Others
                 </x-nav-link>
             </div>
-            <div class="flex-1 p-5 bg-[#eaeaea]">
+            <div class="flex-1 p-5 bg-[#eaeaea] min-w-[1200px]">
                 {{ $slot}}
             </div>
         </section>
