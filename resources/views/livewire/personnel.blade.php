@@ -46,7 +46,9 @@
                         <a href="/personnels/edit/{{ $personnel->id}}">
                             <x-bi-pencil-square class="size-5 text-blue-500" />
                         </a>
-                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                        <a href="/personnels/view/{{ $personnel->id}}">
+                            <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                        </a>
                     </x-td>
                 </tr>
                 @endforeach

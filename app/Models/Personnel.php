@@ -28,6 +28,15 @@ class Personnel extends Model
         'remarks'
     ];
 
+    public function casts()
+    {
+        return [
+            'date_of_birth' => 'date',
+            'start_date' => 'date',
+            'end_date' => 'date'
+        ];
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class);

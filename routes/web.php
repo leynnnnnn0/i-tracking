@@ -13,6 +13,7 @@ use App\Livewire\Others;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Personnel\Edit as PersonnelEdit;
+use App\Livewire\Personnel\View as PersonnelView;
 use App\Livewire\Supply;
 use App\Livewire\Supply\Create;
 use App\Livewire\Supply\Edit;
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Personnel::class)->name('index');
         Route::get('/create', PersonnelCreate::class)->name('create');
         Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
+        Route::get('/view/{id}', PersonnelView::class)->name('view');
     });
 
     Route::prefix('borrowed-logs')->name('borrowed-logs.')->group(function () {
