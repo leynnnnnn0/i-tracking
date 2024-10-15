@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', User::class)->name('index');
         Route::get('/create', User\Create::class)->name('create');
         Route::get('/edit/{id}', User\Edit::class)->name('edit');
+        Route::get('/view/{id}', User\View::class)->name('view');
     });
 
     Route::prefix('equipments')->name('equipments.')->group(function () {
