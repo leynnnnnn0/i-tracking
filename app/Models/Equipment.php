@@ -56,6 +56,11 @@ class Equipment extends Model
         return $this->hasMany(BorrowedEquipment::class);
     }
 
+    public function missing_equipment_log()
+    {
+        return $this->belongsToMany(MissingEquipment::class);
+    }
+
     public function getIsAvailableAttribute()
     {
         return $this->borrowed_log->count() >= 1 ? 'No' : 'Yes';

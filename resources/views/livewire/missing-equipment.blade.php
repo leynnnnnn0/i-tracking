@@ -1,4 +1,14 @@
-<div>
+<div x-data="{
+    showConfirmationModal: false,
+    targetId: null,
+    openConfirmationModal(id){
+        this.targetId = id;
+        this.showConfirmationModal = true;
+        Livewire.on('Condemnd', () => {
+            this.showConfirmationModal = false;
+        })
+    }
+}">
     <section class="space-y-3">
         <div class="flex items-center justify-between mb-5">
             <h1 class="font-bold text-2xl text-emerald-900">Missing Equipment List</h1>
@@ -11,6 +21,7 @@
                 <x-th>status</x-th>
                 <x-th>Reported By</x-th>
                 <x-th>Reported Date</x-th>
+                <x-th>Is Condemnd?</x-th>
                 <x-th>Actions</x-th>
             </x-tr>
             @foreach ($data as $report)
@@ -19,13 +30,14 @@
                 <x-td>{{ Str::headline($report->status)}}</x-td>
                 <x-td>{{ $report->reported_by}}</x-td>
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
+                <x-td>{{ $report->equipment->status === 'Condemnd' ? 'Yes' : 'No'}}</x-td>
                 <x-td class="flex items-center gap-3">
                     <a href="/missing-equipments/edit/{{ $report->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    @if($report->status === 'Reported to SPMO')
-                    <button class="hover:underline text-red-500 text-xs">
+                    @if($report->status === 'Reported to SPMO' && $report->equipment->status !== 'Condemnd')
+                    <button @click="openConfirmationModal({{ $report->id}})" class="hover:underline text-red-500 text-xs">
                         Condemnd
                     </button>
                     @endif
@@ -38,4 +50,7 @@
             {{ $data->links() }}
         </div>
     </section>
+    <template x-if="showConfirmationModal">
+        <x-confirmation-modal @click="$wire.condemnd(targetId)" message="Are you sure this item is already condemnd?" />
+    </template>
 </div>

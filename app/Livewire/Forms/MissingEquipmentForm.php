@@ -50,16 +50,11 @@ class MissingEquipmentForm extends Form
     {
         $this->validate();
         try {
-            DB::transaction(function () use ($missingEquipment) {
-                $missingEquipment->update($this->all());
-                $missingEquipment = $missingEquipment->fresh();
-                if ($missingEquipment->status === 'Reported to SPMO')
-                    Equipment::find($missingEquipment->equipment_id)->update([
-                        'status' => EquipmentStatus::CONDEMND->value
-                    ]);
-            });
+            $missingEquipment->update($this->all());
         } catch (Exception $e) {
             dd($e);
         }
     }
 }
+
+

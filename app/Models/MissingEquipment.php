@@ -21,10 +21,16 @@ class MissingEquipment extends Model
         'reported_date',
     ];
 
-    public function casts(){
+    public function casts()
+    {
         return [
             'reported_date' => 'date',
 
         ];
+    }
+
+    public function equipment()
+    {
+        return $this->belongsTo(Equipment::class);
     }
 }
