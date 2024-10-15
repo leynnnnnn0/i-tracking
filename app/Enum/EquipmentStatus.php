@@ -6,7 +6,7 @@ enum EquipmentStatus: string
 {
     case ACTIVE = 'Active';
     case BORROWED = 'Borrowed';
-    case CONDEMND = 'Condemnd';
+    case CONDEMNED = 'Condemned';
 
     public static function values()
     {
@@ -19,7 +19,7 @@ enum EquipmentStatus: string
         return match ($status) {
             'Borrowed' => 'bg-orange-500 border-orange-500 text-white',
             'Active' => 'bg-green-500 border-green-500 text-white',
-            'Condemnd' => 'bg-red-500 border-red-500 text-white'
+            'Condemned' => 'bg-red-500 border-red-500 text-white'
         };
     }
 }

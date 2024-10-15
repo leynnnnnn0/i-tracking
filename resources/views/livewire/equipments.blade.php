@@ -34,7 +34,7 @@
             <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Active'" wire:click="setQuery('Active')">Active</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Condemnd'" wire:click="setQuery('Condemnd')">Condemnd</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
         </x-filter-tab>
 
         <!-- Filter -->
@@ -88,7 +88,7 @@
                     <button data-toggle="modal" data-target="#exampleModalCenter">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </button>
-                    @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemnd')
+                    @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemned')
                     <button @click="openFormModal({{ $equipment->id }})" class="underline text-orange-500 text-xs">Mark as Borrowed</button>
                     @endif
                     @if($equipment->status == 'Borrowed')

@@ -17,12 +17,12 @@ class MissingEquipment extends Component
         ]);
     }
 
-    public function condemnd($id)
+    public function condemned($id)
     {
         $equipment = Equipment::findOrFail($id)->update([
-            'status' => EquipmentStatus::CONDEMND->value
+            'status' => EquipmentStatus::CONDEMNED->value
         ]);
-        $this->dispatch('Condemnd');
+        $this->dispatch('Condemned');
         Toaster::success('Updated Successfully');
     }
 }
