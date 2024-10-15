@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Enum\OperatingUnitAndProject;
 use App\Enum\OrganizationUnit;
+use App\Enum\Position;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\Department;
 use App\Models\Personnel as ModelsPersonnel;
@@ -18,12 +19,15 @@ class Personnel extends Component
 
     public $keyword;
     public $departments;
+    public $positions;
 
     public $departmentId;
+    public $position;
 
     public function mount()
     {
         $this->departments = Department::pluck('name', 'id')->toArray();
+        $this->positions = Position::values();
     }
 
 
@@ -41,6 +45,10 @@ class Personnel extends Component
             $query->where('department_id', $this->departmentId);
         }
 
+        if ($this->position) {
+            $query->where('position', $this->position);
+        }
+
         $personnels = $query->latest()->paginate(10);
 
         return view('livewire.personnel', [
@@ -52,6 +60,7 @@ class Personnel extends Component
     {
         $this->keyword = "";
         $this->departmentId = null;
+        $this->position = null;
     }
 
 

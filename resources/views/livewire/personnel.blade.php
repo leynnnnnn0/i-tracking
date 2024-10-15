@@ -15,6 +15,9 @@
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div>
                 <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+                <x-form.filter-select :data="$positions" wire:model.live="position">
+                    <option value="">Position</option>
+                </x-form.filter-select>
                 <x-form.filter-select :data="$departments" wire:model.live="departmentId">
                     <option value="">Department</option>
                 </x-form.filter-select>
