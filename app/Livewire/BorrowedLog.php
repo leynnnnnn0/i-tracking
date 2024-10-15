@@ -35,7 +35,7 @@ class BorrowedLog extends Component
     {
         try {
             DB::transaction(function () use ($id) {
-                $log = BorrowedEquipment::orderBy('created_at', 'desc')->findOrFail($id)->first();
+                $log = BorrowedEquipment::orderBy('created_at', 'desc')->findOrFail($id);
                 $log->update([
                     'returned_date' => Carbon::today()->format('Y-m-d')
                 ]);
@@ -43,6 +43,8 @@ class BorrowedLog extends Component
                     'status' => 'Active'
                 ]);
             });
+            $this->dispatch('Mark As Returned');
+            Toaster::success('Mark as Returned Successfully');
         } catch (Exception $e) {
             Toaster::success($e->getMessage());
         }
