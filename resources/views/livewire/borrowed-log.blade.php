@@ -33,6 +33,11 @@
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                    @if(!$log->is_returned)
+                    <button class="hover:underline text-red-500 text-xs">
+                        Returned
+                    </button>
+                    @endif
                 </x-td>
             </tr>
             @endforeach
