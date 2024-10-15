@@ -38,6 +38,8 @@
             @endforeach
         </x-table>
 
+        <x-no-data :data="$users" />
+
         <div>
             {{ $users->links()}}
         </div>

@@ -24,10 +24,16 @@
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                    @if($report->status === 'Reported to SPMO')
+                    <button class="hover:underline text-red-500 text-xs">
+                        Condemnd
+                    </button>
+                    @endif
                 </x-td>
             </tr>
             @endforeach
         </x-table>
+        <x-no-data :data="$data" />
         <div>
             {{ $data->links() }}
         </div>

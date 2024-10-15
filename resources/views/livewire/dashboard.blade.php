@@ -24,10 +24,10 @@
                 </div>
             </x-stats-container>
             <x-stats-container>
-                <x-ri-group-line class="size-10 text-white" />
+                <x-bi-question-circle class="size-10 text-white" />
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-white font-bold text-lg">Personnels</h1>
-                    <span class="text-white font-bold text-2xl text-center">98</span>
+                    <h1 class="text-white font-bold text-lg">Missing Equipments</h1>
+                    <span class="text-white font-bold text-2xl text-center">{{ $missingEquipments}}</span>
                 </div>
             </x-stats-container>
         </section>

@@ -76,7 +76,7 @@
                 <x-td>{{ $equipment->name }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
                 <x-td>
-                    <span class="px-3 py-1 border text-white font-bold bg-opacity-75 rounded-lg {{ App\Enum\EquipmentStatus::getColor($equipment->status)}}">
+                    <span class="px-3 py-1 border font-bold rounded-lg {{ App\Enum\EquipmentStatus::getColor($equipment->status) }}">
                         {{ $equipment->status }}
                     </span>
                 </x-td>
@@ -98,6 +98,8 @@
             </tr>
             @endforeach
         </x-table>
+
+        <x-no-data :data="$equipments" />
         <div>
             {{ $equipments->links() }}
         </div>

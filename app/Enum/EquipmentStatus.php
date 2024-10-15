@@ -17,9 +17,9 @@ enum EquipmentStatus: string
     public static function getColor($status)
     {
         return match ($status) {
-            'Active' => 'bg-green-500 border-green-500',
-            'Borrowed' => 'bg-gray-300 border-gray-300',
-            'Condemnd' => 'bg-red-500 border-red-500'
+            'Borrowed' => 'bg-orange-500 border-orange-500 text-white',
+            'Active' => 'bg-green-500 border-green-500 text-white',
+            'Condemnd' => 'bg-red-500 border-red-500 text-white'
         };
     }
 }

@@ -32,6 +32,7 @@
             </tr>
             @endforeach
         </x-table>
+        <x-no-data :data="$history" />
         {{ $history->links() }}
     </div>
 </div>

@@ -47,6 +47,9 @@
             </tr>
             @endforeach
         </x-table>
+
+        <x-no-data :data="$deletedItems" />
+
         <div class="mt-5">
 
         </div>

@@ -37,6 +37,7 @@
             </tr>
             @endforeach
         </x-table>
+        <x-no-data :data="$logs" />
         <div>
             {{ $logs->links()}}
         </div>

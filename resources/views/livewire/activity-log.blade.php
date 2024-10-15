@@ -25,6 +25,8 @@
                 @endforeach
                 </tr>
             </x-table>
+            <x-no-data :data="$logs" />
+
             <div class="mt-5">
                 {{ $logs->links() }}
             </div>

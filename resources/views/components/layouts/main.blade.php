@@ -27,39 +27,39 @@
                     <x-ri-dashboard-line class="size-5" />
                     Dashboard
                 </x-nav-link>
-                <x-nav-link href="/equipments" :active="request()->is('equipments')">
+                <x-nav-link href="/equipments" :active="request()->is('equipments*')">
                     <x-ri-tools-fill class="size-5" />
                     Equipments
                 </x-nav-link>
-                <x-nav-link href="/personnels" :active="request()->is('personnels')">
+                <x-nav-link href="/personnels" :active="request()->is('personnels*')">
                     <x-ri-group-line class=" size-5" />
                     Personnels
                 </x-nav-link>
-                <x-nav-link href="/supplies" :active="request()->is('supplies')">
+                <x-nav-link href="/supplies" :active="request()->is('supplies*')">
                     <x-ri-product-hunt-line class="size-5" />
                     Supplies
                 </x-nav-link>
-                <x-nav-link href="/delete-archives" :active="request()->is('delete-archives')">
+                <x-nav-link href="/delete-archives" :active="request()->is('delete-archives*')">
                     <x-bi-archive-fill class="size-5" />
                     Delete Archives
                 </x-nav-link>
-                <x-nav-link href="/users" :active="request()->is('users')">
+                <x-nav-link href="/users" :active="request()->is('users*')">
                     <x-ri-user-line class="size-5" />
                     Users
                 </x-nav-link>
-                <x-nav-link href="/borrowed-logs" :active="request()->is('borrowed-logs')">
+                <x-nav-link href="/borrowed-logs" :active="request()->is('borrowed-logs*')">
                     <x-bi-pass class="size-5" />
                     Borrowed Logs
                 </x-nav-link>
-                <x-nav-link href="/activity-logs" :active="request()->is('activity-log')">
+                <x-nav-link href="/activity-logs" :active="request()->is('activity-log*')">
                     <x-ri-history-fill class="size-5" />
                     Activity Log
                 </x-nav-link>
-                <x-nav-link href="/missing-equipments" :active="request()->is('missing-equipments')">
+                <x-nav-link href="/missing-equipments" :active="request()->is('missing-equipments*')">
                     <x-bi-question-circle class="size-5" />
                     Missing Equipments
                 </x-nav-link>
-                <x-nav-link href="/supplies-history" :active="request()->is('supplies-history')">
+                <x-nav-link href="/supplies-history" :active="request()->is('supplies-history*')">
                     <x-ri-history-fill class="size-5" />
                     Supplies History
                 </x-nav-link>
