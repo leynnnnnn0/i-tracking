@@ -9,8 +9,20 @@
         })
         }
     }">
-    <div>
+    <div class="space-y-3">
         <x-index-header heading="Personnels" buttonName="Create New Personnel" location="/personnels/create" />
+        <!-- Filter -->
+        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
+            <div>
+                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+                <x-form.filter-select :data="$departments" wire:model.live="departmentId">
+                    <option value="">Department</option>
+                </x-form.filter-select>
+            </div>
+            <div class="flex items-center gap-3">
+                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
+            </div>
+        </div>
         <section>
             <x-table>
                 <x-tr>
