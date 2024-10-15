@@ -7,7 +7,6 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\SupplyForm;
 use App\Models\Supply as ModelsSupply;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -19,39 +18,39 @@ class Supply extends Component
     public ActivityLogForm $activityLogForm;
     public SupplyForm $form;
     public $query = 'All';
+    public $keyword;
 
-    public function generate_pdf()
-    {
-        
-    }
 
     public function render()
     {
+        $query = ModelsSupply::query();
 
-        switch ($this->query) {
-            case 'All':
-                $data = ModelsSupply::latest()->paginate(10);
-                break;
-            case 'High':
-                $data = ModelsSupply::where('total', '>', 20)->latest()->paginate(10);
-                break;
-            case 'Medium':
-                $data = ModelsSupply::where([['total', '>', 10], ['total', '<=', 20]])
-                    ->latest()
-                    ->paginate(10);
-                break;
-            case 'Low':
-                $data = ModelsSupply::where('total', '<=', 10)->latest()->paginate(10);
-                break;
+        if ($this->query !== 'All') {
+            $query = match ($this->query) {
+                'High' => $query->where('total', '>', 20),
+                'Medium' => $query->where([['total', '>', 10], ['total', '<=', 20]]),
+                'Low' => $query->where('total', '<=', 10)
+            };
         }
+
+        if ($this->keyword) {
+            $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
+        }
+
+        $supplies = $query->latest()->paginate(10);
         return view('livewire.supply', [
-            'data' => $data
+            'data' => $supplies
         ]);
     }
 
     public function setQuery($query)
     {
         $this->query = $query;
+    }
+
+    public function resetFilter()
+    {
+        $this->keyword = "";
     }
 
     public function getColor($total)

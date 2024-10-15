@@ -41,10 +41,10 @@ class Personnel extends Component
             $query->where('department_id', $this->departmentId);
         }
 
-        $supplies = $query->latest()->paginate(10);
+        $personnels = $query->latest()->paginate(10);
 
         return view('livewire.personnel', [
-            'data' => $supplies
+            'data' => $personnels
         ]);
     }
 
