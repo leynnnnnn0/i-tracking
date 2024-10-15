@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipment;
+use App\Models\Personnel;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +30,36 @@ class PdfController extends Controller
             'data' => $data
         ]);
         return $pdf->setPaper('a4', 'landscape')->download('supplies.pdf');
+    }
+
+    public function personnelListPdf(Request $request)
+    {
+        $query = Personnel::query()
+            ->with('department',);
+
+        if ($request->keyword) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('first_name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('last_name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('middle_name', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        if ($request->departmentId) {
+            $query->where('department_id', $request->departmentId);
+        }
+
+        if ($request->position) {
+            $query->where('position', $request->position);
+        }
+
+        $personnels = $query->get();
+
+        $pdf = Pdf::loadView('pdf.PersonnelList', [
+            'personnels' => $personnels
+        ]);
+        return $pdf->setPaper('a4', 'landscape')->download('personnels-as-of-' . Carbon::today()->format('F d, Y') . '.pdf');
     }
 
     public function equipmentListPdf(Request $request)
@@ -78,6 +110,6 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.EquipmentNewResponsiblePerson');
+        return view('pdf.PersonnelList');
     }
 }

@@ -30,6 +30,24 @@ class Personnel extends Component
         $this->positions = Position::values();
     }
 
+    public function downloadPdf()
+    {
+
+        $params = [
+            'keyword' => $this->keyword ?? "",
+            'departmentId' => $this->departmentId ?? "",
+            'position' => $this->position ?? "",
+        ];
+
+        $params = array_filter($params, function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+
+        return redirect()->route('personnels-pdf', $params);
+    }
+
+
 
     public function render()
     {
