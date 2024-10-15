@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use App\Models\Supply;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
@@ -29,12 +30,49 @@ class PdfController extends Controller
         return $pdf->setPaper('a4', 'landscape')->download('supplies.pdf');
     }
 
-    public function equipmentListPdf()
+    public function equipmentListPdf(Request $request)
     {
-        $data = Equipment::all();
+
+        $query = Equipment::query()
+            ->with('responsible_person', 'borrowed_log');
+
+        if ($request->filter !== 'All') {
+            $query->where('status', $request->filter);
+        }
+
+        if ($request->keyword) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('property_number', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('description', 'like', '%' . $request->keyword . '%')
+                    ->orWhereHas('responsible_person', function ($subQuery) use ($request) {
+                        $subQuery->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $request->keyword . '%')
+                            ->orWhere('first_name', 'like', '%' . $request->keyword . '%')
+                            ->orWhere('last_name', 'like', '%' . $request->keyword . '%')
+                            ->orWhere('middle_name', 'like', '%' . $request->keyword . '%');
+                    });
+            });
+        }
+
+        if ($request->responsiblePersonId) {
+            $query->where('responsible_person_id', $request->responsiblePersonId);
+        }
+
+        if ($request->operatingUnit) {
+            $query->where('operating_unit_project', $request->operatingUnit);
+        }
+
+        if ($request->organizationUnit) {
+            $query->where('organization_unit', $request->organizationUnit);
+        }
+
+        $equipments = $query->latest()->get();
+
         $pdf = Pdf::loadView('pdf.EquipmentList', [
-            'data' => $data
+            'data' => $equipments,
+            'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('responsible_person_id', $request->responsiblePersonId)->first()->responsible_person->full_name : false
         ]);
+
         return $pdf->setPaper('a4', 'landscape')->download('equipments.pdf');
     }
 

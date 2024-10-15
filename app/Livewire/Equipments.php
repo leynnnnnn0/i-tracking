@@ -45,6 +45,25 @@ class Equipments extends Component
         $this->organizationUnit = null;
     }
 
+    public function downloadPdf()
+    {
+
+        $params = [
+            'filter' => $this->query,
+            'keyword' => $this->keyword ?? "",
+            'responsiblePersonId' => $this->responsiblePersonId ?? "",
+            'operatingUnit' => $this->operatingUnit ?? "",
+            'organizationUnit' => $this->organizationUnit ?? "",
+        ];
+
+        $params = array_filter($params, function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+
+        return redirect()->route('equipment-pdf', $params);
+    }
+
     public function mount()
     {
         $this->operatingUnits = OperatingUnitAndProject::values();

@@ -1,8 +1,11 @@
 <x-layouts.pdf>
+    @if($isResponsiblePersonFiltered)
+    <h1>{{ $isResponsiblePersonFiltered }}</h1>
+    @endif
     <table class="print-table">
         <thead>
             <tr>
-                <th>Responsible Person ID</th>
+                <th>Responsible Person</th>
                 <th>Organization Unit</th>
                 <th>Operating Unit Project</th>
                 <th>Property Number</th>

@@ -28,6 +28,7 @@
         }
     }">
     <x-index-header heading="Equipments" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
+    <button wire:click="downloadPdf">print</button>
     <div class="space-y-3">
         <!-- Filter tab -->
         <x-filter-tab>

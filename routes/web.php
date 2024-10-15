@@ -29,8 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('test', [PdfController::class, 'index']);
 
 
-    Route::view('/', 'welcome');
-    Route::get('dashboard', Dashboard::class)->middleware('auth')->name('dashboard');
+    Route::get('/', Dashboard::class)->middleware('auth')->name('dashboard');
     Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
     Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
 
