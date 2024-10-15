@@ -4,9 +4,7 @@
         {{ $identification }}
     </h1>
     <p class="text-xs">{{ $message }}</p>
-    <div class="flex items-center gap-2">
-        <button {{ $attributes }} class="flex items-center gap-2 cursor-pointer text-green-500 text-xs underline">
-            Mark as read
-            {{ $slot }}
-    </div>
+    <x-text-button class="flex items-center gap-2 text-green-500" wire.loading.attr="disabled" {{ $attributes }}>
+        Mark as read
+    </x-text-button>
 </section>

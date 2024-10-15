@@ -89,10 +89,10 @@
                     </a>
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                     @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemned')
-                    <button @click="openFormModal({{ $equipment->id }})" class="underline text-orange-500 text-xs">Mark as Borrowed</button>
+                    <x-text-button @click="openFormModal({{ $equipment->id }})" @click="openConfirmationModal({{ $equipment->id }})" class="text-orange-500">Borrowed</x-text-button>
                     @endif
                     @if($equipment->status == 'Borrowed')
-                    <button @click="openConfirmationModal({{ $equipment->id }})" class="underline text-emerald-500 text-xs">Mark as Returned</button>
+                    <x-text-button @click="openConfirmationModal({{ $equipment->id }})" class="text-emerald-500">Returned</x-text-button>
                     @endif
                 </x-td>
             </tr>
