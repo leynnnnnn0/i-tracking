@@ -1,10 +1,16 @@
 <div>
     <div class="space-y-3">
         <x-plain-heading>Supplies History</x-plain-heading>
-        <div class="flex items-centers gap-3">
-            <x-form.input label="From" name="from" type="date" wire:model.live="from" />
-            <x-form.input label="To" name="to" type="date" wire:model.live="to" />
-            <x-primary-button class="h-fit self-center">Search</x-primary-button>
+        <!-- Filter -->
+        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
+            <div class="flex items-end gap-3">
+                <x-form.input label="From" name="from" type="date" wire:model="from" />
+                <x-form.input label="To" name="to" type="date" wire:model="to" />
+            </div>
+            <div class="flex items-center gap-3">
+                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
+                <x-primary-button class="h-fit self-center" wire:click="filter">Filter</x-primary-button>
+            </div>
         </div>
         <x-table>
             <x-tr>
