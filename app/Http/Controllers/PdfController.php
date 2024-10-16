@@ -18,11 +18,11 @@ class PdfController extends Controller
     {
         $query = User::query();
 
-        if($request->keyword){
+        if ($request->keyword) {
             $query->whereAny(['first_name', 'middle_name', 'last_name', 'email', 'phone_number'], "%$request->keyword%");
         }
-        if($request->role){
-            $query->where('role',$request->role);
+        if ($request->role) {
+            $query->where('role', $request->role);
         }
         $users = $query->get();
         $pdf = Pdf::loadView('pdf.UserList', [
@@ -41,9 +41,22 @@ class PdfController extends Controller
         return $pdf->setPaper('a4')->download('newResponsiblePerson.pdf');
     }
 
-    public function borrowedEquipmentList()
+    public function borrowedEquipmentList(Request $request)
     {
-        $borrowedEquipments  = BorrowedEquipment::all();
+        $query = BorrowedEquipment::query()->with('equipment');
+        if ($request->filter == 'Returned') {
+            $query->whereNotNull('returned_date');
+        }
+        if ($request->filter == 'Not Returned') {
+            $query->whereNull('returned_date');
+        }
+        if ($request->keyword) {
+            $query->whereAny(['borrower_first_name', 'borrower_last_name'], 'like', "%$request->keyword%")
+                ->orWhereHas('equipment', function ($q) use ($request) {
+                    $q->where('name', 'like', "%$request->keyword%");
+                });
+        }
+        $borrowedEquipments = $query->get();
         $pdf = Pdf::loadView('pdf.BorrowedLog', [
             'borrowedEquipments' => $borrowedEquipments,
         ]);

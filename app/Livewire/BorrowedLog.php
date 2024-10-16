@@ -17,12 +17,39 @@ class BorrowedLog extends Component
 {
     use WithPagination;
     public ActivityLogForm $activityLogForm;
+    public $keyword;
+    public $query = 'All';
 
     public function render()
     {
+        $query = BorrowedEquipment::query()->with('equipment');
+        if ($this->query == 'Returned') {
+            $query->whereNotNull('returned_date');
+        }
+        if ($this->query == 'Not Returned') {
+            $query->whereNull('returned_date');
+        }
+        if ($this->keyword) {
+            $query->whereAny(['borrower_first_name', 'borrower_last_name'], 'like', "%$this->keyword%")
+                ->orWhereHas('equipment', function ($q) {
+                    $q->where('name', 'like', "%$this->keyword%");
+                });
+        }
+        $logs = $query->latest()->paginate();
         return view('livewire.borrowed-log', [
-            'logs' => BorrowedEquipment::with('equipment')->latest()->paginate(10)
+            'logs' => $logs
         ]);
+    }
+
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
+    public function resetFilter()
+    {
+        $this->keyword = null;
+        $this->query = 'All';
     }
 
     public function delete($id): void
@@ -49,7 +76,14 @@ class BorrowedLog extends Component
 
     public function downloadPdf()
     {
-        return redirect()->route('borrowed-equipments');
+        $params = [
+            'keyword' => $this->keyword,
+            'filter' => $this->query,
+        ];
+        $params = array_filter($params, function ($value) {
+            return $value !== null;
+        });
+        return redirect()->route('borrowed-equipments', $params);
     }
 
     public function returned($id)

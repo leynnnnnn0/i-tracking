@@ -20,6 +20,23 @@
     }">
     <div class="space-y-3">
         <x-index-header wire:click="downloadPdf" heading="Borrowed Equipment Log" buttonName="Add new log" location="/borrowed-logs/create" />
+
+        <x-filter-tab>
+            <x-filter-tab-button :active="$query === 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
+            <x-filter-tab-button :active="$query === 'Returned'" wire:click="setQuery('Returned')">Returned</x-filter-tab-button>
+            <x-filter-tab-button :active="$query === 'Not Returned'" wire:click="setQuery('Not Returned')">Not Returned</x-filter-tab-button>
+        </x-filter-tab>
+
+        <!-- Filter -->
+        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
+            <div>
+                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+            </div>
+            <div class="flex items-center gap-3">
+                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
+            </div>
+        </div>
+
         <x-table>
             <x-tr>
                 <x-th>Id</x-th>
