@@ -50,7 +50,16 @@ class User extends Component
 
     public function downloadPdf()
     {
-        return redirect()->route('users-pdf');
+        $params = [
+            'role' => $this->role,
+            'keyword' => $this->keyword
+        ];
+
+        $params = array_filter($params, function ($value) {
+            return $value !== null && $value !== '';
+        });
+        
+        return redirect()->route('users-pdf', $params);
     }
 
     public function delete($id): void

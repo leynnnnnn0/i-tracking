@@ -14,9 +14,17 @@ use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
-    public function userListPdf()
+    public function userListPdf(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+
+        if($request->keyword){
+            $query->whereAny(['first_name', 'middle_name', 'last_name', 'email', 'phone_number'], "%$request->keyword%");
+        }
+        if($request->role){
+            $query->where('role',$request->role);
+        }
+        $users = $query->get();
         $pdf = Pdf::loadView('pdf.UserList', [
             'users' => $users
         ]);
