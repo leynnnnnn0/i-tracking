@@ -60,5 +60,6 @@ class BorrowEquipmentForm extends Form
     {
         $this->validate();
         $borrowedEquipment->update($this->all());
+        return $borrowedEquipment->fresh();
     }
 }
