@@ -25,10 +25,14 @@ class MissingEquipment extends Component
     {
         try {
             DB::transaction(function () use ($id) {
-                $equipment = Equipment::findOrFail($id)->update([
+                $equipment = Equipment::findOrFail($id);
+                $before = $equipment;
+                $equipment->update([
                     'status' => EquipmentStatus::CONDEMNED->value
                 ]);
-                dd($equipment);
+
+                $this->activityLogForm->setActivityLog($before, $equipment->fresh(), 'Tag Equipment as Condmened', 'Update');
+                $this->activityLogForm->store();
             });
             $this->dispatch('Condemned');
             Toaster::success('Updated Successfully');

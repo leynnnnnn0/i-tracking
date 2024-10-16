@@ -20,6 +20,7 @@ class MissingEquipmentForm extends Form
     public $description;
     public $reported_by;
     public $reported_date;
+    public ActivityLogForm $activityLogForm;
 
     public function setMissingEquipmentForm(MissingEquipment $missingEquipment)
     {

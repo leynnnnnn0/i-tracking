@@ -37,7 +37,7 @@
                     </a>
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     @if($report->status === 'Reported to SPMO' && $report->equipment->status !== 'Condemned')
-                    <button @click="openConfirmationModal({{ $report->id}})" class="hover:underline text-red-500 text-xs">
+                    <button @click="openConfirmationModal({{ $report->equipment->id }})" class="hover:underline text-red-500 text-xs">
                         Condemned
                     </button>
                     @endif
