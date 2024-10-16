@@ -31,6 +31,11 @@ class BorrowedLog extends Component
         $this->dispatch('Data Deleted');
     }
 
+    public function downloadPdf()
+    {
+        return redirect()->route('borrowed-equipments');
+    }
+
     public function returned($id)
     {
         try {

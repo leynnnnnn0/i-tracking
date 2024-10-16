@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use App\Models\Personnel;
 use App\Models\Supply;
@@ -30,6 +31,15 @@ class PdfController extends Controller
             'previous_responsible_person' => $previous_responsible_person
         ]);
         return $pdf->setPaper('a4')->download('newResponsiblePerson.pdf');
+    }
+
+    public function borrowedEquipmentList()
+    {
+        $borrowedEquipments  = BorrowedEquipment::all();
+        $pdf = Pdf::loadView('pdf.BorrowedLog', [
+            'borrowedEquipments' => $borrowedEquipments,
+        ]);
+        return $pdf->setPaper('a4')->download('borrowed-equipments-log.pdf');
     }
 
     public function supplyListPdf(Request $request)
@@ -134,6 +144,6 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.UserList');
+        return view('pdf.BorrowedLog');
     }
 }

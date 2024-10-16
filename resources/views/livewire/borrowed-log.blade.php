@@ -19,7 +19,7 @@
         }
     }">
     <div class="space-y-3">
-        <x-index-header heading="Borrowed Equipment Log" buttonName="Add new log" location="/borrowed-logs/create" />
+        <x-index-header wire:click="downloadPdf" heading="Borrowed Equipment Log" buttonName="Add new log" location="/borrowed-logs/create" />
         <x-table>
             <x-tr>
                 <x-th>Id</x-th>

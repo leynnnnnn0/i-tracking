@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/equipments-pdf', [PdfController::class, 'equipmentListPdf'])->name('equipment-pdf');
     Route::get('/personnels-pdf', [PdfController::class, 'personnelListPdf'])->name('personnels-pdf');
     Route::get('/users-pdf', [PdfController::class, 'userListPdf'])->name('users-pdf');
+    Route::get('/borrowed-equipments', [PdfController::class, 'borrowedEquipmentList'])->name('borrowed-equipments');
 
 
 
