@@ -34,7 +34,6 @@ class Edit extends Component
         try {
             DB::transaction(function () {
                 $equipment = $this->form->update($this->borrowedEquipment);
-
                 $this->activityLogForm->setActivityLog($this->borrowedEquipment, $equipment, 'Updated Borrow Log', 'Update');
                 $this->activityLogForm->store();
             });

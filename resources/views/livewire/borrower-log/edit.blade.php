@@ -16,7 +16,7 @@
             <x-form.input label="End Date" name="form.end_date" type="date" wire:model="form.end_date" />
         </section>
         <section class="flex justify-end gap-3">
-            <a href="/equipments" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
+            <a href="/borrowed-logs" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
             <x-primary-button wire:click="update">Update</x-primary-button>
         </section>
     </div>
