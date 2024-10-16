@@ -21,6 +21,11 @@ class MissingEquipment extends Component
         ]);
     }
 
+    public function downloadPdf()
+    {
+        return redirect()->route('missing-equipments-pdf');
+    }
+
     public function condemned($id)
     {
         try {

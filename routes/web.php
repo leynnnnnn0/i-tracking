@@ -31,8 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users-pdf', [PdfController::class, 'userListPdf'])->name('users-pdf');
     Route::get('/borrowed-equipments', [PdfController::class, 'borrowedEquipmentList'])->name('borrowed-equipments');
     Route::get('/supplies-history-pdf', [PdfController::class, 'supplyHistoryPdf'])->name('supplies-history-pdf');
-
-
+    Route::get('/missing-equipments-pdf', [PdfController::class, 'missingEquipmentPdf'])->name('missing-equipments-pdf');
 
     Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', [PdfController::class, 'handleEquipmentNewResponsiblePerson'])->name('responsible-person-pdf');
     Route::get('test', [PdfController::class, 'index']);

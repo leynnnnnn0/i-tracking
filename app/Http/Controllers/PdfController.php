@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
+use App\Models\MissingEquipment;
 use App\Models\Personnel;
 use App\Models\Supply;
 use App\Models\SupplyHistory;
@@ -33,7 +34,7 @@ class PdfController extends Controller
     }
 
     public function supplyHistoryPdf(Request $request)
-     {
+    {
         $query = SupplyHistory::query()->with('supply');
         if ($request->from && $request->to) {
             $query->whereBetween('created_at', [$request->from, $request->to]);
@@ -45,7 +46,14 @@ class PdfController extends Controller
             'to' => $request->to,
         ]);
         return $pdf->setPaper('a4')->download('supplies-history.pdf');
+    }
 
+    public function missingEquipmentPdf(Request $request)
+    {
+        $pdf = Pdf::loadView('pdf.MissingEquipmentList', [
+            'equipments' => MissingEquipment::with('equipment')->get(),
+        ]);
+        return $pdf->setPaper('a4', 'landscape')->download('missing-equipments.pdf');
     }
 
     public function handleEquipmentNewResponsiblePerson($equipment_id, $previous_responsible_person)
@@ -182,7 +190,7 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.SupplyHistoryList', [
+        return view('pdf.MissingEquipmentList', [
             'supplies' => SupplyHistory::with('supply')->get()
         ]);
     }

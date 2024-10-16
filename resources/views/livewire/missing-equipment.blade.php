@@ -10,11 +10,7 @@
     }
 }">
     <section class="space-y-3">
-        <div class="flex items-center justify-between mb-5">
-            <h1 class="font-bold text-2xl text-emerald-900">Missing Equipment List</h1>
-            <a href="/missing-equipments/create" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">Make A Report</a>
-        </div>
-
+        <x-index-header heading="Missing Equipment List" buttonName="Make A Report" location="/missing-equipments/create" wire:click="downloadPdf"/>
         <x-table>
             <x-tr>
                 <x-th>Equipment</x-th>
