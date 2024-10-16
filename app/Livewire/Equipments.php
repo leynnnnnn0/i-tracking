@@ -77,6 +77,9 @@ class Equipments extends Component
         $query = Equipment::query()
             ->with('responsible_person', 'borrowed_log');
 
+        if ($this->query === 'All') {
+            $query->whereNot('status', 'Condemned');
+        }
         if ($this->query !== 'All') {
             $query->where('status', $this->query);
         }
@@ -179,5 +182,4 @@ class Equipments extends Component
             Toaster::error('Something Went Wrong!');
         }
     }
-
 }
