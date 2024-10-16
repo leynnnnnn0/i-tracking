@@ -21,6 +21,11 @@ class User extends Component
         ]);
     }
 
+    public function downloadPdf()
+    {
+        return redirect()->route('users-pdf');
+    }
+
     public function delete($id): void
     {
         try {

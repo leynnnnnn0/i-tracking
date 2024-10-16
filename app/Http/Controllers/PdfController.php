@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use App\Models\Personnel;
 use App\Models\Supply;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
+    public function userListPdf()
+    {
+        $users = User::all();
+        $pdf = Pdf::loadView('pdf.UserList', [
+            'users' => $users
+        ]);
+        return $pdf->setPaper('a4', 'landscape')->download('users.pdf');
+    }
 
     public function handleEquipmentNewResponsiblePerson($equipment_id, $previous_responsible_person)
     {
@@ -28,6 +37,7 @@ class PdfController extends Controller
         $query = Supply::query();
         if ($request->filter) {
             $query = match ($request->filter) {
+                'All' => $query,
                 'High' => $query->where('total', '>', 20),
                 'Medium' => $query->where([['total', '>', 10], ['total', '<=', 20]]),
                 'Low' => $query->where('total', '<=', 10)
@@ -124,6 +134,6 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.SupplyList');
+        return view('pdf.UserList');
     }
 }

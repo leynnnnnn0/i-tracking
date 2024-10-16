@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf'])->name('supplies-pdf');
     Route::get('/equipments-pdf', [PdfController::class, 'equipmentListPdf'])->name('equipment-pdf');
     Route::get('/personnels-pdf', [PdfController::class, 'personnelListPdf'])->name('personnels-pdf');
+    Route::get('/users-pdf', [PdfController::class, 'userListPdf'])->name('users-pdf');
+
 
 
     Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', [PdfController::class, 'handleEquipmentNewResponsiblePerson'])->name('responsible-person-pdf');

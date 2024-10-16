@@ -15,7 +15,7 @@ class Dashboard extends Component
     public $missingEquipments;
     public function mount()
     {
-        $this->availableEquipments = Equipment::where('status', 'Available')->count();
+        $this->availableEquipments = Equipment::where('status', 'Active')->count();
         $this->availableEquipments = Equipment::where('status', 'Borrowed')->count();
         $this->personnels = Personnel::count();
         $this->missingEquipments = MissingEquipment::count();

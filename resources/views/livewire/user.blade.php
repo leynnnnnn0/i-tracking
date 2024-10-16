@@ -10,7 +10,7 @@
         }
     }">
     <div class="space-y-3">
-        <x-index-header heading="Users" buttonName="Add New User" location="/users/create" />
+        <x-index-header wire:click="downloadPdf" heading="Users" buttonName="Add New User" location="/users/create" />
         <x-table>
             <x-tr>
                 <x-th>Id</x-th>

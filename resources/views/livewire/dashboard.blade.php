@@ -6,7 +6,7 @@
                 <x-ri-tools-fill class="size-10 text-white" />
                 <div class="flex flex-col gap-2">
                     <h1 class="text-white font-bold text-sm">Available Equipments</h1>
-                    <span class="text-white font-bold text-2xl">{{ $availableEquipments ?? 0 }}</span>
+                    <span class="text-white font-bold text-2xl">{{ $availableEquipments }}</span>
                 </div>
             </x-stats-container>
             <x-stats-container>
