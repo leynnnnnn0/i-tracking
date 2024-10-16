@@ -39,7 +39,7 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.BorrowedLog', [
             'borrowedEquipments' => $borrowedEquipments,
         ]);
-        return $pdf->setPaper('a4')->download('borrowed-equipments-log.pdf');
+        return $pdf->setPaper('a4', 'landscape')->download('borrowed-equipments-log.pdf');
     }
 
     public function supplyListPdf(Request $request)

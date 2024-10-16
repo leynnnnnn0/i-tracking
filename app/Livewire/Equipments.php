@@ -124,10 +124,17 @@ class Equipments extends Component
 
     public function submit()
     {
-
-        $this->borrowEquipmentForm->store();
-        Toaster::success('Successfully Created!');
-        $this->dispatch('borrowLogCreated');
+        try {
+            DB::transaction(function () {
+                $data = $this->borrowEquipmentForm->store();
+                $this->form->setActivityLog(null, $data, "Created a borrow log", "Create");
+                $this->form->store();
+            });
+            Toaster::success('Successfully Created!');
+            $this->dispatch('borrowLogCreated');
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 
     public function updateStatus($id)
@@ -135,12 +142,15 @@ class Equipments extends Component
         try {
             DB::transaction(function () use ($id) {
                 $log = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
+                $before = $log;
                 $log->update([
                     'returned_date' => Carbon::today()->format('Y-m-d')
                 ]);
                 Equipment::find($id)->update([
                     'status' => 'Active'
                 ]);
+                $this->form->setActivityLog($before, $log->fresh(), 'Mark Equipment as Returned', 'Update');
+                $this->form->store();
             });
             Toaster::success('Status Updated!');
             $this->dispatch('Status Updated');
@@ -162,16 +172,12 @@ class Equipments extends Component
                 $equipment->delete();
                 $this->form->setActivityLog($equipment, null, 'Delete Equipment', 'Delete');
                 $this->form->store();
-                Toaster::success('Successfully Deleted!');
-                $this->dispatch('Data Deleted');
             });
+            Toaster::success('Successfully Deleted!');
+            $this->dispatch('Data Deleted');
         } catch (Exception $e) {
             Toaster::error('Something Went Wrong!');
         }
     }
-    #[On('show-pdf-confirmation-message')]
-    public function pdfModal()
-    {
-        $this->showPdfModal = true;
-    }
+
 }

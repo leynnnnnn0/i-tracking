@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
     Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
 
-    Route::prefix('delete-archives')->name('delete-archives.')->group(function () {
+    Route::prefix('delete-archives')->name('delete-archives.')->middleware('can:can-handle-delete-archives')->group(function () {
         Route::get('/', DeleteArchives::class)->name('index');
     });
 

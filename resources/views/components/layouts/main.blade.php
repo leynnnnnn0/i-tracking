@@ -39,10 +39,12 @@
                     <x-ri-product-hunt-line class="size-5" />
                     Supplies
                 </x-nav-link>
+                @can('can-handle-delete-archives')
                 <x-nav-link href="/delete-archives" :active="request()->is('delete-archives*')">
                     <x-bi-archive-fill class="size-5" />
                     Delete Archives
                 </x-nav-link>
+                @endcan
                 <x-nav-link href="/users" :active="request()->is('users*')">
                     <x-ri-user-line class="size-5" />
                     Users

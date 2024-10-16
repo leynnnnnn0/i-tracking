@@ -47,12 +47,13 @@ class BorrowEquipmentForm extends Form
     public function store()
     {
         $this->validate();
-        DB::transaction(function () {
+        DB::transaction(function () use (&$borrowedItem) {
             $borrowedItem = BorrowedEquipment::create($this->all());
             $borrowedItem->equipment()->update([
                 'Status' => 'Borrowed'
             ]);
         });
+        return $borrowedItem;
     }
 
     public function update(BorrowedEquipment $borrowedEquipment)
