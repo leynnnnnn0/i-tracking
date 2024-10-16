@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enum\UserRole;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\User as ModelsUser;
 use Exception;
@@ -14,11 +15,37 @@ class User extends Component
 {
     use WithPagination;
     public ActivityLogForm $activityLogForm;
+    public $keyword;
+    public $roles;
+    public $role;
+
+    public function mount()
+    {
+        $this->roles = UserRole::values();
+    }
     public function render()
     {
+        $query = ModelsUser::query();
+
+        if ($this->keyword) {
+            $query->whereAny(['first_name', 'middle_name', 'last_name', 'phone_number', 'email'], 'like', "%$this->keyword%");
+        }
+
+        if ($this->role) {
+            $query->where('role', $this->role);
+        }
+
+        $users = $query->latest()->paginate(10);
+
         return view('livewire.user', [
-            'users' => ModelsUser::latest()->paginate(10)
+            'users' => $users
         ]);
+    }
+
+    public function resetFilter()
+    {
+        $this->keyword = null;
+        $this->role = null;
     }
 
     public function downloadPdf()
