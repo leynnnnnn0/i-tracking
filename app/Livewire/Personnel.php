@@ -2,14 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Enum\OperatingUnitAndProject;
-use App\Enum\OrganizationUnit;
 use App\Enum\Position;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\Department;
 use App\Models\Personnel as ModelsPersonnel;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 

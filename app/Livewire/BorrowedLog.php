@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
@@ -15,7 +16,7 @@ use Masmerise\Toaster\Toaster;
 class BorrowedLog extends Component
 {
     use WithPagination;
-
+    public ActivityLogForm $activityLogForm;
 
     public function render()
     {
@@ -26,9 +27,24 @@ class BorrowedLog extends Component
 
     public function delete($id): void
     {
-        BorrowedEquipment::findOrFail($id)->delete();
-        Toaster::success('Successfully Deleted!');
-        $this->dispatch('Data Deleted');
+        try {
+            DB::transaction(function () use ($id) {
+                $equipment = BorrowedEquipment::findOrFail($id);
+                $equipment->delete();
+                $this->activityLogForm->setActivityLog(
+                    $equipment,
+                    null,
+                    'Delete Borrow Log',
+                    'Delete'
+                );
+                $this->activityLogForm->store();
+            });
+            Toaster::success('Successfully Deleted!');
+            $this->dispatch('Data Deleted');
+        } catch (Exception $e) {
+            dd($e);
+            Toaster::error($e->getMessage());
+        }
     }
 
     public function downloadPdf()
@@ -41,12 +57,15 @@ class BorrowedLog extends Component
         try {
             DB::transaction(function () use ($id) {
                 $log = BorrowedEquipment::orderBy('created_at', 'desc')->findOrFail($id);
+                $before = $log;
                 $log->update([
                     'returned_date' => Carbon::today()->format('Y-m-d')
                 ]);
                 $log->equipment->update([
                     'status' => 'Active'
                 ]);
+                $this->activityLogForm->setActivityLog($before, $log->fresh(), 'Mark Borrowed Item as Returned', 'Update');
+                $this->activityLogForm->store();
             });
             $this->dispatch('Mark As Returned');
             Toaster::success('Mark as Returned Successfully');
