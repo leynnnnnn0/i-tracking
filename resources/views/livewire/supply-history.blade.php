@@ -1,6 +1,11 @@
 <div>
     <div class="space-y-3">
-        <x-plain-heading>Supplies History</x-plain-heading>
+        <div class="flex items-center justify-between">
+            <x-plain-heading>Supplies History</x-plain-heading>
+            <button wire.loading.attr="disabled" wire:click="downloadPdf" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">
+                Export as PDF
+            </button>
+        </div>
         <!-- Filter -->
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div class="flex items-end gap-3">

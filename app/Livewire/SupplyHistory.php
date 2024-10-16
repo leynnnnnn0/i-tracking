@@ -6,7 +6,6 @@ use App\Models\SupplyHistory as ModelsSupplyHistory;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Symfony\Contracts\Service\Attribute\Required;
 
 class SupplyHistory extends Component
 {
@@ -25,6 +24,11 @@ class SupplyHistory extends Component
         return view('livewire.supply-history', [
             'history' => $history
         ]);
+    }
+
+    public function downloadPdf()
+    {
+        
     }
 
     public function resetFilter()

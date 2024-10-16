@@ -6,6 +6,7 @@ use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use App\Models\Personnel;
 use App\Models\Supply;
+use App\Models\SupplyHistory;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -30,6 +31,8 @@ class PdfController extends Controller
         ]);
         return $pdf->setPaper('a4', 'landscape')->download('users.pdf');
     }
+
+    public function supplyHistoryPdf(Request $request) {}
 
     public function handleEquipmentNewResponsiblePerson($equipment_id, $previous_responsible_person)
     {
@@ -165,6 +168,8 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.BorrowedLog');
+        return view('pdf.SupplyHistoryList', [
+            'supplies' => SupplyHistory::with('supply')->get()
+        ]);
     }
 }
