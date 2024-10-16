@@ -32,7 +32,21 @@ class PdfController extends Controller
         return $pdf->setPaper('a4', 'landscape')->download('users.pdf');
     }
 
-    public function supplyHistoryPdf(Request $request) {}
+    public function supplyHistoryPdf(Request $request)
+     {
+        $query = SupplyHistory::query()->with('supply');
+        if ($request->from && $request->to) {
+            $query->whereBetween('created_at', [$request->from, $request->to]);
+        }
+        $supplies = $query->get();
+        $pdf = Pdf::loadView('pdf.SupplyHistoryList', [
+            'supplies' => $supplies,
+            'from' => $request->from,
+            'to' => $request->to,
+        ]);
+        return $pdf->setPaper('a4')->download('supplies-history.pdf');
+
+    }
 
     public function handleEquipmentNewResponsiblePerson($equipment_id, $previous_responsible_person)
     {

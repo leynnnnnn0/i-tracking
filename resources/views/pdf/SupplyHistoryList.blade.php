@@ -1,6 +1,10 @@
 <x-layouts.pdf>
     <h4 class="center">Supplies History</h4>
+    @if($from && $to)
+    <h5 class="center">From {{ Carbon\Carbon::parse($from)->format('F d, Y')}} To {{ Carbon\Carbon::parse($to)->format('F d, Y')}}</h5>
+    @else
     <h5 class="center">As of {{ Carbon\Carbon::today()->format('F d, Y')}}</h5>
+    @endif
     <table class="print-table">
         <thead>
             <tr>

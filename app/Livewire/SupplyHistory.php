@@ -28,7 +28,14 @@ class SupplyHistory extends Component
 
     public function downloadPdf()
     {
-        
+        $params = [
+            'to' => $this->to,
+            'from' => $this->from
+        ];
+        $params = array_filter($params, function ($value) {
+            return $value !== null;
+        });
+        return redirect()->route('supplies-history-pdf', $params);
     }
 
     public function resetFilter()
