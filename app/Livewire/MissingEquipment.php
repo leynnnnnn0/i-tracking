@@ -13,11 +13,28 @@ use Masmerise\Toaster\Toaster;
 
 class MissingEquipment extends Component
 {
+    public $query = 'All';
     public ActivityLogForm $activityLogForm;
+
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
     public function render()
     {
+        $query = ModelsMissingEquipment::query()->with('equipment');
+        if ($this->query !== 'All') {
+            if ($this->query === 'Condemned') {
+                $query->whereHas('equipment', function ($q) {
+                    $q->where('status', $this->query);
+                });
+            } else {
+                $query->where('status', $this->query);
+            }
+        }
+        $data = $query->latest()->paginate(10);
         return view('livewire.missing-equipment', [
-            'data' => ModelsMissingEquipment::with('equipment')->latest()->paginate(10)
+            'data' => $data
         ]);
     }
 

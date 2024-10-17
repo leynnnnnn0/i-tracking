@@ -10,7 +10,17 @@
     }
 }">
     <section class="space-y-3">
-        <x-index-header heading="Missing Equipment List" buttonName="Make A Report" location="/missing-equipments/create" wire:click="downloadPdf"/>
+        <x-index-header heading="Missing Equipment List" buttonName="Make A Report" location="/missing-equipments/create" wire:click="downloadPdf" />
+
+        <!-- Filter tab -->
+        <x-filter-tab>
+            <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Reported'" wire:click="setQuery('Reported')">Reported</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Reported To SPMO'" wire:click="setQuery('Reported To SPMO')">Reported To SPMO</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
+        </x-filter-tab>
+
+
         <x-table>
             <x-tr>
                 <x-th>Equipment</x-th>
