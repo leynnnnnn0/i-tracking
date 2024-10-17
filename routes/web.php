@@ -10,6 +10,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\DeleteArchives;
 use App\Livewire\Equipments;
 use App\Livewire\MissingEquipment;
+use App\Livewire\Offices;
 use App\Livewire\Others;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
@@ -84,6 +85,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', BorrowerLogCreate::class)->name('create');
         Route::get('/edit/{id}', BorrowerLogEdit::class)->name('edit');
         Route::get('/view/{id}', BorrowerLogView::class)->name('view');
+    });
+
+    Route::prefix('offices')->name('offices.')->group(function () {
+        Route::get('/', Offices::class)->name('index');
     });
 
     Route::get('/others', Others::class)->name('others');

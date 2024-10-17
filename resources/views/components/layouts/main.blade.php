@@ -65,6 +65,10 @@
                     <x-ri-history-fill class="size-5" />
                     Supplies History
                 </x-nav-link>
+                <x-nav-link href="/offices" :active="request()->is('offices*')">
+                    <x-ri-history-fill class="size-5" />
+                    Offices
+                </x-nav-link>
                 <x-nav-link href="/others" :active="request()->is('others')">
                     <x-ri-more-line class="size-5" />
                     Others
