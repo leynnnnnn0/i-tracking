@@ -7,6 +7,6 @@
         </svg>
     </button>
     <template x-if="showNotificationBar">
-        <livewire:notification-bar />
+        <!-- <livewire:notification-bar /> -->
     </template>
 </nav>
