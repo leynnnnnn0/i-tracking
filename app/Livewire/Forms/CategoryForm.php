@@ -23,7 +23,7 @@ class CategoryForm extends Form
         return Category::create($this->all());
     }
 
-    public function setOfficeForm(Category $category)
+    public function setCategoryForm(Category $category)
     {
         $this->name = $category->name;
     }
