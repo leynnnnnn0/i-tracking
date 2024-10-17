@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use App\Models\MissingEquipment;
+use App\Models\Office;
 use App\Models\Personnel;
 use App\Models\Supply;
 use App\Models\SupplyHistory;
@@ -16,6 +17,13 @@ use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
+    public function officesListPdf()
+    {
+        $pdf = Pdf::loadView('pdf.OfficesList', [
+            'offices' => Office::all()
+        ]);
+        return $pdf->setPaper('a4')->download('offices.pdf');
+    }
     public function userListPdf(Request $request)
     {
         $query = User::query();

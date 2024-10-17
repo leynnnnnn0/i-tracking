@@ -22,6 +22,11 @@ class Offices extends Component
         ]);
     }
 
+    public function downloadPdf()
+    {
+        return redirect()->route('offices-pdf');
+    }
+
     public function delete($id)
     {
         try {

@@ -39,15 +39,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     //PDF
-    Route::get('/supplies-pdf', [PdfController::class, 'supplyListPdf'])->name('supplies-pdf');
-    Route::get('/equipments-pdf', [PdfController::class, 'equipmentListPdf'])->name('equipment-pdf');
-    Route::get('/personnels-pdf', [PdfController::class, 'personnelListPdf'])->name('personnels-pdf');
-    Route::get('/users-pdf', [PdfController::class, 'userListPdf'])->name('users-pdf');
-    Route::get('/borrowed-equipments', [PdfController::class, 'borrowedEquipmentList'])->name('borrowed-equipments');
-    Route::get('/supplies-history-pdf', [PdfController::class, 'supplyHistoryPdf'])->name('supplies-history-pdf');
-    Route::get('/missing-equipments-pdf', [PdfController::class, 'missingEquipmentPdf'])->name('missing-equipments-pdf');
+    Route::controller(PdfController::class)->group(function () {
+        Route::get('/supplies-pdf', 'supplyListPdf')->name('supplies-pdf');
+        Route::get('/equipments-pdf', 'equipmentListPdf')->name('equipment-pdf');
+        Route::get('/personnels-pdf', 'personnelListPdf')->name('personnels-pdf');
+        Route::get('/users-pdf', 'userListPdf')->name('users-pdf');
+        Route::get('/offices-pdf', 'officesListPdf')->name('offices-pdf');
+        Route::get('/borrowed-equipments', 'borrowedEquipmentList')->name('borrowed-equipments');
+        Route::get('/supplies-history-pdf', 'supplyHistoryPdf')->name('supplies-history-pdf');
+        Route::get('/missing-equipments-pdf', 'missingEquipmentPdf')->name('missing-equipments-pdf');
+        Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', 'handleEquipmentNewResponsiblePerson')->name('responsible-person-pdf');
+    });
 
-    Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', [PdfController::class, 'handleEquipmentNewResponsiblePerson'])->name('responsible-person-pdf');
     Route::get('test', [PdfController::class, 'index']);
 
 
@@ -127,7 +130,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', \App\Livewire\ResponsiblePerson\Edit::class)->name('edit');
         Route::get('/view/{id}', \App\Livewire\ResponsiblePerson\View::class)->name('view');
     });
-
 });
 
 Route::view('profile', 'profile')

@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Offices" buttonName="Add New Office" location="/offices/create" />
+    <x-index-header heading="Offices" buttonName="Add New Office" location="/offices/create" wire:click="downloadPdf" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>
