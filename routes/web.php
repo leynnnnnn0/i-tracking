@@ -6,6 +6,7 @@ use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
 use App\Livewire\BorrowerLog\Edit as BorrowerLogEdit;
 use App\Livewire\BorrowerLog\View as BorrowerLogView;
+use App\Livewire\Category;
 use App\Livewire\Dashboard;
 use App\Livewire\DeleteArchives;
 use App\Livewire\Equipments;
@@ -95,6 +96,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', OfficesCreate::class)->name('create');
         Route::get('/edit/{id}', OfficesEdit::class)->name('edit');
         Route::get('/view/{id}', OfficesView::class)->name('view');
+    });
+
+    Route::prefix('categories')->name('categories.')->group(function () {
+        Route::get('/', Category::class)->name('index');
     });
 
     Route::get('/others', Others::class)->name('others');

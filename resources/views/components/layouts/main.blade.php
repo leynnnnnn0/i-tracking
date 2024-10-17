@@ -66,8 +66,12 @@
                     Supplies History
                 </x-nav-link>
                 <x-nav-link href="/offices" :active="request()->is('offices*')">
-                    <x-ri-history-fill class="size-5" />
+                    <x-phosphor-office-chair class="size-5" />
                     Offices
+                </x-nav-link>
+                <x-nav-link href="/categories" :active="request()->is('categories*')">
+                    <x-carbon-category-and class="size-5" />
+                    Categories
                 </x-nav-link>
                 <x-nav-link href="/others" :active="request()->is('others')">
                     <x-ri-more-line class="size-5" />

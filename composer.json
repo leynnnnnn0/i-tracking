@@ -8,6 +8,7 @@
         "php": "^8.2",
         "andreiio/blade-remix-icon": "^3.3",
         "barryvdh/laravel-dompdf": "^3.0",
+        "codeat3/blade-carbon-icons": "^2.30",
         "codeat3/blade-phosphor-icons": "^2.2",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "laravel/framework": "^11.9",
