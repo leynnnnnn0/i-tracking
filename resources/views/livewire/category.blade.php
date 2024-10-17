@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Categories" buttonName="Add New Category" location="/categories/create" />
+    <x-index-header heading="Categories" buttonName="Add New Category" location="/categories/create" wire:click="downloadPdf" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>

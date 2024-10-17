@@ -22,6 +22,11 @@ class Category extends Component
         ]);
     }
 
+    public function downloadPdf()
+    {
+        return redirect()->route('categories-pdf');
+    }
+
     public function delete($id)
     {
         try {

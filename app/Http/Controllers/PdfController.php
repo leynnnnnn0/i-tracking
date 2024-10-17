@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BorrowedEquipment;
+use App\Models\Category;
 use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use App\Models\Office;
@@ -17,6 +18,14 @@ use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
+
+    public function categoriesListPdf()
+    {
+        $pdf = Pdf::loadView('pdf.CategoriesList', [
+            'categories' => Category::all()
+        ]);
+        return $pdf->setPaper('a4')->download('categories.pdf');
+    }
     public function officesListPdf()
     {
         $pdf = Pdf::loadView('pdf.OfficesList', [
