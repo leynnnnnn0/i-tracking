@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountingOfficer;
 use App\Models\BorrowedEquipment;
 use App\Models\Category;
 use App\Models\Equipment;
@@ -18,6 +19,26 @@ use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
+
+    public function accountingOfficersListPdf(Request $request)
+    {
+        $query = AccountingOfficer::query()->with('office');
+
+        if ($request->keyword) {
+            $query->whereAny(['first_name', 'last_name', 'email'], $request->keyword);
+        }
+
+        if ($request->office) {
+            $query->where('office_id', $request->office);
+        }
+
+        $officers = $query->get();
+
+        $pdf = Pdf::loadView('pdf.AccountingOfficersList', [
+            'officers' => $officers
+        ]);
+        return $pdf->setPaper('a4', 'download')->download('accounting-officers.pdf');
+    }
 
     public function categoriesListPdf()
     {

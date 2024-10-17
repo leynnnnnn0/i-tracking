@@ -40,6 +40,27 @@ class AccountingOfficer extends Component
         ]);
     }
 
+    public function downloadPdf()
+    {
+        $params = [
+            'keyword' => $this->keyword,
+            'office' => $this->office
+        ];
+
+        $params = array_filter($params, function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+
+        return redirect()->route('accounting-officers-pdf', $params);
+    }
+
+    public function resetFilter()
+    {
+        $this->keyword = null;
+        $this->office = null;
+    }
+
     public function delete($id)
     {
         try {

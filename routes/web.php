@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PdfController;
 use App\Livewire\AccountingOfficer;
-use App\Livewire\AccountingOfficer\Create as AccountingOfficerCreate;
 use App\Livewire\AccountingOfficer\Edit as AccountingOfficerEdit;
 use App\Livewire\AccountingOfficer\View as AccountingOfficerView;
 use App\Livewire\ActivityLog;
@@ -22,7 +21,6 @@ use App\Livewire\Offices;
 use App\Livewire\Offices\Create as OfficesCreate;
 use App\Livewire\Offices\Edit as OfficesEdit;
 use App\Livewire\Offices\View as OfficesView;
-use App\Livewire\Others;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Personnel\Edit as PersonnelEdit;
@@ -51,6 +49,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/offices-pdf', 'officesListPdf')->name('offices-pdf');
         Route::get('/categories-pdf', 'categoriesListPdf')->name('categories-pdf');
+        Route::get('/accounting-officers-pdf', 'accountingOfficersListPdf')->name('accounting-officers-pdf');
     });
 
     Route::get('test', [PdfController::class, 'index']);
