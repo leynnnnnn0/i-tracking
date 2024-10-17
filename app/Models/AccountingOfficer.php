@@ -26,9 +26,13 @@ class AccountingOfficer extends Model
         return $this->belongsTo(Office::class);
     }
 
+    public function responsible_persons()
+    {
+        return $this->hasMany(ResponsiblePerson::class);
+    }
+
     public function getFullNameAttribute()
     {
         return "$this->first_name $this->last_name";
     }
-
 }

@@ -3,21 +3,22 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\ActivityLogForm;
-use App\Models\AccountingOfficer as ModelsAccountingOfficer;
+use App\Models\ResponsiblePerson as ModelsResponsiblePerson;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
-class AccountingOfficer extends Component
+class ResponsiblePerson extends Component
 {
     use WithPagination;
     public ActivityLogForm $activityLogForm;
+
     public function render()
     {
-        return view('livewire.accounting-officer', [
-            'officers' => ModelsAccountingOfficer::with('office')->paginate(10)
+        return view('livewire.responsible-person', [
+            'persons' => ModelsResponsiblePerson::with('accounting_officer')->paginate(10)
         ]);
     }
 
@@ -25,9 +26,9 @@ class AccountingOfficer extends Component
     {
         try {
             DB::transaction(function () use ($id) {
-                $officer = ModelsAccountingOfficer::findOrFail($id);
-                $officer->delete();
-                $this->activityLogForm->setActivityLog($officer, null, 'Deleted Accounting Officer', 'Delete');
+                $person = ModelsResponsiblePerson::findOrFail($id);
+                $person->delete();
+                $this->activityLogForm->setActivityLog($person, null, 'Deleted Responsible Person', 'Delete');
                 $this->activityLogForm->store();
             });
             Toaster::success('Deleted Successfully');

@@ -27,6 +27,8 @@ use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Personnel\Edit as PersonnelEdit;
 use App\Livewire\Personnel\View as PersonnelView;
+use App\Livewire\ResponsiblePerson;
+use App\Livewire\ResponsiblePerson\Create as ResponsiblePersonCreate;
 use App\Livewire\Supply;
 use App\Livewire\Supply\Create;
 use App\Livewire\Supply\Edit;
@@ -114,9 +116,14 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('accounting-officers')->name('accounting-officers.')->group(function () {
         Route::get('/', AccountingOfficer::class)->name('index');
-        Route::get('/create', AccountingOfficerCreate::class)->name('create');
+        Route::get('/create', AccountingOfficer\Create::class)->name('create');
         Route::get('/edit/{id}', AccountingOfficerEdit::class)->name('edit');
         Route::get('/view/{id}', AccountingOfficerView::class)->name('view');
+    });
+
+    Route::prefix('responsible-persons')->name('responsible-persons.')->group(function () {
+        Route::get('/', ResponsiblePerson::class)->name('index');
+        Route::get('/create', ResponsiblePersonCreate::class)->name('create');
     });
 
     Route::get('/others', Others::class)->name('others');

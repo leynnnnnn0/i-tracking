@@ -74,8 +74,12 @@
                     Categories
                 </x-nav-link>
                 <x-nav-link href="/accounting-officers" :active="request()->is('accounting-officers*')">
-                    <x-carbon-category-and class="size-5" />
+                    <x-healthicons-o-officer class="size-5" />
                     Accounting Officers
+                </x-nav-link>
+                <x-nav-link href="/responsible-persons" :active="request()->is('responsible-persons*')">
+                    <x-healthicons-o-officer class="size-5" />
+                    Responsible Persons
                 </x-nav-link>
                 <x-nav-link href="/others" :active="request()->is('others')">
                     <x-ri-more-line class="size-5" />

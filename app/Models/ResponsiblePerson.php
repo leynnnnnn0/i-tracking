@@ -22,6 +22,11 @@ class ResponsiblePerson extends Model
         'phone_number'
     ];
 
+    public function accounting_officer()
+    {
+        return $this->belongsTo(AccountingOfficer::class);
+    }
+
     public function getFullNameAttribute()
     {
         return "$this->first_name $this->last_name";
