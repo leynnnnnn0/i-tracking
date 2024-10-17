@@ -24,66 +24,62 @@
         <section class="flex-1 flex min-h-full">
             <div class="min-w-60 bg-emerald-500 flex flex-col">
                 <x-nav-link href="/" :active="request()->is('/')">
-                    <x-ri-dashboard-line class="size-5" />
+                    <x-ri-dashboard-line class="size-4" />
                     Dashboard
                 </x-nav-link>
                 <x-nav-link href="/equipments" :active="request()->is('equipments*')">
-                    <x-ri-tools-fill class="size-5" />
+                    <x-ri-tools-fill class="size-4" />
                     Equipments
                 </x-nav-link>
                 <x-nav-link href="/personnels" :active="request()->is('personnels*')">
-                    <x-ri-group-line class=" size-5" />
+                    <x-ri-group-line class=" size-4" />
                     Personnels
                 </x-nav-link>
                 <x-nav-link href="/supplies" :active="request()->is('supplies*')">
-                    <x-ri-product-hunt-line class="size-5" />
+                    <x-ri-product-hunt-line class="size-4" />
                     Supplies
                 </x-nav-link>
                 @can('can-handle-delete-archives')
                 <x-nav-link href="/delete-archives" :active="request()->is('delete-archives*')">
-                    <x-bi-archive-fill class="size-5" />
+                    <x-bi-archive-fill class="size-4" />
                     Delete Archives
                 </x-nav-link>
                 @endcan
                 <x-nav-link href="/users" :active="request()->is('users*')">
-                    <x-ri-user-line class="size-5" />
+                    <x-ri-user-line class="size-4" />
                     Users
                 </x-nav-link>
                 <x-nav-link href="/borrowed-logs" :active="request()->is('borrowed-logs*')">
-                    <x-bi-pass class="size-5" />
+                    <x-bi-pass class="size-4" />
                     Borrowed Logs
                 </x-nav-link>
                 <x-nav-link href="/activity-logs" :active="request()->is('activity-log*')">
-                    <x-ri-history-fill class="size-5" />
+                    <x-ri-history-fill class="size-4" />
                     Activity Log
                 </x-nav-link>
                 <x-nav-link href="/missing-equipments" :active="request()->is('missing-equipments*')">
-                    <x-bi-question-circle class="size-5" />
+                    <x-bi-question-circle class="size-4" />
                     Missing Equipments
                 </x-nav-link>
                 <x-nav-link href="/supplies-history" :active="request()->is('supplies-history*')">
-                    <x-ri-history-fill class="size-5" />
+                    <x-ri-history-fill class="size-4" />
                     Supplies History
                 </x-nav-link>
                 <x-nav-link href="/offices" :active="request()->is('offices*')">
-                    <x-phosphor-office-chair class="size-5" />
+                    <x-phosphor-office-chair class="size-4" />
                     Offices
                 </x-nav-link>
                 <x-nav-link href="/categories" :active="request()->is('categories*')">
-                    <x-carbon-category-and class="size-5" />
+                    <x-carbon-category-and class="size-4" />
                     Categories
                 </x-nav-link>
                 <x-nav-link href="/accounting-officers" :active="request()->is('accounting-officers*')">
-                    <x-healthicons-o-officer class="size-5" />
+                    <x-healthicons-o-officer class="size-4" />
                     Accounting Officers
                 </x-nav-link>
                 <x-nav-link href="/responsible-persons" :active="request()->is('responsible-persons*')">
-                    <x-healthicons-o-officer class="size-5" />
+                    <x-bi-people-fill class="size-4" />
                     Responsible Persons
-                </x-nav-link>
-                <x-nav-link href="/others" :active="request()->is('others')">
-                    <x-ri-more-line class="size-5" />
-                    Others
                 </x-nav-link>
             </div>
             <div class="flex-1 p-5 bg-[#eaeaea] min-w-[1200px]">

@@ -125,9 +125,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', ResponsiblePerson::class)->name('index');
         Route::get('/create', ResponsiblePersonCreate::class)->name('create');
         Route::get('/edit/{id}', \App\Livewire\ResponsiblePerson\Edit::class)->name('edit');
+        Route::get('/view/{id}', \App\Livewire\ResponsiblePerson\View::class)->name('view');
     });
 
-    Route::get('/others', Others::class)->name('others');
 });
 
 Route::view('profile', 'profile')

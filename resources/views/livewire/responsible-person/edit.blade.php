@@ -1,8 +1,8 @@
 <div class="space-y-4">
-    <h1 class="font-bold text-2xl text-emerald-900">Edit Officer Details</h1>
+    <h1 class="font-bold text-2xl text-emerald-900">Edit Responsible Person Details</h1>
     <div class="bg-white rounded-xl p-5">
         <section class="pb-5 border-b border-gray-300">
-            <h1 class="text-gray-700 font-bold text-lg">Officer Information</h1>
+            <h1 class="text-gray-700 font-bold text-lg">Responsible Person Information</h1>
             <p class="text-gray-600 text-xs">Please input all the required fields.</p>
         </section>
         <section class="py-2 grid grid-cols-2 gap-5">
