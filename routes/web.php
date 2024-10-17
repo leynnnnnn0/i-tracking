@@ -11,6 +11,7 @@ use App\Livewire\DeleteArchives;
 use App\Livewire\Equipments;
 use App\Livewire\MissingEquipment;
 use App\Livewire\Offices;
+use App\Livewire\Offices\Create as OfficesCreate;
 use App\Livewire\Others;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
@@ -89,6 +90,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('offices')->name('offices.')->group(function () {
         Route::get('/', Offices::class)->name('index');
+        Route::get('/create', OfficesCreate::class)->name('create');
     });
 
     Route::get('/others', Others::class)->name('others');

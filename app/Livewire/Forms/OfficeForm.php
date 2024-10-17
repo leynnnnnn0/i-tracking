@@ -20,6 +20,6 @@ class OfficeForm extends Form
     public function store()
     {
         $this->validate();
-        Office::create($this->all());
+        return Office::create($this->all());
     }
 }

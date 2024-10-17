@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Offices" buttonName="Add New Office" />
+    <x-index-header heading="Offices" buttonName="Add New Office" location="/offices/create"/>
     <x-table>
         <x-tr>
             <x-th>Id</x-th>
