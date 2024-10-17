@@ -9,6 +9,7 @@ use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use App\Models\Office;
 use App\Models\Personnel;
+use App\Models\ResponsiblePerson;
 use App\Models\Supply;
 use App\Models\SupplyHistory;
 use App\Models\User;
@@ -20,12 +21,33 @@ use Illuminate\Support\Facades\DB;
 class PdfController extends Controller
 {
 
+    public function responsiblePersonsListPdf(Request $request)
+    {
+        $query = ResponsiblePerson::query()->with('accounting_officer');
+
+        if ($request->keyword) {
+            $query->whereAny(['first_name', 'last_name', 'email'],  'like', "%$request->keyword%");
+        }
+
+        if ($request->officer) {
+            $query->where('accounting_officer_id', $request->officer);
+        }
+
+        $persons = $query->get();
+
+        $pdf = Pdf::loadView('pdf.ResponsiblePersonsList', [
+            'persons' => $persons
+        ]);
+
+        return $pdf->setPaper('a4', 'download')->download('responsible-persons.pdf');
+    }
+
     public function accountingOfficersListPdf(Request $request)
     {
         $query = AccountingOfficer::query()->with('office');
 
         if ($request->keyword) {
-            $query->whereAny(['first_name', 'last_name', 'email'], $request->keyword);
+            $query->whereAny(['first_name', 'last_name', 'email'], 'like', "%$request->keyword%");
         }
 
         if ($request->office) {

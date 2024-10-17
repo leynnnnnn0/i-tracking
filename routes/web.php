@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/offices-pdf', 'officesListPdf')->name('offices-pdf');
         Route::get('/categories-pdf', 'categoriesListPdf')->name('categories-pdf');
         Route::get('/accounting-officers-pdf', 'accountingOfficersListPdf')->name('accounting-officers-pdf');
+        Route::get('/responsible-persons-pdf', 'responsiblePersonsListPdf')->name('responsible-persons-pdf');
     });
 
     Route::get('test', [PdfController::class, 'index']);
