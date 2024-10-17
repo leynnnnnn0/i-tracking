@@ -22,7 +22,7 @@
             <x-td>{{ $office->name }}</x-td>
             <x-td class="flex items-center gap-2">
                 <x-bi-trash @click="openDeleteModal({{ $office->id }})" class="cursor-pointer size-5 text-red-500" />
-                <a>
+                <a href="/offices/edit/{{ $office->id }}">
                     <x-bi-pencil-square class="size-5 text-blue-500" />
                 </a>
                 <x-bi-eye class="cursor-pointer size-5 text-green-500" />

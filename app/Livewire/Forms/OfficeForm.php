@@ -22,4 +22,16 @@ class OfficeForm extends Form
         $this->validate();
         return Office::create($this->all());
     }
+
+    public function setOfficeForm(Office $office)
+    {
+        $this->name = $office->name;
+    }
+
+    public function update(Office $office)
+    {
+        $this->validate();
+        $office->update($this->all());
+        return $office->fresh();
+    }
 }
