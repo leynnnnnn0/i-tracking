@@ -15,6 +15,12 @@ export default {
             fontFamily: {
                 poppins: ["Poppins", "sans-serif"],
             },
+            colors: {
+                primary: "#0B592D",
+                'primary-gray': "#E5E6E1",
+                'primary-yellow': "#FED206",
+                'primary-brown': "#6C4441"
+            }
         },
     },
 

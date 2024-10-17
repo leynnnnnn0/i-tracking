@@ -22,7 +22,7 @@
     <div class="flex flex-col min-h-screen">
         <livewire:navigation />
         <section class="flex-1 flex min-h-full">
-            <div class="min-w-60 bg-emerald-500 flex flex-col">
+            <div class="min-w-60 bg-primary flex flex-col">
                 <x-nav-link href="/" :active="request()->is('/')">
                     <x-ri-dashboard-line class="size-4" />
                     Dashboard
@@ -82,7 +82,7 @@
                     Responsible Persons
                 </x-nav-link>
             </div>
-            <div class="flex-1 p-5 bg-[#eaeaea] min-w-[1200px]">
+            <div class="flex-1 p-5 bg-primary-gray min-w-[1200px]">
                 {{ $slot}}
             </div>
         </section>

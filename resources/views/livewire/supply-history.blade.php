@@ -2,7 +2,7 @@
     <div class="space-y-3">
         <div class="flex items-center justify-between">
             <x-plain-heading>Supplies History</x-plain-heading>
-            <button wire.loading.attr="disabled" wire:click="downloadPdf" class="px-4 py-1 bg-emerald-500 rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">
+            <button wire.loading.attr="disabled" wire:click="downloadPdf" class="px-4 py-1 bg-primary rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300">
                 Export as PDF
             </button>
         </div>
@@ -26,7 +26,6 @@
                 <x-th>Total Added</x-th>
                 <x-th>Total</x-th>
                 <x-th>Date</x-th>
-                <x-th>Action</x-th>
             </x-tr>
             @foreach ($history as $data)
             <tr class="border-b border-gray-300">
@@ -37,9 +36,6 @@
                 <x-td>{{ $data->total_added }}</x-td>
                 <x-td>{{ $data->total }}</x-td>
                 <x-td>{{ $data->created_at->format('F d, Y') }}</x-td>
-                <x-td>
-                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                </x-td>
             </tr>
             @endforeach
         </x-table>
