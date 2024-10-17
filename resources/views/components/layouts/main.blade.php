@@ -66,15 +66,15 @@
                     Supplies History
                 </x-nav-link>
                 <x-nav-link href="/offices" :active="request()->is('offices*')">
-                    <x-phosphor-office-chair class="size-4" />
+                    <x-ri-home-office-line class="size-4" />
                     Offices
                 </x-nav-link>
                 <x-nav-link href="/categories" :active="request()->is('categories*')">
-                    <x-carbon-category-and class="size-4" />
+                    <x-bi-textarea-resize class="size-4" />
                     Categories
                 </x-nav-link>
                 <x-nav-link href="/accounting-officers" :active="request()->is('accounting-officers*')">
-                    <x-healthicons-o-officer class="size-4" />
+                    <x-ri-user-line class="size-4" />
                     Accounting Officers
                 </x-nav-link>
                 <x-nav-link href="/responsible-persons" :active="request()->is('responsible-persons*')">

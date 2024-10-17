@@ -5,7 +5,7 @@
         </svg>
     </button>
     <div class="flex flex-col w-64 bg-white shadow-l-lg h-full p-3 gap-3 max-h-full overflow-y-scroll">
-        <h1 class="font-bold text-orange-500">Notifications</h1>
+        <h1 class="font-bold text-primary">Notifications</h1>
         @foreach ($notifications as $notification)
         <x-notification-container :identification="$notification->title" :message="$notification->message" wire:click="markAsRead({{ $notification->id }})">
         </x-notification-container>
