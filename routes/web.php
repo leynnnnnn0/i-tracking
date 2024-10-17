@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PdfController;
+use App\Livewire\AccountingOfficer;
 use App\Livewire\ActivityLog;
 use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
@@ -101,11 +102,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', OfficesView::class)->name('view');
     });
 
-    Route::prefix('categories')->name('categories.')->group(function () {
-        Route::get('/', Category::class)->name('index');
-        Route::get('/create', CategoryCreate::class)->name('create');
-        Route::get('/edit/{id}', CategoryEdit::class)->name('edit');
-        Route::get('/view/{id}', CategoryView::class)->name('view');
+    Route::prefix('accounting-officers')->name('accounting-officers.')->group(function () {
+        Route::get('/', AccountingOfficer::class)->name('index');
+
     });
 
     Route::get('/others', Others::class)->name('others');
