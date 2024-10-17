@@ -13,6 +13,7 @@ use App\Livewire\MissingEquipment;
 use App\Livewire\Offices;
 use App\Livewire\Offices\Create as OfficesCreate;
 use App\Livewire\Offices\Edit as OfficesEdit;
+use App\Livewire\Offices\View as OfficesView;
 use App\Livewire\Others;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
@@ -93,6 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Offices::class)->name('index');
         Route::get('/create', OfficesCreate::class)->name('create');
         Route::get('/edit/{id}', OfficesEdit::class)->name('edit');
+        Route::get('/view/{id}', OfficesView::class)->name('view');
     });
 
     Route::get('/others', Others::class)->name('others');

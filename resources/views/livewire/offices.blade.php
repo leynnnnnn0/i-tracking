@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Offices" buttonName="Add New Office" location="/offices/create"/>
+    <x-index-header heading="Offices" buttonName="Add New Office" location="/offices/create" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>
@@ -25,7 +25,9 @@
                 <a href="/offices/edit/{{ $office->id }}">
                     <x-bi-pencil-square class="size-5 text-blue-500" />
                 </a>
-                <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                <a href="/offices/view/{{ $office->id }}">
+                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                </a>
             </x-td>
         <tr>
             @endforeach
