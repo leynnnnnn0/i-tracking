@@ -124,6 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('responsible-persons')->name('responsible-persons.')->group(function () {
         Route::get('/', ResponsiblePerson::class)->name('index');
         Route::get('/create', ResponsiblePersonCreate::class)->name('create');
+        Route::get('/edit/{id}', \App\Livewire\ResponsiblePerson\Edit::class)->name('edit');
     });
 
     Route::get('/others', Others::class)->name('others');
