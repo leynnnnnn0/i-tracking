@@ -10,6 +10,8 @@ export default {
         "./vendor/masmerise/livewire-toaster/resources/views/*.blade.php",
     ],
 
+    darkMode: "class",
+
     theme: {
         extend: {
             fontFamily: {
@@ -17,10 +19,11 @@ export default {
             },
             colors: {
                 primary: "#0B592D",
-                'primary-gray': "#E5E6E1",
-                'primary-yellow': "#FED206",
-                'primary-brown': "#6C4441"
-            }
+                "primary-gray": "#E5E6E1",
+                "primary-yellow": "#FED206",
+                "primary-brown": "#6C4441",
+                "dark-primary": "#000000"
+            },
         },
     },
 

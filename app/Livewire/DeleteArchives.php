@@ -2,9 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Models\AccountingOfficer;
+use App\Models\Category;
 use App\Models\Equipment;
+use App\Models\Office;
 use App\Models\Personnel;
+use App\Models\ResponsiblePerson;
 use App\Models\Supply;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,7 +27,12 @@ class DeleteArchives extends Component
         $this->modelClasses = [
             'equipments' => Equipment::class,
             'supplies' => Supply::class,
-            'personnels' => Personnel::class
+            'personnels' => Personnel::class,
+            'users' => User::class,
+            'offices' => Office::class,
+            'categories' => Category::class,
+            'accounting-officers' => AccountingOfficer::class,
+            'responsible-person' => ResponsiblePerson::class
         ];
     }
     public function render()

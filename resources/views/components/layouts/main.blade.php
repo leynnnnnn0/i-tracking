@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    class="light">
 
 <head>
     <meta charset="utf-8">
@@ -22,7 +23,7 @@
     <div class="flex flex-col min-h-screen">
         <livewire:navigation />
         <section class="flex-1 flex min-h-full">
-            <div class="min-w-60 bg-primary flex flex-col">
+            <div class="min-w-60 bg-primary flex flex-col dark:bg-dark-primary">
                 <x-nav-link href="/" :active="request()->is('/')">
                     <x-ri-dashboard-line class="size-4" />
                     Dashboard
@@ -82,7 +83,7 @@
                     Responsible Persons
                 </x-nav-link>
             </div>
-            <div class="flex-1 p-5 bg-primary-gray min-w-[1200px]">
+            <div class="flex-1 p-5 bg-primary-gray min-w-[1200px] dark:bg-black/25">
                 {{ $slot}}
             </div>
         </section>
