@@ -5,14 +5,14 @@
             <x-stats-container>
                 <x-ri-tools-fill class="size-10 text-white" />
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-white font-bold text-sm">Available Equipments</h1>
+                    <h1 class="text-white font-bold text-sm">Available Equipment</h1>
                     <span class="text-white font-bold text-2xl">{{ $availableEquipments }}</span>
                 </div>
             </x-stats-container>
             <x-stats-container>
                 <x-bi-pass class="size-10 text-white" />
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-white font-bold text-sm">Borrowed Equipments</h1>
+                    <h1 class="text-white font-bold text-sm">Borrowed Equipment</h1>
                     <span class="text-white font-bold text-2xl">{{ $borrowedEquipments ?? 0 }}</span>
                 </div>
             </x-stats-container>

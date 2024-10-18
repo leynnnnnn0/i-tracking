@@ -6,6 +6,7 @@ use App\Enum\OperatingUnitAndProject;
 use App\Enum\OrganizationUnit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
+use App\Models\AccountingOfficer;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
@@ -29,8 +30,10 @@ class Equipments extends Component
     public $operatingUnits;
     public $organizationUnits;
     public $responsiblePersons;
+    public $accountingOfficers;
     // Filter
     public $keyword;
+    public $accountingOfficerId;
     public $responsiblePersonId;
     public $operatingUnit;
     public $organizationUnit;
@@ -50,14 +53,15 @@ class Equipments extends Component
 
         $params = [
             'filter' => $this->query,
-            'keyword' => $this->keyword ?? "",
-            'responsiblePersonId' => $this->responsiblePersonId ?? "",
-            'operatingUnit' => $this->operatingUnit ?? "",
-            'organizationUnit' => $this->organizationUnit ?? "",
+            'keyword' => $this->keyword,
+            'responsiblePersonId' => $this->responsiblePersonId,
+            'operatingUnit' => $this->operatingUnit,
+            'organizationUnit' => $this->organizationUnit,
+            'accountingOfficerId' => $this->accountingOfficerId,
         ];
 
         $params = array_filter($params, function ($value) {
-            return $value !== null && $value !== '';
+            return $value !== null;
         });
 
 
@@ -69,13 +73,14 @@ class Equipments extends Component
         $this->operatingUnits = OperatingUnitAndProject::values();
         $this->organizationUnits = OrganizationUnit::values();
         $this->responsiblePersons = ResponsiblePerson::get()->pluck('full_name', 'id');
+        $this->accountingOfficers = AccountingOfficer::get()->pluck('full_name', 'id');
         $this->showDeleteModal = false;
     }
 
     public function render()
     {
         $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log');
+            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer');
 
         if ($this->query === 'All') {
             $query->whereNot('status', 'Condemned');
@@ -100,6 +105,12 @@ class Equipments extends Component
 
         if ($this->responsiblePersonId) {
             $query->where('responsible_person_id', $this->responsiblePersonId);
+        }
+
+        if ($this->accountingOfficerId) {
+            $query->whereHas('responsible_person.accounting_officer', function ($q) {
+                $q->where('id', $this->accountingOfficerId);
+            });
         }
 
         if ($this->operatingUnit) {

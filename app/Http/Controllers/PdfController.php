@@ -206,7 +206,7 @@ class PdfController extends Controller
     {
 
         $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log');
+            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer');
 
         if ($request->filter !== 'All') {
             $query->where('status', $request->filter);
@@ -226,6 +226,12 @@ class PdfController extends Controller
             });
         }
 
+        if ($request->accountingOfficerId) {
+            $query->whereHas('responsible_person.accounting_officer', function ($q) use ($request) {
+                $q->where('id', $request->accountingOfficerId);
+            });
+        }
+
         if ($request->responsiblePersonId) {
             $query->where('responsible_person_id', $request->responsiblePersonId);
         }
@@ -239,9 +245,13 @@ class PdfController extends Controller
         }
 
         $equipments = $query->latest()->get();
-
+        $isAccountingOfficerFiltered = null;
+        if ($request->accountingOfficerId) {
+            $isAccountingOfficerFiltered = AccountingOfficer::find($request->accountingOfficerId)->full_name;
+        }
         $pdf = Pdf::loadView('pdf.EquipmentList', [
             'data' => $equipments,
+            'isAccountingOfficerFiltered' => $isAccountingOfficerFiltered,
             'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('responsible_person_id', $request->responsiblePersonId)->first()->responsible_person->full_name : false
         ]);
 

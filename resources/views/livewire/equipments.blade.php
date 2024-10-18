@@ -27,7 +27,7 @@
         })
         }
     }">
-    <x-index-header wire:click="downloadPdf" heading="Equipments" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
+    <x-index-header wire:click="downloadPdf" heading="Equipment" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
     <div class="space-y-3">
         <!-- Filter tab -->
         <x-filter-tab>
@@ -40,6 +40,9 @@
         <!-- Filter -->
         <x-others-filter wire:click="resetFilter">
             <x-input wire:model.live="keyword" />
+            <x-form.filter-select :data="$accountingOfficers" wire:model.live="accountingOfficerId">
+                <option value="">Accounting Officer</option>
+            </x-form.filter-select>
             <x-form.filter-select :data="$responsiblePersons" wire:model.live="responsiblePersonId">
                 <option value="">Responsible Person</option>
             </x-form.filter-select>

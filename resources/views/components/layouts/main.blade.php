@@ -30,11 +30,11 @@
                 </x-nav-link>
                 <x-nav-link href="/equipments" :active="request()->is('equipments*')">
                     <x-ri-tools-fill class="size-4" />
-                    Equipments
+                    Equipment
                 </x-nav-link>
                 <x-nav-link href="/personnels" :active="request()->is('personnels*')">
                     <x-ri-group-line class=" size-4" />
-                    Personnels
+                    Personnel
                 </x-nav-link>
                 <x-nav-link href="/supplies" :active="request()->is('supplies*')">
                     <x-ri-product-hunt-line class="size-4" />
@@ -60,7 +60,7 @@
                 </x-nav-link>
                 <x-nav-link href="/missing-equipments" :active="request()->is('missing-equipments*')">
                     <x-bi-question-circle class="size-4" />
-                    Missing Equipments
+                    Missing Equipment
                 </x-nav-link>
                 <x-nav-link href="/supplies-history" :active="request()->is('supplies-history*')">
                     <x-ri-history-fill class="size-4" />

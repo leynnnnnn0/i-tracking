@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use App\Models\Personnel;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Dashboard extends Component
