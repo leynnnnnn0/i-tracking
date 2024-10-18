@@ -8,7 +8,6 @@ use App\Enum\OrganizationUnit;
 use App\Enum\Unit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
-use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
 use Exception;
@@ -61,6 +60,7 @@ class Edit extends Component
                 $this->equipment = $this->equipment->fresh();
             });
             Toaster::success('Updated Successfully.');
+            $this->dispatch('Equipment Updated');
             if ($this->previous_responsible_person !== $this->equipment->responsible_person->full_name) {
                 $this->dispatch('download-pdf');
             } else {
