@@ -31,5 +31,32 @@
                 </div>
             </x-stats-container>
         </section>
+
+        <section>
+            <h1 class="font-bold text-primary">Low Stock Supplies</h1>
+            <x-table>
+                <x-tr>
+                    <x-th>Id</x-th>
+                    <x-th>Description</x-th>
+                    <x-th>Total</x-th>
+                    <x-th>Expiry Date</x-th>
+                </x-tr>
+                @foreach ($supplies as $supply)
+                <tr class="border border-b-300">
+                    <x-td>{{ $supply->id }}</x-td>
+                    <x-td>{{ $supply->description }}</x-td>
+                    <x-td>
+                        <span class="px-3 py-1 rounded-lg text-white font-bold border bg-opacity-75 text-border-black {{ App\Helper\ColorStatus::getTotalColor($supply->total)}}">
+                            {{ $supply->total }}
+                        </span>
+                    </x-td>
+                    <x-td>{{ $supply->expiry_date->format('F d, Y') }}</x-td>
+                </tr>
+                @endforeach
+
+            </x-table>
+            <x-no-data :data="$supplies" />
+            {{ $supplies->links() }}
+        </section>
     </div>
 </div>
