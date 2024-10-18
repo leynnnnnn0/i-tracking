@@ -36,13 +36,20 @@ class EquipmentForm extends Form
             'unit' => ['required', 'string', 'min:1'],
             'name' => ['required', 'min:2'],
             'description' => ['nullable', 'string'],
-            'date_acquired' => ['required', 'date'],
+            'date_acquired' => ['required', 'date', 'lte:today'],
             'fund' => ['nullable', 'string'],
             'ppe_class' => ['nullable', 'string'],
             'estimated_useful_time' => ['nullable', 'string'],
             'unit_price' => ['required', 'numeric', 'min:0'],
             'total_amount' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'string']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'date_acquired.lte' => 'Acquired date can\'t be later than today'
         ];
     }
     public function setEquipment(Equipment $equipment)
