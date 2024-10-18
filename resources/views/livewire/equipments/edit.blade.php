@@ -38,6 +38,7 @@
                     wire:model="form.property_number" />
 
                 <x-form.input label="Quantity"
+                    onkeydown="return event.keyCode !== 69"
                     name="form.quantity"
                     type="number"
                     wire:model.lazy="form.quantity" />
@@ -75,12 +76,14 @@
                     :isRequired="false" />
 
                 <x-form.input label="Unit Price"
+                    onkeydown="return event.keyCode !== 69"
                     name="form.unit_price"
                     type="number"
                     step="0.01"
                     wire:model.lazy="form.unit_price" />
 
                 <x-form.input label="Total Amount"
+                    onkeydown="return event.keyCode !== 69"
                     name="form.total_amount"
                     type="number"
                     step="0.01"

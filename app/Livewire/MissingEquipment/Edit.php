@@ -2,6 +2,7 @@
 
 namespace App\Livewire\MissingEquipment;
 
+use App\Enum\EquipmentStatus;
 use App\Enum\MissingStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\MissingEquipmentForm;
@@ -19,6 +20,7 @@ class Edit extends Component
     public MissingEquipmentForm $form;
     public ActivityLogForm $activityLogForm;
     public $report;
+    public $isCondemened = false;
 
     public function mount($id)
     {
@@ -41,6 +43,11 @@ class Edit extends Component
                 $data = $this->form->update($this->report);
                 $this->activityLogForm->setActivityLog($this->report, $data, 'Updated Equipment Missing Report', 'Update');
                 $this->activityLogForm->store();
+                if ($this->isCondemened) {
+                    Equipment::findOrFail($data->equipment_id)->update([
+                        'status' => EquipmentStatus::CONDEMNED->value
+                    ]);;
+                }
             });
             Toaster::success('Updated Successfully.');
             $this->redirect('/missing-equipments');
