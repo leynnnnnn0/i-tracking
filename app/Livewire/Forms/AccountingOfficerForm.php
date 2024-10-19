@@ -24,7 +24,7 @@ class AccountingOfficerForm extends Form
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:15'],
+            'phone_number' => ['required', 'string', 'regex:/^09\d{9}$/'],
         ];
     }
 

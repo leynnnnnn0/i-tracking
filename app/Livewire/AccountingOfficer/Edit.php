@@ -29,8 +29,9 @@ class Edit extends Component
         return view('livewire.accounting-officer.edit');
     }
 
-    public function edit()
+    public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $officer = $this->form->update($this->officer);
@@ -41,6 +42,7 @@ class Edit extends Component
             return $this->redirect('/accounting-officers');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

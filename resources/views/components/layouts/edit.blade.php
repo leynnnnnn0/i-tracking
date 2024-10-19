@@ -8,10 +8,10 @@
             })
         },
     }">
-    <x-plain-heading>Edit {{ $title }}</x-plain-heading>
+    <x-plain-heading>Edit {{ $title }} Details</x-plain-heading>
     <div class="bg-white rounded-xl p-5">
         <section class="pb-5 border-b border-gray-300">
-            <h1 class="text-gray-700 font-bold text-lg">{{ $title }}</h1>
+            <h1 class="text-gray-700 font-bold text-lg">{{ $title }} Details</h1>
             <p class="text-gray-600 text-xs">Please input all the required fields.</p>
         </section>
         <section class="py-2 grid grid-cols-2 gap-5">

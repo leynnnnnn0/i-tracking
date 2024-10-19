@@ -26,8 +26,9 @@ class Edit extends Component
         return view('livewire.offices.edit');
     }
 
-    public function edit()
+    public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $office = $this->form->update($this->office);
@@ -38,6 +39,7 @@ class Edit extends Component
             return $this->redirect('/offices');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

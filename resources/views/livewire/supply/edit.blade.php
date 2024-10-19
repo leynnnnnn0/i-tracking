@@ -1,4 +1,4 @@
-<x-layouts.edit title="Supply Details" cancelLocation="/supplies" wire:click="update">
+<x-layouts.edit title="Supply" cancelLocation="/supplies" wire:click="update">
     <x-form.input wire:model="form.description" name="form.description" label="Description" :isRequired="true" />
     <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :isRequired="true" :data="$units" />
     <x-form.date wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />

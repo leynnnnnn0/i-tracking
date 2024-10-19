@@ -29,8 +29,9 @@ class Edit extends Component
         return view('livewire.responsible-person.edit');
     }
 
-    public function edit()
+    public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $person = $this->form->update($this->person);
@@ -41,6 +42,7 @@ class Edit extends Component
             return $this->redirect('/responsible-persons');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

@@ -40,6 +40,7 @@ class Create extends Component
             return $this->redirect('/users');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

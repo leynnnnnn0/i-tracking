@@ -20,8 +20,7 @@
                 name="form.last_name"
                 wire:model="form.last_name" />
 
-            <x-form.input label="Date of Birth"
-                type="date"
+            <x-form.date label="Date of Birth"
                 name="form.date_of_birth"
                 wire:model="form.date_of_birth" />
 

@@ -31,6 +31,7 @@ class Edit extends Component
 
     public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $equipment = $this->form->update($this->borrowedEquipment);
@@ -41,6 +42,7 @@ class Edit extends Component
             return $this->redirect('/borrowed-logs');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

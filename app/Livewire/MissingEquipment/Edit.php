@@ -36,8 +36,9 @@ class Edit extends Component
         return view('livewire.missing-equipment.edit');
     }
 
-    public function edit()
+    public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $data = $this->form->update($this->report);
