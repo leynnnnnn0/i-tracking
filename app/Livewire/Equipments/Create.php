@@ -31,11 +31,18 @@ class Create extends Component
 
     public function mount()
     {
+        $this->officers = AccountingOfficer::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->full_name
+                ];
+            })
+            ->toArray();
         $this->units = Unit::values();
         $this->statuses = EquipmentStatus::values();
         $this->organizations = OrganizationUnit::values();
         $this->operating_units = OperatingUnitAndProject::values();
-        $this->officers = AccountingOfficer::all()->pluck('full_name', 'id');
         $this->updatePersons();
     }
 
@@ -49,10 +56,15 @@ class Create extends Component
 
     public function updatePersons()
     {
-        $this->persons = ResponsiblePerson::select('id', 'first_name', 'last_name')
-            ->where('accounting_officer_id', $this->officer)
+        $this->persons = ResponsiblePerson::where('accounting_officer_id', $this->officer)
             ->get()
-            ->pluck('full_name', 'id');
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->full_name
+                ];
+            })
+            ->toArray();
     }
 
     public function submit()
