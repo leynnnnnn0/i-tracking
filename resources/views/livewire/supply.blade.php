@@ -38,6 +38,9 @@
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div>
                 <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+                <x-form.filter-select :data="$categories" wire:model.live="category">  
+                    <option value="">Category</option>
+            </x-form.filter-select>
             </div>
             <div class="flex items-center gap-3">
                 <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
@@ -51,7 +54,6 @@
                     <x-th>Description</x-th>
                     <x-th>Quantity</x-th>
                     <x-th>Used</x-th>
-                    <x-th>Recently Added</x-th>
                     <x-th>Total</x-th>
                     <x-th>Expiry Date</x-th>
                     <x-th>Actions</x-th>
@@ -70,7 +72,6 @@
                             {{ $supply->used }}
                         </span>
                     </x-td>
-                    <x-td>{{ $supply->recently_added }}</x-td>
                     <x-td>
                         <span class="px-3 py-1 rounded-lg text-white font-bold border bg-opacity-75 text-border-black {{ $this->getColor($supply->total) }}">
                             {{ $supply->total }}</x-td>

@@ -8,17 +8,7 @@
         <section class="py-2 grid grid-cols-2 gap-5">
             <x-form.input wire:model="form.description" name="form.description" label="Description" :isRequired="true" />
             <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :isRequired="true" :data="$units" />
-            <x-form.input wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
-            <x-form.input wire:model="form.used" name="form.used" label="Used" type="number" />
-            <x-form.input wire:model="form.recently_added" name="form.recently_added" label="Recently Added" type="number" />
             <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />
-            <div class="grid grid-cols-3 gap-2">
-                <x-form.label class="col-span-3">Categories <span class="text-red-500">*</span></x-form.label>
-                @foreach ($categories as $key => $value)
-                <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category->toArray()) ? 'text-white bg-emerald-500' : ''}} text-xs border border-gray-500 rounded-lg px-2 py-1">{{ $value }}</button>
-                @endforeach
-                <x-form.error name="form.category" />
-            </div>
             <div class="flex gap-1 flex-col">
                 <label class="text-sm text-gray-700">Is Consumable? <span class="text-red-500">*</span></label>
                 <div class="flex gap-3 h-full">
@@ -33,6 +23,14 @@
                 </div>
                 <x-form.error name="form.is_consumable" />
             </div>
+            <div class="grid grid-cols-3 gap-2">
+                <x-form.label class="col-span-3">Categories <span class="text-red-500">*</span></x-form.label>
+                @foreach ($categories as $key => $value)
+                <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category->toArray()) ? 'text-white bg-emerald-500' : ''}} text-xs border border-gray-500 rounded-lg px-2 py-1">{{ $value }}</button>
+                @endforeach
+                <x-form.error name="form.category" />
+            </div>
+
         </section>
         <section class="flex justify-end gap-3">
             <a href="/supplies" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>

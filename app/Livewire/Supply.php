@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Helper\ColorStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\SupplyForm;
+use App\Models\Category;
 use App\Models\Supply as ModelsSupply;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,12 @@ class Supply extends Component
     public SupplyForm $form;
     public $query = 'All';
     public $keyword;
+    public $categories;
 
+    public function mount()
+    {
+        $this->categories = Category::all()->pluck('name', 'id');
+    }
 
     public function render()
     {

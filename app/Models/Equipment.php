@@ -58,7 +58,7 @@ class Equipment extends Model
 
     public function missing_equipment_log()
     {
-        return $this->belongsToMany(MissingEquipment::class);
+        return $this->hasMany(MissingEquipment::class);
     }
 
     public function getIsAvailableAttribute()

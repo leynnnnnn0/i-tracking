@@ -22,7 +22,7 @@ class Dashboard extends Component
         $this->availableEquipments = Equipment::where('status', 'Active')->count();
         $this->borrowedEquipments = Equipment::where('status', 'Borrowed')->count();
         $this->personnels = Personnel::count();
-        $this->missingEquipments = MissingEquipment::where('status', 'Reported')->count();
+        $this->missingEquipments = MissingEquipment::count();
     }
     public function render()
     {
