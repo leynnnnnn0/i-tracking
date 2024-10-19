@@ -31,8 +31,9 @@ class Edit extends Component
         return view('livewire.supply.edit');
     }
 
-    public function edit()
+    public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $after = $this->form->update($this->supply);
@@ -43,6 +44,7 @@ class Edit extends Component
             return $this->redirect('/supplies');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 
