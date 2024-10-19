@@ -38,9 +38,9 @@
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div>
                 <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
-                <x-form.filter-select :data="$categories" wire:model.live="category">  
+                <x-form.filter-select :data="$categories" wire:model.live="category">
                     <option value="">Category</option>
-            </x-form.filter-select>
+                </x-form.filter-select>
             </div>
             <div class="flex items-center gap-3">
                 <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
@@ -52,7 +52,6 @@
                 <x-tr>
                     <x-th>Id</x-th>
                     <x-th>Description</x-th>
-                    <x-th>Quantity</x-th>
                     <x-th>Used</x-th>
                     <x-th>Total</x-th>
                     <x-th>Expiry Date</x-th>
@@ -62,11 +61,6 @@
                 <tr class="border-b border-gray-300">
                     <x-td>{{ $supply->id }}</x-td>
                     <x-td>{{ $supply->description }}</x-td>
-                    <x-td>
-                        <span class=" cursor-pointer" @click="showAddQuantityModal({{$supply->id}})">
-                            {{ $supply->quantity }}
-                        </span>
-                    </x-td>
                     <x-td>
                         <span class=" cursor-pointer" @click="toggle({{$supply->id}})">
                             {{ $supply->used }}
@@ -86,13 +80,13 @@
                         </a>
                         <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="openDeleteModal({{ $supply->id }})" />
 
-
+                        <x-text-button class="text-green-500" @click="showAddQuantityModal({{$supply->id}})">Add Quantity</x-text-button>
                     </x-td>
                 </tr>
                 @endforeach
             </x-table>
 
-            <x-no-data :data="$data" />
+            <x-no-data :data=" $data" />
 
             <div class="mt-5">
                 {{ $data->links() }}
@@ -101,7 +95,7 @@
     </section>
 
     <template x-if="open">
-        <div class="flex items-center justify-center absolute bg-black/50 inset-0">
+        <div class="flex items-center justify-center fixed bg-black/50 inset-0">
             <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2">
                 <x-bi-x @click="toggle" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">
@@ -113,7 +107,7 @@
         </div>
     </template>
     <template x-if="showAddQuantity">
-        <div class="flex items-center justify-center absolute bg-black/50 inset-0">
+        <div class="flex items-center justify-center fixed bg-black/50 inset-0">
             <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2">
                 <x-bi-x @click="showAddQuantityModal" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">

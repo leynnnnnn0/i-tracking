@@ -7,6 +7,11 @@
             <p class="text-gray-600 text-xs">Please input all the required fields.</p>
         </section>
         <section class="py-2 grid grid-cols-2 gap-5">
+        <x-form.select label="Accounting Officer"
+                :data="$persons"
+                name="form.responsible_person_id"
+                wire:model="form.responsible_person_id">
+            </x-form.select>
             <x-form.select label="Responsible Person"
                 :data="$persons"
                 name="form.responsible_person_id"

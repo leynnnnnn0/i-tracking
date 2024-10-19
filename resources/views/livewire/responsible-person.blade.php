@@ -29,7 +29,6 @@
         <x-table>
             <x-tr>
                 <x-th>Id</x-th>
-                <x-th>Accounting Officer</x-th>
                 <x-th>Full Name</x-th>
                 <x-th>Email</x-th>
                 <x-th>Phone Number</x-th>
@@ -38,7 +37,6 @@
             @foreach ($persons as $person)
             <tr class="border-b border-gray-300">
                 <x-td>{{ $person->id }}</x-td>
-                <x-td>{{ $person->accounting_officer ? $person->accounting_officer->full_name :'N/A' }}</x-td>
                 <x-td>{{ $person->full_name }}</x-td>
                 <x-td>{{ $person->email }}</x-td>
                 <x-td>{{ $person->phone_number }}</x-td>

@@ -8,7 +8,7 @@
         <section class="py-2 grid grid-cols-2 gap-5">
             <x-form.input wire:model="form.description" name="form.description" label="Description" />
             <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :data="$units" />
-            <x-form.input wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
+            <x-form.input onkeydown="return event.keyCode !== 69" wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
             <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" :isRequired="false" />
 
             <div class="grid grid-cols-3 gap-2">

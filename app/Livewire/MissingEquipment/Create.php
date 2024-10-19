@@ -24,7 +24,15 @@ class Create extends Component
     public function mount()
     {
         $this->form->reported_date = Carbon::today()->format('Y-m-d');
-        $this->equipments = Equipment::pluck('name', 'id');
+        $this->equipments = Equipment::select('id', 'name', 'property_number')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => "{$item->name} (PN: {$item->property_number})"
+                ];
+            })
+            ->toArray();
         $this->statuses = MissingStatus::values();
     }
     public function render()

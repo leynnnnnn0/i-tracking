@@ -8,7 +8,10 @@
                 <p class="text-gray-600 text-xs">Please input all the required fields.</p>
             </section>
             <section class="py-2 grid grid-cols-2 gap-5">
-                <x-form.select label="Equipment" :data="$equipments" name="form.equipment_id" wire:model="form.equipment_id" />
+                <div class="flex flex-col">
+                    <span class="text-sm text-gray-700">Equipment</span>
+                    <x-tsselect.styled :options="$equipments" select="label:label|value:value" searchable wire:model="form.equipment_id" />
+                </div>
                 <x-form.select label="Status" :data="$statuses" name="form.status" wire:model.live="form.status" />
                 <x-form.input label="Reported By" name="form.reported_by" wire:model="form.reported_by" />
                 <x-form.input label="Reported Date" name="form.reported_date" type="date" wire:model="form.reported_date" />
