@@ -2,7 +2,7 @@
      showConfirmationModal: false,
      openConfirmationModal() {
             this.showConfirmationModal = true;
-            Livewire.on('Equipment Updated', () => {
+            Livewire.on('Confirm Update', () => {
             this.showConfirmationModal = false;
             })
         },
@@ -70,10 +70,11 @@
                     name="form.ppe_class"
                     wire:model="form.ppe_class" />
 
-                <x-form.input label="Estimated Useful Time"
-                    name="form.estimated_useful_time"
-                    wire:model="form.estimated_useful_time"
-                    :isRequired="false" />
+                <div class="flex flex-col">
+                    <span>Estimated Useful Time</span>
+                    <x-tsdate month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" />
+                    <x-form.error name="form.estimated_useful_time" />
+                </div>
 
                 <x-form.input label="Unit Price"
                     onkeydown="return event.keyCode !== 69"

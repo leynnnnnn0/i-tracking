@@ -4,6 +4,7 @@ namespace App\Livewire\Forms;
 
 use App\Models\Equipment;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
@@ -40,7 +41,7 @@ class EquipmentForm extends Form
             'date_acquired' => ['required', 'date', 'before_or_equal:' . Carbon::today()],
             'fund' => ['nullable', 'string'],
             'ppe_class' => ['nullable', 'string'],
-            'estimated_useful_time' => ['nullable', 'string'],
+            'estimated_useful_time' => ['nullable', 'after:today'],
             'unit_price' => ['required', 'numeric', 'min:0'],
             'total_amount' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'string']
@@ -50,7 +51,8 @@ class EquipmentForm extends Form
     public function messages()
     {
         return [
-            'date_acquired.before_or_equal' => 'Acquired date can\'t be greater than today'
+            'date_acquired.before_or_equal' => 'Acquired date can\'t be greater than today',
+            'estimated_useful_time' => 'Estimated useful time can\'t be before or equals today'
         ];
     }
     public function setEquipment(Equipment $equipment)

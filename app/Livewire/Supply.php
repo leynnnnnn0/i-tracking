@@ -34,7 +34,7 @@ class Supply extends Component
             $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
         }
 
-        $supplies = $query->latest()->paginate(10);
+        $supplies = $query->orderByDesc('total')->paginate(10);
         return view('livewire.supply', [
             'data' => $supplies
         ]);

@@ -51,6 +51,7 @@ class Edit extends Component
 
     public function update()
     {
+        $this->dispatch('Confirm Update');
         $this->previous_responsible_person = $this->equipment->responsible_person->full_name;
         try {
             DB::transaction(function () {
@@ -58,9 +59,9 @@ class Edit extends Component
                 $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
                 $this->activityLogForm->store();
                 $this->equipment = $this->equipment->fresh();
+                $this->dispatch('Equipment Updated');
             });
             Toaster::success('Updated Successfully.');
-            $this->dispatch('Equipment Updated');
             if ($this->previous_responsible_person !== $this->equipment->responsible_person->full_name) {
                 $this->dispatch('download-pdf');
             } else {
@@ -68,6 +69,7 @@ class Edit extends Component
             }
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 

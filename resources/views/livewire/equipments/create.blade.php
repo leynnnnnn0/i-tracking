@@ -7,15 +7,15 @@
             <p class="text-gray-600 text-xs">Please input all the required fields.</p>
         </section>
         <section class="py-2 grid grid-cols-2 gap-5">
-        <x-form.select label="Accounting Officer"
-                :data="$persons"
-                name="form.responsible_person_id"
-                wire:model="form.responsible_person_id">
+            <x-form.select label="Accounting Officer"
+                :data="$officers"
+                wire:model.live="officer"
+                name="officer">
             </x-form.select>
             <x-form.select label="Responsible Person"
                 :data="$persons"
                 name="form.responsible_person_id"
-                wire:model="form.responsible_person_id">
+                wire:model.live="form.responsible_person_id">
             </x-form.select>
 
             <x-form.select label="Organization Unit"
@@ -66,10 +66,10 @@
                 name="form.ppe_class"
                 wire:model="form.ppe_class" />
 
-            <x-form.input label="Estimated Useful Time"
-                name="form.estimated_useful_time"
-                wire:model="form.estimated_useful_time"
-                :isRequired="false" />
+            <div class="flex flex-col">
+                <span>Estimated Useful Time</span>
+                <x-tsdate month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" />
+            </div>
 
             <x-form.input label="Unit Price"
                 onkeydown="return event.keyCode !== 69"

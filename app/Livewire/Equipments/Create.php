@@ -8,9 +8,11 @@ use App\Enum\OrganizationUnit;
 use App\Enum\Unit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
+use App\Models\AccountingOfficer;
 use App\Models\ResponsiblePerson;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -23,6 +25,9 @@ class Create extends Component
     public $organizations;
     public $operating_units;
     public $units;
+    #[Validate('required')]
+    public $officers;
+    public $officer;
 
     public function mount()
     {
@@ -30,7 +35,22 @@ class Create extends Component
         $this->statuses = EquipmentStatus::values();
         $this->organizations = OrganizationUnit::values();
         $this->operating_units = OperatingUnitAndProject::values();
+        $this->officers = AccountingOfficer::all()->pluck('full_name', 'id');
+        $this->updatePersons();
+    }
+
+    public function updated($propertyName)
+    {
+        if ($propertyName === 'officer') {
+            $this->updatePersons();
+            $this->form->responsible_person_id = null; // Reset the selected person
+        }
+    }
+
+    public function updatePersons()
+    {
         $this->persons = ResponsiblePerson::select('id', 'first_name', 'last_name')
+            ->where('accounting_officer_id', $this->officer)
             ->get()
             ->pluck('full_name', 'id');
     }
