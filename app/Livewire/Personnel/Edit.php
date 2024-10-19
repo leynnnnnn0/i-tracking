@@ -35,8 +35,9 @@ class Edit extends Component
         return view('livewire.personnel.edit');
     }
 
-    public function submit()
+    public function update()
     {
+        $this->dispatch('Confirm Update');
         try {
             DB::transaction(function () {
                 $personnel = $this->form->update($this->personnel);
@@ -47,6 +48,7 @@ class Edit extends Component
             return $this->redirect('/personnels');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

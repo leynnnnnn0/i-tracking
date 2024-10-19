@@ -1,4 +1,12 @@
-<div class="space-y-4">
+<div x-data="{
+     showConfirmationModal: false,
+     openConfirmationModal() {
+            this.showConfirmationModal = true;
+            Livewire.on('Confirm Update', () => {
+            this.showConfirmationModal = false;
+            })
+        },
+    }">
     <h1 class="font-bold text-2xl text-emerald-900">Edit Supply Details</h1>
     <div class="bg-white rounded-xl p-5">
         <section class="pb-5 border-b border-gray-300">
@@ -8,7 +16,7 @@
         <section class="py-2 grid grid-cols-2 gap-5">
             <x-form.input wire:model="form.description" name="form.description" label="Description" :isRequired="true" />
             <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :isRequired="true" :data="$units" />
-            <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />
+            <x-form.date wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" />
             <div class="flex gap-1 flex-col">
                 <label class="text-sm text-gray-700">Is Consumable? <span class="text-red-500">*</span></label>
                 <div class="flex gap-3 h-full">
@@ -37,4 +45,9 @@
             <x-primary-button wire:click="edit">Edit</x-primary-button>
         </section>
     </div>
+
+    <!-- Modal -->
+    <template x-if="showConfirmationModal">
+        <x-confirmation-modal message="Are you sure you want to update the equipment details?" wire:click="update" />
+    </template>
 </div>

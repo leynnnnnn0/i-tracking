@@ -26,6 +26,11 @@ class AccountingOfficer extends Model
         return $this->belongsTo(Office::class);
     }
 
+    public function equipment()
+    {
+        return $this->hasManyThrough(Equipment::class, ResponsiblePerson::class);
+    }
+
     public function responsible_persons()
     {
         return $this->hasMany(ResponsiblePerson::class);

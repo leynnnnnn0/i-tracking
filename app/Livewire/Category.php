@@ -15,6 +15,7 @@ class Category extends Component
 {
     use WithPagination;
     public ActivityLogForm $activityLogForm;
+    
     public function render()
     {
         return view('livewire.category', [

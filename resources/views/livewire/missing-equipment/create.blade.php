@@ -8,11 +8,12 @@
                 <p class="text-gray-600 text-xs">Please input all the required fields.</p>
             </section>
             <section class="py-2 grid grid-cols-2 gap-5">
-                <x-form.tsselect :options="$equipments" wire:model="form.equipment_id" :options="$equipments" label="Equipment" />
+                <x-form.tsselect :options="$equipments" wire:model.live="form.equipment_id" :options="$equipments" label="Equipment" />
                 <x-form.select label="Status" :data="$statuses" name="form.status" wire:model.live="form.status" />
                 <x-form.input label="Reported By" name="form.reported_by" wire:model="form.reported_by" />
                 <x-form.input label="Reported Date" name="form.reported_date" type="date" wire:model="form.reported_date" />
                 <x-form.text-area label="Description" name="form.description" wire:model="form.description" :isRequired="false" />
+                <x-form.input label="Quantity" name="form.quantity" wire:model="form.quantity" type="number" onkeydown="return event.keyCode !== 69" :hint="$quantityHint" />
 
                 @if($form->status === 'Reported to SPMO')
                 <div class="flex gap-1 flex-col">

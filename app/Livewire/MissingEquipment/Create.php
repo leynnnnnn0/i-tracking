@@ -20,6 +20,7 @@ class Create extends Component
     public $statuses;
     public $equipments;
     public $isCondemened = false;
+    public $quantityHint = "";
 
     public function mount()
     {
@@ -37,6 +38,9 @@ class Create extends Component
     }
     public function render()
     {
+        if ($this->form->equipment_id) {
+            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
+        }
         return view('livewire.missing-equipment.create');
     }
 
@@ -57,6 +61,7 @@ class Create extends Component
             return $this->redirect('/missing-equipments');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

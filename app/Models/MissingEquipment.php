@@ -15,6 +15,7 @@ class MissingEquipment extends Model
 
     protected $fillable = [
         'equipment_id',
+        'quantity',
         'status',
         'description',
         'reported_by',

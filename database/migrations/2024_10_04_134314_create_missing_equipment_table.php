@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Equipment::class)->constrained();
             $table->enum('status', MissingStatus::values());
+            $table->integer('quantity');
             $table->text('description')->nullable();
             $table->string('reported_by');
             $table->date('reported_date');

@@ -20,6 +20,7 @@ class Supply extends Component
     public SupplyForm $form;
     public $keyword;
     public $categories;
+    public $category;
 
     public function mount()
     {
@@ -32,6 +33,14 @@ class Supply extends Component
 
         if ($this->keyword) {
             $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
+        }
+
+        if ($this->category) {
+            $query->when($this->category, function ($query) {
+                return $query->whereHas('categories', function ($q) {
+                    $q->where('categories.id', $this->category);
+                });
+            });
         }
 
         $supplies = $query->orderByDesc('total')->paginate(10);

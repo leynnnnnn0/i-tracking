@@ -16,11 +16,9 @@
                 <p class="text-gray-600 text-xs">Please input all the required fields.</p>
             </section>
             <section class="py-2 grid grid-cols-2 gap-5">
-                <x-form.select label="Responsible Person"
-                    :data="$persons"
-                    name="form.responsible_person_id"
-                    wire:model="form.responsible_person_id">
-                </x-form.select>
+                <x-form.tsselect :options="$officers" wire:model.live="officer" label="Accounting Officer" />
+
+                <x-form.tsselect :options="$persons" wire:model.live="form.responsible_person_id" label="Responsible Person" />
 
                 <x-form.select label="Organization Unit"
                     :data="$organizations"

@@ -52,11 +52,12 @@ class PersonnelForm extends Form
             'phone_number' => ['required', 'regex:/^09\d{9}$/'],
             'email' => ['required', 'email', Rule::unique('personnels')->ignore($this->personnel_id)],
             'position' => ['required', 'in:' . implode(',', Position::values())],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['nullable', 'date'],
+            'start_date' => ['required', 'date', 'before_or_equal:today'],
+            'end_date' => ['nullable', 'date', 'after:start_date'],
             'remarks' => ['nullable', 'string'],
         ];
     }
+
 
     public function update(Personnel $personnel)
     {
