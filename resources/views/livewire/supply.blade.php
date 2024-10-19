@@ -26,14 +26,6 @@
             }}">
     <section class="space-y-3">
         <x-index-header heading="Supplies" buttonName="Create New Supply" location="/supplies/create" wire:click="downloadPdf" />
-
-        <x-filter-tab>
-            <x-filter-tab-button :active="$query === 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
-            <x-filter-tab-button :active="$query === 'High'" wire:click="setQuery('High')">High Stock</x-filter-tab-button>
-            <x-filter-tab-button :active="$query === 'Medium'" wire:click="setQuery('Medium')">Medium Stock</x-filter-tab-button>
-            <x-filter-tab-button :active="$query === 'Low'" wire:click="setQuery('Low')">Low Stock</x-filter-tab-button>
-        </x-filter-tab>
-
         <!-- Filter -->
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div>

@@ -18,7 +18,6 @@ class Supply extends Component
     use WithPagination;
     public ActivityLogForm $activityLogForm;
     public SupplyForm $form;
-    public $query = 'All';
     public $keyword;
     public $categories;
 
@@ -30,14 +29,6 @@ class Supply extends Component
     public function render()
     {
         $query = ModelsSupply::query();
-
-        if ($this->query !== 'All') {
-            $query = match ($this->query) {
-                'High' => $query->where('total', '>', 20),
-                'Medium' => $query->where([['total', '>', 10], ['total', '<=', 20]]),
-                'Low' => $query->where('total', '<=', 10)
-            };
-        }
 
         if ($this->keyword) {
             $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
