@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('description');
             $table->string('unit');
-            $table->string('quantity');
+            $table->integer('quantity');
             $table->integer('used')->default(0);
             $table->integer('recently_added')->default(0);
             $table->integer('total')->default(0);
