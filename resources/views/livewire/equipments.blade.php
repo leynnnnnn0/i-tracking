@@ -73,13 +73,13 @@
                 <x-td>{{ $equipment->id }}</x-td>
                 <x-td>{{ $equipment->name }}</x-td>
                 <x-td>{{ $equipment->property_number }}</x-td>
-                <x-td>{{ $query === 'Condemned' ? $equipment->total_missing_equipment->total_quantity : $equipment->quantity }}</x-td>
+                <x-td>{{ $query === 'All' ||  $query === 'Active' ? $equipment->quantity : $equipment->total_missing_equipment->total_quantity ?? $equipment->total_borrowed  }}</x-td>
                 <x-td>{{ $equipment->organization_unit }}</x-td>
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
                 <x-td>
-                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'Condemned' ? App\Enum\EquipmentStatus::getColor('Condemned') : App\Enum\EquipmentStatus::getColor($equipment->status) }}">
-                        {{ $query === 'Condemned' ? 'Condemned' : $equipment->status }}
+                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'All' ? App\Enum\EquipmentStatus::getColor($equipment->status) : App\Enum\EquipmentStatus::getColor($query) }}">
+                        {{ $query === 'All' ? 'Active' : $query }}
                     </span>
                 </x-td>
                 <x-td class="flex items-center gap-2">
@@ -125,6 +125,7 @@
                 name="borrowEquipmentForm.start_date" type="date" wire:model="borrowEquipmentForm.start_date" />
             <x-form.input label="End Date"
                 name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" />
+            <x-form.input label="Equipment Quantity" name="borrowEquipmentForm.quantity" wire:model="borrowEquipmentForm.quantity" type="number" onkeydown="return event.keyCode !== 69" :hint="$quantityHint" />
             <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
                 <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</button>
                 <x-primary-button wire:click="submit">Submit</x-primary-button>

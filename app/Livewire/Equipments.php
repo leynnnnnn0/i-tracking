@@ -38,6 +38,7 @@ class Equipments extends Component
     public $responsiblePersonId;
     public $operatingUnit;
     public $organizationUnit;
+    public $quantityHint = "";
 
     public $showPdfModal = false;
 
@@ -83,7 +84,7 @@ class Equipments extends Component
     public function render()
     {
         $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer', 'total_missing_equipment');
+            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer', 'total_missing_equipment', 'total_borrowed_quantity');
 
         if ($this->query === 'All') {
             $query->where('quantity', '>', 0);
@@ -96,7 +97,9 @@ class Equipments extends Component
         }
 
         if ($this->query === 'Borrowed') {
-            $query->where('status', $this->query);
+            $query->whereHas('total_borrowed_quantity', function ($q) {
+                $q->whereNull('returned_date');
+            });
         }
 
         if ($this->keyword) {
@@ -144,6 +147,9 @@ class Equipments extends Component
         $this->targetId = $id;
         $this->equipmentsList = Equipment::find($this->targetId)->pluck('name', 'id');
         $this->borrowEquipmentForm->equipment_id = $id;
+        if ($this->borrowEquipmentForm->equipment_id) {
+            $this->quantityHint = "Available: " . Equipment::select('quantity')->find($this->borrowEquipmentForm->equipment_id)->quantity;
+        }
     }
 
     public function submit()
@@ -158,6 +164,7 @@ class Equipments extends Component
             $this->dispatch('borrowLogCreated');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 

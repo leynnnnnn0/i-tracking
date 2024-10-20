@@ -6,6 +6,7 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -17,15 +18,20 @@ class Edit extends Component
     public BorrowedEquipment $borrowedEquipment;
     public ActivityLogForm $activityLogForm;
     public $equipments;
+    public $quantityHint = "";
 
     public function mount($id)
     {
         $this->borrowedEquipment = BorrowedEquipment::findOrFail($id);
         $this->form->setBorrowEquipment($this->borrowedEquipment);
         $this->equipments = Equipment::where('status', 'Borrowed')->get()->pluck('name', 'id');
+        $this->form->returned_date =  Carbon::today()->format('Y-m-d');
     }
     public function render()
     {
+        if ($this->form->equipment_id) {
+            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
+        }
         return view('livewire.borrower-log.edit');
     }
 

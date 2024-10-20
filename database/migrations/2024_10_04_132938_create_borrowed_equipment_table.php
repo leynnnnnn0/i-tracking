@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('borrowed_equipment', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Equipment::class)->constrained()->cascadeOnDelete();
+            $table->integer('quantity');
             $table->string('borrower_first_name');
             $table->string('borrower_last_name');
             $table->string('borrower_email')->nullable();

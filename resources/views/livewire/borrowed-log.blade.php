@@ -41,6 +41,7 @@
             <x-tr>
                 <x-th>Id</x-th>
                 <x-th>Equipment</x-th>
+                <x-th>Borrowed Quantity</x-th>
                 <x-th>Borrower</x-th>
                 <x-th>Start Date</x-th>
                 <x-th>End Date</x-th>
@@ -50,7 +51,8 @@
             @foreach ($logs as $log)
             <tr class="border-b border-gray-300">
                 <x-td>{{ $log->id }}</x-td>
-                <x-td>{{ $log->equipment ? $log->equipment->name : 'N/A' }}</x-td>
+                <x-td>{{ $log->equipment->name }}</x-td>
+                <x-td>{{ $log->quantity }}</x-td>
                 <x-td>{{ $log->full_name }}</x-td>
                 <x-td>{{ $log->start_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>

@@ -45,7 +45,7 @@
                 <td>Until {{ Carbon\Carbon::createFromFormat('Y-m', $equipment->estimated_useful_time)->format('F Y') }}</td>
                 <td>{{ number_format($equipment->unit_price, 2) }}</td>
                 <td>{{ number_format($equipment->total_amount, 2) }}</td>
-                <td>{{ $equipment->status }}</td>
+                <td>{{ $query === 'Condemned' ? 'Condemned' : $equipment->status }}</td>
             </tr>
             @endforeach
         </tbody>

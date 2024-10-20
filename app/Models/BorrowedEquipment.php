@@ -15,6 +15,7 @@ class BorrowedEquipment extends Model
 
     protected $fillable = [
         'equipment_id',
+        'quantity',
         'borrower_first_name',
         'borrower_last_name',
         'borrower_phone_number',
@@ -30,7 +31,7 @@ class BorrowedEquipment extends Model
         return [
             'start_date' => 'date',
             'end_date' => 'date',
-            'returned_date' => 'date'
+            'returned_date' => 'date',
         ];
     }
 

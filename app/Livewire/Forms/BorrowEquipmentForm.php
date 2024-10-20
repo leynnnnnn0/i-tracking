@@ -3,6 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\BorrowedEquipment;
+use App\Models\Equipment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Form;
 
@@ -16,11 +18,28 @@ class BorrowEquipmentForm extends Form
     public $start_date;
     public $end_date;
     public $is_returned = false;
+    public $quantity;
+    public $returned_date;
 
     public function rules()
     {
         return [
             'equipment_id' => ['required', 'exists:equipment,id'],
+            'quantity' => [
+                'required',
+                'integer',
+                'min:1',
+                function ($attribute, $value, $fail) {
+                    $equipment = Equipment::find($this->equipment_id);
+                    if ($equipment) {
+                        if ($value > $equipment->quantity) {
+                            $fail("The {$attribute} must not exceed the equipment's total quantity of {$equipment->quantity}.");
+                        }
+                    } else {
+                        $fail("Unable to verify equipment quantity. Please ensure a valid equipment is selected.");
+                    }
+                },
+            ],
             'borrower_first_name' => ['required', 'string', 'max:255'],
             'borrower_last_name' => ['required', 'string', 'max:255'],
             'borrower_phone_number' => ['required', 'regex:/^09\d{9}$/'],
@@ -34,6 +53,7 @@ class BorrowEquipmentForm extends Form
     public function setBorrowEquipment(BorrowedEquipment $borrowedEquipment)
     {
         $this->equipment_id = $borrowedEquipment->equipment_id;
+        $this->quantity = $borrowedEquipment->quantity;
         $this->borrower_first_name = $borrowedEquipment->borrower_first_name;
         $this->borrower_last_name = $borrowedEquipment->borrower_last_name;
         $this->borrower_phone_number = $borrowedEquipment->borrower_phone_number;
@@ -47,13 +67,7 @@ class BorrowEquipmentForm extends Form
     public function store()
     {
         $this->validate();
-        DB::transaction(function () use (&$borrowedItem) {
-            $borrowedItem = BorrowedEquipment::create($this->all());
-            $borrowedItem->equipment()->update([
-                'Status' => 'Borrowed'
-            ]);
-        });
-        return $borrowedItem;
+        return BorrowedEquipment::create($this->all());
     }
 
     public function update(BorrowedEquipment $borrowedEquipment)
@@ -62,4 +76,6 @@ class BorrowEquipmentForm extends Form
         $borrowedEquipment->update($this->all());
         return $borrowedEquipment->fresh();
     }
+
+    public function returned() {}
 }

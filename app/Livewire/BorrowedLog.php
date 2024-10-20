@@ -93,10 +93,8 @@ class BorrowedLog extends Component
                 $log = BorrowedEquipment::orderBy('created_at', 'desc')->findOrFail($id);
                 $before = $log;
                 $log->update([
+                    'is_returned' => true,
                     'returned_date' => Carbon::today()->format('Y-m-d')
-                ]);
-                $log->equipment->update([
-                    'status' => 'Active'
                 ]);
                 $this->activityLogForm->setActivityLog($before, $log->fresh(), 'Mark Borrowed Item as Returned', 'Update');
                 $this->activityLogForm->store();

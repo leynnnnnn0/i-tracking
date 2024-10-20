@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', MissingEquipment::class)->name('index');
         Route::get('/create', MissingEquipment\Create::class)->name('create');
         Route::get('/edit/{id}', MissingEquipment\Edit::class)->name('edit');
+        Route::get('/view/{id}', MissingEquipment\View::class)->name('view');
     });
 
     Route::prefix('users')->name('users.')->group(function () {

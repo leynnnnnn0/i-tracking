@@ -68,6 +68,18 @@ class Equipment extends Model
             ->groupBy('equipment_id');
     }
 
+    public function total_borrowed_quantity()
+    {
+        return $this->hasOne(BorrowedEquipment::class)
+            ->selectRaw('equipment_id, SUM(quantity) as total_borrowed')
+            ->groupBy('equipment_id');
+    }
+
+    public function getTotalBorrowedAttribute()
+    {
+        return $this->total_borrowed_quantity ? $this->total_borrowed_quantity->total_borrowed : 0;
+    }
+
     public function getIsAvailableAttribute()
     {
         return $this->borrowed_log->count() >= 1 ? 'No' : 'Yes';

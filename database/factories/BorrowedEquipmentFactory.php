@@ -21,6 +21,7 @@ class BorrowedEquipmentFactory extends Factory
 
         return [
             'equipment_id' => fake()->numberBetween(1, 100),
+            'quantity' => 1,
             'borrower_first_name' => fake()->firstName(),
             'borrower_last_name' => fake()->lastName(),
             'borrower_email' => fake()->safeEmail(),

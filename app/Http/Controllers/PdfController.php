@@ -211,11 +211,21 @@ class PdfController extends Controller
     {
 
         $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer');
+            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer', 'total_missing_equipment');
 
-        if ($request->filter !== 'All') {
-            $query->where('status', $request->filter);
-        }
+            if ($request->query === 'All') {
+                $query->where('quantity', '>', 0);
+            }
+    
+            if ($request->query === 'Condemned') {
+                $query->whereHas('total_missing_equipment', function ($q) {
+                    $q->where('is_condemned', true);
+                });
+            }
+    
+            if ($request->query === 'Borrowed') {
+                $query->where('status', $request->query);
+            }
 
         if ($request->keyword) {
             $query->where(function ($q) use ($request) {
@@ -258,7 +268,8 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.EquipmentList', [
             'data' => $equipments,
             'isAccountingOfficerFiltered' => $isAccountingOfficerFiltered,
-            'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('responsible_person_id', $request->responsiblePersonId)->first()->responsible_person->full_name : false
+            'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('responsible_person_id', $request->responsiblePersonId)->first()->responsible_person->full_name : false,
+            'query' => $request->query
         ]);
 
         return $pdf->setPaper('a4', 'landscape')->download('equipments-' . Carbon::today()->format('F d, Y') . '.pdf');

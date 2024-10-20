@@ -15,10 +15,12 @@ class Create extends Component
     public BorrowEquipmentForm $form;
     public ActivityLogForm $activityLogForm;
     public $equipments;
+    public $quantityHint = "";
 
     public function mount()
     {
         $this->equipments = Equipment::where('status', 'Active')
+            ->where('quantity', '>', 0)
             ->select('id', 'name', 'property_number')
             ->get()
             ->map(function ($item) {
@@ -31,6 +33,9 @@ class Create extends Component
     }
     public function render()
     {
+        if ($this->form->equipment_id) {
+            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
+        }
         return view('livewire.borrower-log.create');
     }
 
@@ -41,6 +46,7 @@ class Create extends Component
                 $data = $this->form->store();
                 $this->activityLogForm->setActivityLog(null, $data, 'Created Borrow Log', 'Create');
                 $this->activityLogForm->store();
+                $this->form->reset();
             });
             Toaster::success('Successfully Created!');
             return $this->redirect('/borrowed-logs');

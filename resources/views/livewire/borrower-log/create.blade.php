@@ -7,6 +7,7 @@
         </section>
         <section class="py-2 grid grid-cols-2 gap-5">
             <x-form.tsselect :options="$equipments" wire:model.live="form.equipment_id" :options="$equipments" label="Equipment" />
+            <x-form.input label="Equipment Quantity" name="form.quantity" wire:model="form.quantity" type="number" onkeydown="return event.keyCode !== 69" :hint="$quantityHint" />
             <x-form.input label="Borrower First Name" name="form.borrower_first_name" wire:model="form.borrower_first_name" />
             <x-form.input label="Borrower Last Name" name="form.borrower_last_name" wire:model="form.borrower_last_name" />
             <x-form.input label="Phone Number" name="form.borrower_phone_number" wire:model="form.borrower_phone_number" />
@@ -15,7 +16,7 @@
             <x-form.date label="End Date" name="form.end_date" wire:model="form.end_date" />
         </section>
         <section class="flex justify-end gap-3">
-            <a href="/borrow-logs" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
+            <a href="/borrowed-logs" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
             <x-primary-button wire:click="submit">Submit</x-primary-button>
         </section>
     </div>
