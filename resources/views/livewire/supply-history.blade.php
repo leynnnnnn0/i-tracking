@@ -9,6 +9,7 @@
         <!-- Filter -->
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div class="flex items-end gap-3">
+                <x-form.input label="Supply Name" name="name" wire:model="name" placeholder="Search..." />
                 <x-form.input label="From" name="from" type="date" wire:model="from" />
                 <x-form.input label="To" name="to" type="date" wire:model="to" />
             </div>

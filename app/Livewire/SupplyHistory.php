@@ -12,14 +12,21 @@ class SupplyHistory extends Component
     use WithPagination;
     public $from;
     public $to;
+    public $name;
 
     #[On('filter-supplies-history')]
     public function render()
     {
         $query = ModelsSupplyHistory::query()->with('supply');
+        if ($this->name) {
+            $query->whereHas('supply', function ($q) {
+                $q->where('supplies.description', $this->name);
+            });
+        }
         if ($this->from && $this->to) {
             $query->whereBetween('created_at', [$this->from, $this->to]);
         }
+
         $history = $query->latest()->paginate(10);
         return view('livewire.supply-history', [
             'history' => $history
@@ -30,7 +37,8 @@ class SupplyHistory extends Component
     {
         $params = [
             'to' => $this->to,
-            'from' => $this->from
+            'from' => $this->from,
+            'name' => $this->name
         ];
         $params = array_filter($params, function ($value) {
             return $value !== null;
@@ -42,6 +50,7 @@ class SupplyHistory extends Component
     {
         $this->from = null;
         $this->to = null;
+        $this->name = null;
     }
 
     public function filter()

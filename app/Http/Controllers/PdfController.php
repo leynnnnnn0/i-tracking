@@ -96,6 +96,11 @@ class PdfController extends Controller
     public function supplyHistoryPdf(Request $request)
     {
         $query = SupplyHistory::query()->with('supply');
+        if ($request->name) {
+            $query->whereHas('supply', function ($q) use ($request) {
+                $q->where('supplies.description', $request->name);
+            });
+        }
         if ($request->from && $request->to) {
             $query->whereBetween('created_at', [$request->from, $request->to]);
         }
