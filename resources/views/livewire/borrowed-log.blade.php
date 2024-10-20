@@ -51,7 +51,7 @@
             <tr class="border-b border-gray-300">
                 <x-td>{{ $log->id }}</x-td>
                 <x-td>{{ $log->equipment ? $log->equipment->name : 'N/A' }}</x-td>
-                <x-td>{{ $log->borrower_first_name }}</x-td>
+                <x-td>{{ $log->full_name }}</x-td>
                 <x-td>{{ $log->start_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>

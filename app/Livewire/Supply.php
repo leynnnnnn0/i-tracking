@@ -52,7 +52,7 @@ class Supply extends Component
     public function downloadPdf()
     {
         $params = [
-            'filter' => $this->query,
+            'category' => $this->category,
             'keyword' => $this->keyword
         ];
         $params = array_filter($params, function ($value) {
@@ -61,14 +61,10 @@ class Supply extends Component
         return redirect()->route('supplies-pdf', $params);
     }
 
-    public function setQuery($query)
-    {
-        $this->query = $query;
-    }
-
     public function resetFilter()
     {
-        $this->keyword = "";
+        $this->keyword = null;
+        $this->category = null;
     }
 
     public function getColor($total)

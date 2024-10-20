@@ -18,7 +18,16 @@ class Create extends Component
 
     public function mount()
     {
-        $this->equipments = Equipment::where('status', 'Active')->get()->pluck('name', 'id');
+        $this->equipments = Equipment::where('status', 'Active')
+            ->select('id', 'name', 'property_number')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => "{$item->name} (PN: {$item->property_number})"
+                ];
+            })
+            ->toArray();
     }
     public function render()
     {
@@ -36,6 +45,8 @@ class Create extends Component
             Toaster::success('Successfully Created!');
             return $this->redirect('/borrowed-logs');
         } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

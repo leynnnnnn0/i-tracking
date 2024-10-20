@@ -32,7 +32,6 @@ class UserForm extends Form
         $this->phone_number = $user->phone_number;
         $this->email = $user->email;
         $this->role = $user->role;
-        $this->password = Str::mask($user->password, '*', 3);
     }
 
     public function rules()
@@ -59,7 +58,7 @@ class UserForm extends Form
     {
         $this->user_id = $user->id;
         $this->validate();
-        $user->update($this->all());
+        $user->update($this->except('password'));
         return $user->fresh();
     }
 }

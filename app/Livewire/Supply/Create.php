@@ -38,6 +38,7 @@ class Create extends Component
             });
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 

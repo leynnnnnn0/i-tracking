@@ -5,5 +5,5 @@
     <x-form.input label="Phone Number" name="form.borrower_phone_number" wire:model="form.borrower_phone_number" />
     <x-form.input label="Email" name="form.borrower_email" type="email" wire:model="form.borrower_email" />
     <x-form.date label="Start Date" name="form.start_date" wire:model="form.start_date" />
-    <x-form.input label="End Date" name="form.end_date" type="date" wire:model="form.end_date" />
+    <x-form.date label="End Date" name="form.end_date" wire:model="form.end_date" />
 </x-layouts.edit>

@@ -39,10 +39,6 @@
                 name="form.email"
                 wire:model="form.email" />
 
-            <x-form.input label="Password"
-                type="password"
-                name="form.password"
-                wire:model="form.password" />
 
             <x-form.select label="Role"
                 :data="$roles"

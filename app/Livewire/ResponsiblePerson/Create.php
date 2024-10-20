@@ -36,6 +36,7 @@ class Create extends Component
             return $this->redirect('/responsible-persons');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

@@ -16,6 +16,7 @@
                 @foreach ($categories as $key => $value)
                 <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category) ? 'text-white bg-primary' : ''}} text-xs border border-gray-500 rounded-lg px-2 py-1">{{ $value }}</button>
                 @endforeach
+                <br>
                 <x-form.error name="form.category" />
             </div>
 

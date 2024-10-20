@@ -29,6 +29,7 @@ class Create extends Component
             return $this->redirect('/categories');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }

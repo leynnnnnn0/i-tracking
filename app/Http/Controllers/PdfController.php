@@ -151,19 +151,19 @@ class PdfController extends Controller
     public function supplyListPdf(Request $request)
     {
         $query = Supply::query();
-        if ($request->filter) {
-            $query = match ($request->filter) {
-                'All' => $query,
-                'High' => $query->where('total', '>', 20),
-                'Medium' => $query->where([['total', '>', 10], ['total', '<=', 20]]),
-                'Low' => $query->where('total', '<=', 10)
-            };
-        }
 
         if ($request->keyword) {
             if ($request->keyword) {
                 $query->whereAny(['description', 'id'], 'like', '%' . $request->keyword . '%');
             }
+        }
+
+        if ($request->category) {
+            $query->when($request->category, function ($query) use ($request) {
+                return $query->whereHas('categories', function ($q) use ($request) {
+                    $q->where('categories.id', $request->category);
+                });
+            });
         }
         $supplies = $query->get();
         $pdf = Pdf::loadView('pdf.SupplyList', [

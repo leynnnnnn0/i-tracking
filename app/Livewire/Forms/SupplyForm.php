@@ -28,7 +28,7 @@ class SupplyForm extends Form
         return [
             'description' => ['required', 'string', 'min:2'],
             'unit' => ['required', Rule::in(Unit::values())],
-            'quantity' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric', 'min:1'],
             'used' => ['sometimes', 'required', 'lte:quantity'],
             'recently_added' => ['sometimes', 'nullable', 'required'],
             'expiry_date' => ['nullable', 'date'],

@@ -30,6 +30,7 @@ class Create extends Component
             return $this->redirect('/offices');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+            throw $e;
         }
     }
 }
