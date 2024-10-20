@@ -145,10 +145,21 @@ class Equipments extends Component
     public function setTargetId($id)
     {
         $this->targetId = $id;
-        $this->equipmentsList = Equipment::find($this->targetId)->pluck('name', 'id');
+        $this->equipmentsList = Equipment::where('id', $this->targetId)->pluck('name', 'id');
         $this->borrowEquipmentForm->equipment_id = $id;
+
         if ($this->borrowEquipmentForm->equipment_id) {
-            $this->quantityHint = "Available: " . Equipment::select('quantity')->find($this->borrowEquipmentForm->equipment_id)->quantity;
+            $equipment = Equipment::with(['borrowed_log' => function ($query) {
+                $query->whereNull('returned_date');
+            }])->find($this->borrowEquipmentForm->equipment_id);
+
+            if ($equipment) {
+                $borrowed = $equipment->borrowed_log->sum('quantity');
+                $available = $equipment->quantity - $borrowed;
+                $this->quantityHint = "Available: " . $available;
+            } else {
+                $this->quantityHint = "Equipment not found";
+            }
         }
     }
 

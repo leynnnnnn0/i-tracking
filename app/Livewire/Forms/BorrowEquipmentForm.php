@@ -30,10 +30,16 @@ class BorrowEquipmentForm extends Form
                 'integer',
                 'min:1',
                 function ($attribute, $value, $fail) {
-                    $equipment = Equipment::find($this->equipment_id);
+                    $equipment = Equipment::with(['borrowed_log' => function ($query) {
+                        $query->whereNull('returned_date');
+                    }])->find($this->equipment_id);
+
                     if ($equipment) {
-                        if ($value > $equipment->quantity) {
-                            $fail("The {$attribute} must not exceed the equipment's total quantity of {$equipment->quantity}.");
+                        $borrowedQuantity = $equipment->borrowed_log->sum('quantity');
+                        $availableQuantity = $equipment->quantity - $borrowedQuantity;
+
+                        if ($value > $availableQuantity) {
+                            $fail("The {$attribute} must not exceed the available quantity of {$availableQuantity}.");
                         }
                     } else {
                         $fail("Unable to verify equipment quantity. Please ensure a valid equipment is selected.");
@@ -67,7 +73,9 @@ class BorrowEquipmentForm extends Form
     public function store()
     {
         $this->validate();
-        return BorrowedEquipment::create($this->all());
+        $equipment = BorrowedEquipment::create($this->all());
+        $this->reset();
+        return $equipment;
     }
 
     public function update(BorrowedEquipment $borrowedEquipment)
