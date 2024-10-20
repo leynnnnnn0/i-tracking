@@ -62,7 +62,7 @@ class Edit extends Component
     {
         if ($propertyName === 'officer') {
             $this->updatePersons();
-            $this->form->responsible_person_id = null; // Reset the selected person
+            $this->form->responsible_person_id = null;
         }
     }
 
@@ -98,7 +98,12 @@ class Edit extends Component
             });
             Toaster::success('Updated Successfully.');
             if ($this->previous_responsible_person !== $this->equipment->responsible_person->full_name) {
-                $this->dispatch('download-pdf');
+                $query = http_build_query([
+                    'download_pdf' => true,
+                    'equipment_id' => $this->equipment->id,
+                    'previous_responsible_person' => $this->previous_responsible_person
+                ]);
+                return redirect()->to(route('equipments.index') . '?' . $query);
             } else {
                 return $this->redirect('/equipments');
             }

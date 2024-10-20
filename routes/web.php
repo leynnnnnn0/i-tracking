@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/borrowed-equipments', 'borrowedEquipmentList')->name('borrowed-equipments');
         Route::get('/supplies-history-pdf', 'supplyHistoryPdf')->name('supplies-history-pdf');
         Route::get('/missing-equipments-pdf', 'missingEquipmentPdf')->name('missing-equipments-pdf');
-        Route::get('/responsible-person-pdf/{equipment_id}/{previous_responsible_person}', 'handleEquipmentNewResponsiblePerson')->name('responsible-person-pdf');
+        Route::get('/responsible-person-pdf', 'handleEquipmentNewResponsiblePerson')->name('responsible-person-pdf');
 
         Route::get('/offices-pdf', 'officesListPdf')->name('offices-pdf');
         Route::get('/categories-pdf', 'categoriesListPdf')->name('categories-pdf');

@@ -143,3 +143,14 @@
 
 
 </div>
+
+@if(request('download_pdf'))
+<script>
+    window.onload = function() {
+        window.location.href = "{!! route('responsible-person-pdf', ['previous_responsible_person' => request('previous_responsible_person'), 'equipment_id' => !! request('equipment_id') ]) !!}";
+
+
+        window.history.replaceState({}, document.title, window.location.pathname);
+    };
+</script>
+@endif
