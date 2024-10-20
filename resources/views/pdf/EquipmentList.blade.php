@@ -1,5 +1,5 @@
 <x-layouts.pdf>
-    <h4 class="center">List of Properties</h4>
+    <h4 class="center">List of Equipments</h4>
     <h5 class="center">As of {{ Carbon\Carbon::today()->format('F d, Y')}}</h5>
     @if ($isAccountingOfficerFiltered)
     <span>Accounting Officer: {{ $isAccountingOfficerFiltered }}</span>
@@ -9,6 +9,7 @@
     <table class="print-table">
         <thead>
             <tr>
+                <th>Accounting Officer</th>
                 <th>Responsible Person</th>
                 <th>Organization Unit</th>
                 <th>Operating Unit Project</th>
@@ -27,8 +28,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $equipment) <!-- Changed from $supply to $equipment -->
+            @foreach ($data as $equipment)
             <tr>
+                <td>{{ $equipment->responsible_person->accounting_officer->full_name }}</td>
                 <td>{{ $equipment->responsible_person->full_name }}</td>
                 <td>{{ $equipment->organization_unit }}</td>
                 <td>{{ $equipment->operating_unit_project }}</td>
@@ -40,7 +42,7 @@
                 <td>{{ Carbon\Carbon::parse($equipment->date_acquired)->format('F d, Y') }}</td>
                 <td>{{ $equipment->fund }}</td>
                 <td>{{ $equipment->ppe_class }}</td>
-                <td>{{ $equipment->estimated_useful_time }}</td>
+                <td>Until {{ Carbon\Carbon::createFromFormat('Y-m', $equipment->estimated_useful_time)->format('F Y') }}</td>
                 <td>{{ number_format($equipment->unit_price, 2) }}</td>
                 <td>{{ number_format($equipment->total_amount, 2) }}</td>
                 <td>{{ $equipment->status }}</td>

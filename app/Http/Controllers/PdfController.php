@@ -249,13 +249,14 @@ class PdfController extends Controller
         if ($request->accountingOfficerId) {
             $isAccountingOfficerFiltered = AccountingOfficer::find($request->accountingOfficerId)->full_name;
         }
+
         $pdf = Pdf::loadView('pdf.EquipmentList', [
             'data' => $equipments,
             'isAccountingOfficerFiltered' => $isAccountingOfficerFiltered,
             'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('responsible_person_id', $request->responsiblePersonId)->first()->responsible_person->full_name : false
         ]);
 
-        return $pdf->setPaper('a4', 'landscape')->download('equipments.pdf');
+        return $pdf->setPaper('a4', 'landscape')->download('equipments-' . Carbon::today()->format('F d, Y') . '.pdf');
     }
 
     public function index()

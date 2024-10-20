@@ -41,7 +41,7 @@ class EquipmentForm extends Form
             'date_acquired' => ['required', 'date', 'before_or_equal:' . Carbon::today()],
             'fund' => ['nullable', 'string'],
             'ppe_class' => ['nullable', 'string'],
-            'estimated_useful_time' => ['nullable', 'after:today'],
+            'estimated_useful_time' => ['nullable', 'after:date_acquired'],
             'unit_price' => ['required', 'numeric', 'min:0'],
             'total_amount' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'string']

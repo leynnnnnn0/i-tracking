@@ -62,7 +62,7 @@ class Supply extends Model
         if ($this->expiry_date < now()) {
             return "This item is already expired.";
         } else {
-            return "This item will expire on " . $this->expiry_date->diffForHumans();
+            return "This item will expire " . $this->expiry_date->diffForHumans();
         }
     }
 }

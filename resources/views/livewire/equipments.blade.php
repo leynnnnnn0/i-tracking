@@ -3,7 +3,8 @@
         showDeleteModal: false,
         showConfirmationModal: false,
         targetId: null,
-        openConfirmationModal(id) {
+
+        openConfirmationModal(id, name) {
             this.showConfirmationModal = true;
             this.targetId = id;
             $dispatch('setTargetId', { id: id })
@@ -55,7 +56,7 @@
         </x-others-filter>
 
         <!-- Table -->
-        <x-table>
+        <x-table wire:scroll>
             <x-tr>
                 <x-th>ID</x-th>
                 <x-th>Organization Unit</x-th>
@@ -98,9 +99,9 @@
             @endforeach
         </x-table>
 
-        <x-no-data :data="$equipments" />
+        <x-no-data :data="$equipments" id="paginatedEquipment" />
         <div>
-            {{ $equipments->links() }}
+            {{ $equipments->links(data: ['scrollTo' => '#paginatedEquipment']) }}
         </div>
     </div>
 
@@ -132,7 +133,7 @@
 
     <!-- Delete Modal -->
     <template x-if="showDeleteModal">
-        <x-delete-modal @click="$wire.delete(targetId)" />
+        <x-delete-modal @click="$wire.delete(targetId)" message="Are you sure you want to delete this equipment?" />
     </template>
 
     <!-- Update Modal -->

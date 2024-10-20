@@ -15,12 +15,13 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
 class Equipments extends Component
 {
-    use WithPagination;
+    use WithPagination, WithoutUrlPagination;
     public ActivityLogForm $form;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
@@ -42,10 +43,12 @@ class Equipments extends Component
 
     public function resetFilter()
     {
+        $this->resetPage();
         $this->keyword = null;
         $this->responsiblePersonId = null;
         $this->operatingUnit = null;
         $this->organizationUnit = null;
+        $this->accountingOfficerId = null;
     }
 
     public function downloadPdf()
@@ -122,7 +125,7 @@ class Equipments extends Component
         }
 
         $equipments = $query->latest()->paginate(10);
-
+        
         return view('livewire.equipments', [
             'equipments' => $equipments
         ]);
