@@ -21,11 +21,11 @@
                     <div class="flex items-center gap-3 h-full">
                         <div class="flex items-center gap-1">
                             <label class="text-sm text-gray-700">Yes</label>
-                            <input wire:model="isCondemened" value="1" type="radio" name="isCondemened">
+                            <input wire:model="form.is_condemned" value="1" type="radio" name="form.is_condemned">
                         </div>
                         <div class="flex items-center gap-1">
                             <label class="text-sm text-gray-700">No</label>
-                            <input wire:model="isCondemened" value="0" type="radio" name="isCondemened">
+                            <input wire:model="form.is_condemned" value="0" type="radio" name="form.is_condemned">
                         </div>
                     </div>
                 </div>

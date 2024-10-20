@@ -36,14 +36,14 @@
                 <x-td>{{ Str::headline($report->status)}}</x-td>
                 <x-td>{{ $report->reported_by}}</x-td>
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
-                <x-td>{{ $report->equipment->status === 'Condemned' ? 'Yes' : 'No'}}</x-td>
+                <x-td>{{ $report->is_condemned ? 'Yes' : 'No'}}</x-td>
                 <x-td class="flex items-center gap-3">
                     <a href="/missing-equipments/edit/{{ $report->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    @if($report->status === 'Reported to SPMO' && $report->equipment->status !== 'Condemned')
-                    <button @click="openConfirmationModal({{ $report->equipment->id }})" class="hover:underline text-red-500 text-xs">
+                    @if($report->status === 'Reported to SPMO' && !$report->is_condemned)
+                    <button @click="openConfirmationModal({{ $report->id }})" class="hover:underline text-red-500 text-xs">
                         Condemned
                     </button>
                     @endif

@@ -6,7 +6,6 @@ use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use App\Models\Personnel;
 use App\Models\Supply;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,7 +21,7 @@ class Dashboard extends Component
         $this->availableEquipments = Equipment::where('status', 'Active')->count();
         $this->borrowedEquipments = Equipment::where('status', 'Borrowed')->count();
         $this->personnels = Personnel::count();
-        $this->missingEquipments = MissingEquipment::count();
+        $this->missingEquipments = MissingEquipment::where('is_condemned', false)->count();
     }
     public function render()
     {

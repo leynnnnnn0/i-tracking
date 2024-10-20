@@ -20,7 +20,7 @@ class Edit extends Component
     public MissingEquipmentForm $form;
     public ActivityLogForm $activityLogForm;
     public $report;
-    public $isCondemened = false;
+    public $quantityHint;
 
     public function mount($id)
     {
@@ -33,6 +33,7 @@ class Edit extends Component
 
     public function render()
     {
+        $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
         return view('livewire.missing-equipment.edit');
     }
 
@@ -44,10 +45,8 @@ class Edit extends Component
                 $data = $this->form->update($this->report);
                 $this->activityLogForm->setActivityLog($this->report, $data, 'Updated Equipment Missing Report', 'Update');
                 $this->activityLogForm->store();
-                if ($this->isCondemened) {
-                    Equipment::findOrFail($data->equipment_id)->update([
-                        'status' => EquipmentStatus::CONDEMNED->value
-                    ]);;
+                if ($this->form->is_condemned) {
+                    $this->form->condemned($data->equipment_id);
                 }
             });
             Toaster::success('Updated Successfully.');

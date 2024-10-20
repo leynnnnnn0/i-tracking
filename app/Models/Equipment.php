@@ -61,6 +61,13 @@ class Equipment extends Model
         return $this->hasMany(MissingEquipment::class);
     }
 
+    public function total_missing_equipment()
+    {
+        return $this->hasOne(MissingEquipment::class)
+            ->selectRaw('equipment_id, SUM(quantity) as total_quantity, MAX(is_condemned) as is_condemned')
+            ->groupBy('equipment_id');
+    }
+
     public function getIsAvailableAttribute()
     {
         return $this->borrowed_log->count() >= 1 ? 'No' : 'Yes';

@@ -19,7 +19,7 @@
             <x-stats-container>
                 <x-bi-question-circle class="size-10 text-white" />
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-white font-bold text-sm">Missing Equipments</h1>
+                    <h1 class="text-white font-bold text-sm">Missing Equipment</h1>
                     <span class="text-white font-bold text-2xl">{{ $missingEquipments}}</span>
                 </div>
             </x-stats-container>

@@ -83,12 +83,19 @@ class Equipments extends Component
     public function render()
     {
         $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer');
+            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer', 'total_missing_equipment');
 
         if ($this->query === 'All') {
-            $query->whereNot('status', 'Condemned');
+            $query->where('quantity', '>', 0);
         }
-        if ($this->query !== 'All') {
+
+        if ($this->query === 'Condemned') {
+            $query->whereHas('total_missing_equipment', function ($q) {
+                $q->where('is_condemned', true);
+            });
+        }
+
+        if ($this->query === 'Borrowed') {
             $query->where('status', $this->query);
         }
 
@@ -125,7 +132,7 @@ class Equipments extends Component
         }
 
         $equipments = $query->latest()->paginate(10);
-        
+
         return view('livewire.equipments', [
             'equipments' => $equipments
         ]);

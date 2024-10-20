@@ -59,10 +59,11 @@
         <x-table wire:scroll>
             <x-tr>
                 <x-th>ID</x-th>
+                <x-th>Name</x-th>
+                <x-th>PN</x-th>
+                <x-th>Quantity</x-th>
                 <x-th>Organization Unit</x-th>
                 <x-th>Operating Unit/Project</x-th>
-                <x-th>PN</x-th>
-                <x-th>Name</x-th>
                 <x-th>Responsible Person</x-th>
                 <x-th>Status</x-th>
                 <x-th>Actions</x-th>
@@ -70,14 +71,15 @@
             @foreach ($equipments as $equipment)
             <tr class="border-b border-gray-300">
                 <x-td>{{ $equipment->id }}</x-td>
+                <x-td>{{ $equipment->name }}</x-td>
+                <x-td>{{ $equipment->property_number }}</x-td>
+                <x-td>{{ $query === 'Condemned' ? $equipment->total_missing_equipment->total_quantity : $equipment->quantity }}</x-td>
                 <x-td>{{ $equipment->organization_unit }}</x-td>
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
-                <x-td>{{ $equipment->property_number }}</x-td>
-                <x-td>{{ $equipment->name }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
                 <x-td>
-                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ App\Enum\EquipmentStatus::getColor($equipment->status) }}">
-                        {{ $equipment->status }}
+                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'Condemned' ? App\Enum\EquipmentStatus::getColor('Condemned') : App\Enum\EquipmentStatus::getColor($equipment->status) }}">
+                        {{ $query === 'Condemned' ? 'Condemned' : $equipment->status }}
                     </span>
                 </x-td>
                 <x-td class="flex items-center gap-2">

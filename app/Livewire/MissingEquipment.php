@@ -4,8 +4,9 @@ namespace App\Livewire;
 
 use App\Enum\EquipmentStatus;
 use App\Livewire\Forms\ActivityLogForm;
-use App\Models\Equipment;
+use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\MissingEquipment as ModelsMissingEquipment;
+use App\Models\Equipment;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -15,6 +16,8 @@ class MissingEquipment extends Component
 {
     public $query = 'All';
     public ActivityLogForm $activityLogForm;
+    public MissingEquipmentForm $form;
+
 
     public function setQuery($query)
     {
@@ -25,9 +28,7 @@ class MissingEquipment extends Component
         $query = ModelsMissingEquipment::query()->with('equipment');
         if ($this->query !== 'All') {
             if ($this->query === 'Condemned') {
-                $query->whereHas('equipment', function ($q) {
-                    $q->where('status', $this->query);
-                });
+                $query->where('is_condemned', true);
             } else {
                 $query->where('status', $this->query);
             }
@@ -43,17 +44,18 @@ class MissingEquipment extends Component
         return redirect()->route('missing-equipments-pdf');
     }
 
-    public function condemned($id)
+    public function condemned($reportId)
     {
         try {
-            DB::transaction(function () use ($id) {
-                $equipment = Equipment::findOrFail($id);
-                $before = $equipment;
-                $equipment->update([
-                    'status' => EquipmentStatus::CONDEMNED->value
+            DB::transaction(function () use ($reportId) {
+                $before = ModelsMissingEquipment::findOrFail($reportId);
+                $before->update([
+                    'is_condemned' => true,
                 ]);
+                $this->form->setMissingEquipmentForm($before);
+                $this->form->condemned($before->equipment_id);
 
-                $this->activityLogForm->setActivityLog($before, $equipment->fresh(), 'Tag Equipment as Condmened', 'Update');
+                $this->activityLogForm->setActivityLog($before, $before->fresh(), 'Tag Missing Equipment as Condemned', 'Update');
                 $this->activityLogForm->store();
             });
             $this->dispatch('Condemned');

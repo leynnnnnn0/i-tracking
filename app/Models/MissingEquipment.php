@@ -20,13 +20,14 @@ class MissingEquipment extends Model
         'description',
         'reported_by',
         'reported_date',
+        'is_condemned'
     ];
 
     public function casts()
     {
         return [
             'reported_date' => 'date',
-
+            'is_condemned' => 'boolean'
         ];
     }
 

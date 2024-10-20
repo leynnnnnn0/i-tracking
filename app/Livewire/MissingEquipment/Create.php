@@ -19,13 +19,13 @@ class Create extends Component
     public MissingEquipmentForm $form;
     public $statuses;
     public $equipments;
-    public $isCondemened = false;
     public $quantityHint = "";
 
     public function mount()
     {
         $this->form->reported_date = Carbon::today()->format('Y-m-d');
         $this->equipments = Equipment::select('id', 'name', 'property_number')
+            ->where('quantity', '>', 0)
             ->get()
             ->map(function ($item) {
                 return [
@@ -51,10 +51,8 @@ class Create extends Component
                 $data = $this->form->store();
                 $this->activityLogForm->setActivityLog(null, $data, 'Created Missing Equipment Report', 'Create');
                 $this->activityLogForm->store();
-                if ($this->isCondemened) {
-                    Equipment::findOrFail($data->equipment_id)->update([
-                        'status' => EquipmentStatus::CONDEMNED->value
-                    ]);;
+                if ($this->form->is_condemned) {
+                    $this->form->condemned($data->equipment_id);
                 }
             });
             Toaster::success('Report Created.');

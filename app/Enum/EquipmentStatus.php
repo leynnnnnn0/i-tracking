@@ -6,7 +6,6 @@ enum EquipmentStatus: string
 {
     case ACTIVE = 'Active';
     case BORROWED = 'Borrowed';
-    case CONDEMNED = 'Condemned';
 
     public static function values()
     {

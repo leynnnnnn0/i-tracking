@@ -21,6 +21,7 @@ class MissingEquipmentForm extends Form
     public $reported_by;
     public $reported_date;
     public $quantity;
+    public $is_condemned = false;
     public ActivityLogForm $activityLogForm;
 
     public function setMissingEquipmentForm(MissingEquipment $missingEquipment)
@@ -31,6 +32,7 @@ class MissingEquipmentForm extends Form
         $this->description = $missingEquipment->description;
         $this->reported_by = $missingEquipment->reported_by;
         $this->reported_date = $missingEquipment->reported_date->format('Y-m-d');
+        $this->is_condemned = $missingEquipment->is_condemned;
     }
     public function rules()
     {
@@ -55,6 +57,7 @@ class MissingEquipmentForm extends Form
             'description' => ['nullable', 'string', 'max:255'],
             'reported_by' => ['required', 'string', 'max:100'],
             'reported_date' => ['required', 'date'],
+            'is_condemned' => ['sometimes', 'required', 'boolean']
         ];
     }
     public function store()
@@ -68,5 +71,13 @@ class MissingEquipmentForm extends Form
         $this->validate();
         $missingEquipment->update($this->all());
         return $missingEquipment->fresh();
+    }
+
+    public function condemned($equipment_id)
+    {
+        $equipment = Equipment::findOrFail($equipment_id);
+        $equipment->update([
+            'quantity' => (int) $equipment->quantity - (int) $this->quantity,
+        ]);
     }
 }
