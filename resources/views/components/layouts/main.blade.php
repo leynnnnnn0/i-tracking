@@ -32,7 +32,7 @@
                     <x-ri-dashboard-line class="size-4" />
                     Dashboard
                 </x-nav-link>
-                <x-nav-link href="/equipments" :active="request()->is('equipments*')">
+                <x-nav-link href="/equipment" :active="request()->is('equipment*')">
                     <x-ri-tools-fill class="size-4" />
                     Equipment
                 </x-nav-link>

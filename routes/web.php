@@ -78,7 +78,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', User\View::class)->name('view');
     });
 
-    Route::prefix('equipments')->name('equipments.')->group(function () {
+    Route::prefix('equipment')->name('equipment.')->group(function () {
         Route::get('/', Equipments::class)->name('index');
         Route::get('/create', \App\Livewire\Equipments\Create::class)->name('create');
         Route::get('/edit/{id}', \App\Livewire\Equipments\Edit::class)->name('edit');

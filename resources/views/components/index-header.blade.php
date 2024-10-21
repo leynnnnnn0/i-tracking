@@ -5,7 +5,7 @@
         <button wire.loading.attr="disabled" {{ $attributes }} class="px-4 py-1 bg-primary rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300 dark:bg-dark-primary">
             Export as PDF
         </button>
-        <a href="{{ $location }}" class="px-4 py-1 bg-primary rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300 dark:bg-dark-primary">
+        <a href="{{ $location }}" class="px-4 py-1 bg-primary rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300 dark:bg-dark-primary" wire:navigate.hover>
             {{ $buttonName }}
         </a>
     </section>

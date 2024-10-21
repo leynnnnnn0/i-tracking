@@ -78,7 +78,6 @@ class EquipmentForm extends Form
 
     public function store()
     {
-        $this->validate();
         return Equipment::create($this->all());
     }
 

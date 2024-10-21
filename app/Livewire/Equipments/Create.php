@@ -69,6 +69,7 @@ class Create extends Component
 
     public function submit()
     {
+        $this->form->validate();
         try {
             DB::transaction(function () {
                 $equipment = $this->form->store();
@@ -76,7 +77,7 @@ class Create extends Component
                 $this->activityLogForm->store();
             });
             Toaster::success('New Equipment Created!');
-            return $this->redirect('/equipments');
+            return $this->redirect(route('equipment.index'), true);
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
             throw $e;

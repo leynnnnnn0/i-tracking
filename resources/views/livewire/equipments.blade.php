@@ -28,7 +28,7 @@
         })
         }
     }">
-    <x-index-header wire:click="downloadPdf" heading="Equipment" buttonName="Add New Equipment" location="/equipments/create" pdfLocation="/equipments-pdf" />
+    <x-index-header wire:click="downloadPdf" heading="Equipment" buttonName="Add New Equipment" :location="route('equipment.create')" pdfLocation="/equipments-pdf" />
     <div class="space-y-3">
         <!-- Filter tab -->
         <x-filter-tab>

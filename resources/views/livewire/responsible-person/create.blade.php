@@ -43,7 +43,7 @@
                 required />
         </section>
         <section class="flex justify-end gap-3">
-            <a href="/accounting-officers" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
+            <a href="/accounting-officers" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300" wire.navigate.hover>Cancel</a>
             <x-primary-button wire:click="submit">Submit</x-primary-button>
         </section>
     </div>
