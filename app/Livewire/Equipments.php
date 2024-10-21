@@ -25,7 +25,7 @@ class Equipments extends Component
     public ActivityLogForm $form;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
-    public $query = 'Borrowed';
+    public $query = 'All';
     public $targetId;
     public $equipmentsList;
     public $operatingUnits;

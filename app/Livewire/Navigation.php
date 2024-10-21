@@ -8,6 +8,7 @@ use App\Models\Supply;
 use Exception;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Navigation extends Component
 {
@@ -52,5 +53,13 @@ class Navigation extends Component
     public function render()
     {
         return view('livewire.navigation');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return $this->redirect('/', navigate: true);
     }
 }

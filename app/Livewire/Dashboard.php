@@ -6,6 +6,7 @@ use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use App\Models\Personnel;
 use App\Models\Supply;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
