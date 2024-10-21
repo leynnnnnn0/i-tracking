@@ -1,4 +1,4 @@
-@props(['title' => 'Are you sure?','message']);
+@props(['title' => 'Are you sure?','message' => false]);
 <div class="flex items-center justify-center fixed bg-black/50 inset-0 animated fadeIn faster" id="modal-id">
     <div class="absolut opacity-80 inset-0 z-0"></div>
     <div class="w-full max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg bg-white">
@@ -17,7 +17,14 @@
                 </div>
 
                 <h2 class="text-xl font-bold py-4">{{ $title}}</h2>
-                <p class="text-sm text-gray-500 px-8">{{ $message }}</p>
+                <p class="text-sm text-gray-500 px-8">
+                    @if ($message)
+                    {{ $message }}
+                    @else
+                    <span x-text="message ?? ''"></span>
+                    @endif
+
+                </p>
             </div>
             <!--footer-->
             <div class="p-3 mt-2 text-center space-x-4 md:block">

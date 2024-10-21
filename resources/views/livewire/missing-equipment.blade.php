@@ -1,8 +1,10 @@
 <div x-data="{
     showConfirmationModal: false,
     targetId: null,
-    openConfirmationModal(id){
+    message:  null,
+    openConfirmationModal(id, message){
         this.targetId = id;
+        this.message = message;
         this.showConfirmationModal = true;
         Livewire.on('Condemned', () => {
             this.showConfirmationModal = false;
@@ -45,8 +47,13 @@
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     @if($report->status === 'Reported to SPMO' && !$report->is_condemned)
-                    <button @click="openConfirmationModal({{ $report->id }})" class="hover:underline text-red-500 text-xs">
+                    <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as condemned?')" class="hover:underline text-red-500 text-xs">
                         Condemned
+                    </button>
+                    @endif
+                    @if($report->status === 'Reported')
+                    <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as Reported To SPMO?')" class="hover:underline text-orange-500 text-xs">
+                        Reported To SPMO
                     </button>
                     @endif
                 </x-td>
@@ -59,6 +66,6 @@
         </div>
     </section>
     <template x-if="showConfirmationModal">
-        <x-confirmation-modal @click="$wire.condemned(targetId)" message="Are you sure this item is already condemned?" />
+        <x-confirmation-modal @click="$wire.changeStatus(targetId)" />
     </template>
 </div>

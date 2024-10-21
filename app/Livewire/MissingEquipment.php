@@ -44,18 +44,25 @@ class MissingEquipment extends Component
         return redirect()->route('missing-equipments-pdf');
     }
 
-    public function condemned($reportId)
+    public function changeStatus($reportId)
     {
         try {
             DB::transaction(function () use ($reportId) {
                 $before = ModelsMissingEquipment::findOrFail($reportId);
-                $before->update([
-                    'is_condemned' => true,
-                ]);
-                $this->form->setMissingEquipmentForm($before);
-                $this->form->condemned($before->equipment_id);
-
-                $this->activityLogForm->setActivityLog($before, $before->fresh(), 'Tag Missing Equipment as Condemned', 'Update');
+                if ($before->status === 'Reported to SPMO') {
+                    $before->update([
+                        'is_condemned' => true,
+                    ]);
+                    $this->form->setMissingEquipmentForm($before);
+                    $this->form->condemned($before->equipment_id);
+                }
+                if ($before->status === 'Reported') {
+                    $before->update([
+                        'status' => 'Reported to SPMO',
+                    ]);
+                }
+                $after = $before->fresh();
+                $this->activityLogForm->setActivityLog($before, $after, 'Tag Missing Equipment as ' . $after->status, 'Update');
                 $this->activityLogForm->store();
             });
             $this->dispatch('Condemned');

@@ -18,7 +18,7 @@
     </div>
 
     <!-- This code -->
-    <div x-show="showNotificationBar">
+    <div class="absolute" x-show="showNotificationBar">
         <livewire:notification-bar />
     </div>
 
