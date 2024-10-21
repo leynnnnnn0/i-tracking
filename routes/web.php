@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', View::class)->name('view');
     });
 
-    Route::prefix('personnels')->name('personnels.')->group(function () {
+    Route::prefix('personnel')->name('personnel.')->group(function () {
         Route::get('/', Personnel::class)->name('index');
         Route::get('/create', PersonnelCreate::class)->name('create');
         Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');

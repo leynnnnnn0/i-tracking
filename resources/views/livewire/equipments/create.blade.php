@@ -1,7 +1,13 @@
 <x-layouts.create title="Equipment" :cancelLocation="route('equipment.index')" wire:click="submit">
-    <x-form.tsselect :options="$officers" wire:model.live="officer" label="Accounting Officer" />
+    <x-form.tsselect :options="$officers"
+        wire:model.live="officer"
+        label="Accounting Officer"
+        name="officer" />
 
-    <x-form.tsselect :options="$persons" wire:model.live="form.responsible_person_id" label="Responsible Person" />
+    <x-form.tsselect :options="$persons"
+        wire:model.live="form.responsible_person_id"
+        label="Responsible Person"
+        name="form.responsible_person_id" />
 
     <x-form.select label="Organization Unit"
         :data="$organizations"
@@ -18,10 +24,8 @@
         name="form.property_number"
         wire:model="form.property_number" />
 
-    <x-form.input label="Quantity"
-        onkeydown="return event.keyCode !== 69"
+    <x-form.tsnumber label="Quantity"
         name="form.quantity"
-        type="number"
         wire:model.lazy="form.quantity" />
 
     <x-form.select label="Unit"
@@ -51,22 +55,13 @@
         name="form.ppe_class"
         wire:model="form.ppe_class" />
 
-    <div class="flex flex-col">
-        <span>Estimated Useful Time</span>
-        <x-tsdate month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" />
-    </div>
+    <x-form.date month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
 
-    <x-form.input label="Unit Price"
-        onkeydown="return event.keyCode !== 69"
+    <x-form.tsnumber label="Unit Price"
         name="form.unit_price"
-        type="number"
-        step="0.01"
         wire:model.lazy="form.unit_price" />
 
-    <x-form.input label="Total Amount"
-        onkeydown="return event.keyCode !== 69"
+    <x-form.tsnumber label="Total Amount"
         name="form.total_amount"
-        type="number"
-        step="0.01"
         wire:model="form.total_amount" />
 </x-layouts.create>

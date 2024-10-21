@@ -21,7 +21,7 @@ class SupplyForm extends Form
     public $is_consumable;
     public $used = 0;
     public $recently_added = 0;
-    public $total;
+    public $total = 0;
 
     public function rules()
     {
@@ -47,14 +47,18 @@ class SupplyForm extends Form
 
     public function store()
     {
-        self::setRecentlyAdded();
-        self::setTotal();
-        $this->validate();
         $supply = null;
-        DB::transaction(function () use (&$supply) {
-            $supply = Supply::create($this->all());
-            $supply->categories()->attach($this->category);
-        });
+        try {
+            self::setRecentlyAdded();
+            self::setTotal();
+            $this->validate();
+            DB::transaction(function () use (&$supply) {
+                $supply = Supply::create($this->all());
+                $supply->categories()->attach($this->category);
+            });
+        } catch (Exception $e) {
+            dd($e);
+        }
         return $supply;
     }
 

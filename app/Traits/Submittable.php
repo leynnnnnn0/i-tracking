@@ -2,20 +2,21 @@
 
 namespace App\Traits;
 
-use App\Livewire\Forms\ActivityLogForm;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Str;
+
 
 trait Submittable
 {
-    abstract protected function performStoreOperation(): Object;
+    abstract protected function performStoreOperation();
     abstract protected function getModelName(): string;
 
     public function submit()
     {
-        dd(class_basename($this));
         $this->form->validate();
+
         try {
             DB::transaction(function () {
                 $model = $this->performStoreOperation();
@@ -31,7 +32,7 @@ trait Submittable
 
     protected function getRedirectRoute(): string
     {
-        return 'index.' . strtolower($this->getModelName());
+        return Str::plural(strtolower($this->getModelName())) . '.index';
     }
 
     protected function getActivityLogMessage(): string

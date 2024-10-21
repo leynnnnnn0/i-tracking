@@ -36,7 +36,7 @@
                     <x-ri-tools-fill class="size-4" />
                     Equipment
                 </x-nav-link>
-                <x-nav-link href="/personnels" :active="request()->is('personnels*')">
+                <x-nav-link href="/personnel" :active="request()->is('personnel*')">
                     <x-ri-group-line class=" size-4" />
                     Personnel
                 </x-nav-link>

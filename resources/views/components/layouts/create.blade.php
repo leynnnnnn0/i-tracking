@@ -1,8 +1,7 @@
 @props(['title', 'cancelLocation'])
 <div>
-    <x-plain-heading>Create New {{ $title }}</x-plain-heading>
-
-    <div class="bg-white rounded-xl p-5">
+    <x-plain-heading class="mb-3">Create New {{ $title }}</x-plain-heading>
+    <div class="bg-white rounded-xl p-5 dark:dark-primary">
         <section class="pb-5 border-b border-gray-300">
             <h1 class="text-gray-700 font-bold text-lg">{{ $title }} Information</h1>
             <p class="text-gray-600 text-xs">Please input all the required fields.</p>

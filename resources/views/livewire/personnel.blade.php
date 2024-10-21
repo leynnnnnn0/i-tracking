@@ -10,7 +10,7 @@
         }
     }">
     <div class="space-y-3">
-        <x-index-header heading="Personnel" buttonName="Create New Personnel" location="/personnels/create" wire:click="downloadPdf" />
+        <x-index-header heading="Personnel" buttonName="Create New Personnel" location="/personnel/create" wire:click="downloadPdf" />
         <!-- Filter -->
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
             <div>

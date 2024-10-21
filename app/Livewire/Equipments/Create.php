@@ -33,7 +33,7 @@ class Create extends Component
         return 'equipment';
     }
 
-    protected function performStoreOperation(): object
+    protected function performStoreOperation()
     {
         return $this->form->store();
     }
@@ -81,4 +81,6 @@ class Create extends Component
         $this->form->total_amount = (int) $this->form->quantity * (float) $this->form->unit_price;
         return view('livewire.equipments.create');
     }
+
+
 }

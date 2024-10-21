@@ -15,12 +15,22 @@ use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
-
+    use Submittable;
     public PersonnelForm $form;
     public ActivityLogForm $activityLogForm;
     public $genders;
     public $positions;
     public $departments;
+
+    protected function getModelName(): string
+    {
+        return 'personnel';
+    }
+
+    protected function performStoreOperation()
+    {
+        return $this->form->store();
+    }
 
     public function mount()
     {
@@ -29,21 +39,6 @@ class Create extends Component
         $this->departments = Department::pluck('name', 'id')->toArray();
     }
 
-    public function submit()
-    {
-        try {
-            DB::transaction(function () {
-                $personnel = $this->form->store();
-                $this->activityLogForm->setActivityLog(null, $personnel, 'Create Personnel', 'Create');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('New Personnel Created!');
-            return $this->redirect('/personnels');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-            throw $e;
-        }
-    }
     public function render()
     {
         return view('livewire.personnel.create');
