@@ -34,8 +34,15 @@ class Create extends Component
     public function render()
     {
         if ($this->form->equipment_id) {
-            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
+            $equipment = Equipment::with(['borrowed_log' => function ($query) {
+                $query->whereNull('returned_date');
+            }])->find($this->form->equipment_id);
+
+            $borrowed = $equipment->borrowed_log->sum('quantity');
+            $available = $equipment->quantity - $borrowed;
+            $this->quantityHint = "Available: " . $available;
         }
+
         return view('livewire.borrower-log.create');
     }
 

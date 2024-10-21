@@ -25,7 +25,7 @@ class Equipments extends Component
     public ActivityLogForm $form;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
-    public $query = 'All';
+    public $query = 'Borrowed';
     public $targetId;
     public $equipmentsList;
     public $operatingUnits;
@@ -84,7 +84,14 @@ class Equipments extends Component
     public function render()
     {
         $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer', 'total_missing_equipment', 'total_borrowed_quantity');
+            ->with([
+                'responsible_person',
+                'responsible_person.accounting_officer',
+                'total_missing_equipment',
+                'borrowed_log' => function ($query) {
+                    $query->whereNull('returned_date');
+                }
+            ]);
 
         if ($this->query === 'All') {
             $query->where('quantity', '>', 0);
@@ -97,7 +104,7 @@ class Equipments extends Component
         }
 
         if ($this->query === 'Borrowed') {
-            $query->whereHas('total_borrowed_quantity', function ($q) {
+            $query->whereHas('borrowed_log', function ($q) {
                 $q->whereNull('returned_date');
             });
         }
@@ -135,6 +142,7 @@ class Equipments extends Component
         }
 
         $equipments = $query->latest()->paginate(10);
+
 
         return view('livewire.equipments', [
             'equipments' => $equipments
