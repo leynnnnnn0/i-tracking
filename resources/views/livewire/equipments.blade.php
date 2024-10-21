@@ -83,10 +83,10 @@
                     </span>
                 </x-td>
                 <x-td class="flex items-center gap-2">
-                    <a href="/equipments/view/{{ $equipment->id }}">
+                    <a href="/equipment/view/{{ $equipment->id }}" wire:navigate.hover>
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </a>
-                    <a href="/equipments/edit/{{ $equipment->id }}">
+                    <a href="/equipment/edit/{{ $equipment->id }}" wire:navigate.hover>
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </a>
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />

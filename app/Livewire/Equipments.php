@@ -25,7 +25,7 @@ class Equipments extends Component
     public ActivityLogForm $form;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
-    public $query = 'Condemned';
+    public $query = 'All';
     public $targetId;
     public $equipmentsList;
     public $operatingUnits;
@@ -145,7 +145,7 @@ class Equipments extends Component
 
         $equipments = $query->latest()->paginate(10);
 
-    
+
 
         return view('livewire.equipments', [
             'equipments' => $equipments
