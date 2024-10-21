@@ -2,11 +2,11 @@
 
 namespace App\Livewire\MissingEquipment;
 
-use App\Enum\EquipmentStatus;
 use App\Enum\MissingStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\Equipment;
+use App\Traits\Submittable;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -15,11 +15,22 @@ use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
+    use Submittable;
     public ActivityLogForm $activityLogForm;
     public MissingEquipmentForm $form;
     public $statuses;
     public $equipments;
     public $quantityHint = "";
+
+    protected function getModelName(): string
+    {
+        return 'missing equipment';
+    }
+
+    protected function performStoreOperation()
+    {
+        return $this->form->store();
+    }
 
     public function mount()
     {
@@ -42,24 +53,5 @@ class Create extends Component
             $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
         }
         return view('livewire.missing-equipment.create');
-    }
-
-    public function submit()
-    {
-        try {
-            DB::transaction(function () {
-                $data = $this->form->store();
-                $this->activityLogForm->setActivityLog(null, $data, 'Created Missing Equipment Report', 'Create');
-                $this->activityLogForm->store();
-                if ($this->form->is_condemned) {
-                    $this->form->condemned($data->equipment_id);
-                }
-            });
-            Toaster::success('Report Created.');
-            return $this->redirect('/missing-equipments');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-            throw $e;
-        }
     }
 }

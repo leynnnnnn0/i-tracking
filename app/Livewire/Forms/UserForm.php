@@ -32,6 +32,7 @@ class UserForm extends Form
         $this->phone_number = $user->phone_number;
         $this->email = $user->email;
         $this->role = $user->role;
+        $this->password = $user->password;
     }
 
     public function rules()
@@ -44,7 +45,7 @@ class UserForm extends Form
             'date_of_birth' => ['required', 'date', 'before:today'],
             'phone_number' => ['required', 'string', 'regex:/^09\d{9}$/'],
             'email' => ['required', 'email', 'max:255',  Rule::unique('users')->ignore($this->user_id)],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['sometimes','required', 'string', 'min:8'],
             'role' => ['required', 'string', Rule::in(UserRole::values())]
         ];
     }

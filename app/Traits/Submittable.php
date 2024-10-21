@@ -32,7 +32,12 @@ trait Submittable
 
     protected function getRedirectRoute(): string
     {
-        return Str::plural(strtolower($this->getModelName())) . '.index';
+        $modelName = $this->getModelName();
+        if (!str_contains($modelName, 'equipment') && !str_contains($modelName, 'personnel')) {
+            $modelName = Str::plural($modelName);
+        }
+
+        return Str::kebab($modelName) . '.index';
     }
 
     protected function getActivityLogMessage(): string

@@ -60,22 +60,11 @@ Route::middleware('auth')->group(function () {
     Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
     Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
 
-    Route::prefix('delete-archives')->name('delete-archives.')->middleware('can:can-handle-delete-archives')->group(function () {
-        Route::get('/', DeleteArchives::class)->name('index');
-    });
-
-    Route::prefix('missing-equipments')->name('missing-equipments.')->group(function () {
+    Route::prefix('missing-equipment')->name('missing-equipment.')->group(function () {
         Route::get('/', MissingEquipment::class)->name('index');
         Route::get('/create', MissingEquipment\Create::class)->name('create');
         Route::get('/edit/{id}', MissingEquipment\Edit::class)->name('edit');
         Route::get('/view/{id}', MissingEquipment\View::class)->name('view');
-    });
-
-    Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', User::class)->name('index');
-        Route::get('/create', User\Create::class)->name('create');
-        Route::get('/edit/{id}', User\Edit::class)->name('edit');
-        Route::get('/view/{id}', User\View::class)->name('view');
     });
 
     Route::prefix('equipment')->name('equipment.')->group(function () {
@@ -92,12 +81,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', View::class)->name('view');
     });
 
-    Route::prefix('personnel')->name('personnel.')->group(function () {
-        Route::get('/', Personnel::class)->name('index');
-        Route::get('/create', PersonnelCreate::class)->name('create');
-        Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
-        Route::get('/view/{id}', PersonnelView::class)->name('view');
-    });
 
     Route::prefix('borrowed-logs')->name('borrowed-logs.')->group(function () {
         Route::get('/', BorrowedLog::class)->name('index');
@@ -106,12 +89,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', BorrowerLogView::class)->name('view');
     });
 
-    Route::prefix('offices')->name('offices.')->group(function () {
-        Route::get('/', Offices::class)->name('index');
-        Route::get('/create', OfficesCreate::class)->name('create');
-        Route::get('/edit/{id}', OfficesEdit::class)->name('edit');
-        Route::get('/view/{id}', OfficesView::class)->name('view');
-    });
 
     Route::prefix('categories')->name('categories.')->group(function () {
         Route::get('/', Category::class)->name('index');
@@ -120,19 +97,49 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', CategoryView::class)->name('view');
     });
 
-    Route::prefix('accounting-officers')->name('accounting-officers.')->group(function () {
-        Route::get('/', AccountingOfficer::class)->name('index');
-        Route::get('/create', AccountingOfficer\Create::class)->name('create');
-        Route::get('/edit/{id}', AccountingOfficerEdit::class)->name('edit');
-        Route::get('/view/{id}', AccountingOfficerView::class)->name('view');
+
+    Route::middleware('can:admin-access')->group(function(){
+        Route::prefix('delete-archives')->name('delete-archives.')->group(function () {
+            Route::get('/', DeleteArchives::class)->name('index');
+        });
+        
+        Route::prefix('responsible-persons')->name('responsible-persons.')->group(function () {
+            Route::get('/', ResponsiblePerson::class)->name('index');
+            Route::get('/create', ResponsiblePersonCreate::class)->name('create');
+            Route::get('/edit/{id}', \App\Livewire\ResponsiblePerson\Edit::class)->name('edit');
+            Route::get('/view/{id}', \App\Livewire\ResponsiblePerson\View::class)->name('view');
+        });
+
+        Route::prefix('accounting-officers')->name('accounting-officers.')->group(function () {
+            Route::get('/', AccountingOfficer::class)->name('index');
+            Route::get('/create', AccountingOfficer\Create::class)->name('create');
+            Route::get('/edit/{id}', AccountingOfficerEdit::class)->name('edit');
+            Route::get('/view/{id}', AccountingOfficerView::class)->name('view');
+        });
+
+        Route::prefix('offices')->name('offices.')->group(function () {
+            Route::get('/', Offices::class)->name('index');
+            Route::get('/create', OfficesCreate::class)->name('create');
+            Route::get('/edit/{id}', OfficesEdit::class)->name('edit');
+            Route::get('/view/{id}', OfficesView::class)->name('view');
+        });
+
+        Route::prefix('personnel')->name('personnel.')->group(function () {
+            Route::get('/', Personnel::class)->name('index');
+            Route::get('/create', PersonnelCreate::class)->name('create');
+            Route::get('/edit/{id}', PersonnelEdit::class)->name('edit');
+            Route::get('/view/{id}', PersonnelView::class)->name('view');
+        });
+
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', User::class)->name('index');
+            Route::get('/create', User\Create::class)->name('create');
+            Route::get('/edit/{id}', User\Edit::class)->name('edit');
+            Route::get('/view/{id}', User\View::class)->name('view');
+        });
     });
 
-    Route::prefix('responsible-persons')->name('responsible-persons.')->group(function () {
-        Route::get('/', ResponsiblePerson::class)->name('index');
-        Route::get('/create', ResponsiblePersonCreate::class)->name('create');
-        Route::get('/edit/{id}', \App\Livewire\ResponsiblePerson\Edit::class)->name('edit');
-        Route::get('/view/{id}', \App\Livewire\ResponsiblePerson\View::class)->name('view');
-    });
+    
 });
 
 Route::view('profile', 'profile')

@@ -50,7 +50,7 @@
                             {{ $supply->total }}
                         </span>
                     </x-td>
-                    <x-td>{{ $supply->expiry_date->format('F d, Y') }}</x-td>
+                    <x-td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/a'}}</x-td>
                 </tr>
                 @endforeach
 

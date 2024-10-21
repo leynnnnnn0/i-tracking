@@ -1,8 +1,8 @@
 <x-layouts.create title="Supply" :cancelLocation="route('supplies.index')" wire:click="submit">
     <x-form.input wire:model="form.description" name="form.description" label="Description" />
     <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :data="$units" />
-    <x-form.input onkeydown="return event.keyCode !== 69" wire:model="form.quantity" name="form.quantity" label="Quantity" type="number" />
-    <x-form.input wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" type="date" :isRequired="false" />
+    <x-form.tsnumber wire:model="form.quantity" name="form.quantity" label="Quantity" />
+    <x-form.date wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" :isRequired="false" />
 
     <div class="grid grid-cols-3 gap-2">
         <x-form.label class="col-span-3">Categories <span class="text-red-500">*</span></x-form.label>

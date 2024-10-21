@@ -12,7 +12,7 @@
     }
 }">
     <section class="space-y-3">
-        <x-index-header heading="Missing Equipment List" buttonName="Make A Report" location="/missing-equipments/create" wire:click="downloadPdf" />
+        <x-index-header heading="Missing Equipment List" buttonName="Make A Report" location="/missing-equipment/create" wire:click="downloadPdf" />
 
         <!-- Filter tab -->
         <x-filter-tab>

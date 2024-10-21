@@ -5,6 +5,8 @@ namespace App\Livewire\BorrowerLog;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\Equipment;
+use App\Traits\Submittable;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -12,13 +14,25 @@ use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
+    use Submittable;
     public BorrowEquipmentForm $form;
     public ActivityLogForm $activityLogForm;
     public $equipments;
     public $quantityHint = "";
 
+    protected function getModelName(): string
+    {
+        return 'borrowed log';
+    }
+
+    protected function performStoreOperation()
+    {
+        return $this->form->store();
+    }
+
     public function mount()
     {
+        $this->form->start_date = Carbon::today()->format('Y-m-d');
         $this->equipments = Equipment::where('status', 'Active')
             ->where('quantity', '>', 0)
             ->select('id', 'name', 'property_number')
@@ -44,22 +58,5 @@ class Create extends Component
         }
 
         return view('livewire.borrower-log.create');
-    }
-
-    public function submit()
-    {
-        try {
-            DB::transaction(function () {
-                $data = $this->form->store();
-                $this->activityLogForm->setActivityLog(null, $data, 'Created Borrow Log', 'Create');
-                $this->activityLogForm->store();
-                $this->form->reset();
-            });
-            Toaster::success('Successfully Created!');
-            return $this->redirect('/borrowed-logs');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-            throw $e;
-        }
     }
 }

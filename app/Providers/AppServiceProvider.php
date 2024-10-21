@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Livewire::component('pdf-controller', PdfController::class);
-        Gate::define('can-handle-delete-archives', function (User $user) {
+        Gate::define('admin-access', function (User $user) {
             return $user->role === 'Admin';
         });
     }
