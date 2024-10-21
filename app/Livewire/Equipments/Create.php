@@ -10,14 +10,13 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
 use App\Models\AccountingOfficer;
 use App\Models\ResponsiblePerson;
-use Exception;
-use Illuminate\Support\Facades\DB;
+use App\Traits\Submittable;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
+    use Submittable;
     public ActivityLogForm $activityLogForm;
     public EquipmentForm $form;
     public $persons;
@@ -28,6 +27,16 @@ class Create extends Component
     #[Validate('required')]
     public $officers;
     public $officer;
+
+    protected function getModelName(): string
+    {
+        return 'equipment';
+    }
+
+    protected function performStoreOperation(): object
+    {
+        return $this->form->store();
+    }
 
     public function mount()
     {
@@ -67,22 +76,6 @@ class Create extends Component
             ->toArray();
     }
 
-    public function submit()
-    {
-        $this->form->validate();
-        try {
-            DB::transaction(function () {
-                $equipment = $this->form->store();
-                $this->activityLogForm->setActivityLog(null, $equipment, 'Create Equipment', 'Create');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('New Equipment Created!');
-            return $this->redirect(route('equipment.index'), true);
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-            throw $e;
-        }
-    }
     public function render()
     {
         $this->form->total_amount = (int) $this->form->quantity * (float) $this->form->unit_price;

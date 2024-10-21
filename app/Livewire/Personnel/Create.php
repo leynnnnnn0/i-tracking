@@ -7,6 +7,7 @@ use App\Enum\Position;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\PersonnelForm;
 use App\Models\Department;
+use App\Traits\Submittable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -14,6 +15,7 @@ use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
+
     public PersonnelForm $form;
     public ActivityLogForm $activityLogForm;
     public $genders;

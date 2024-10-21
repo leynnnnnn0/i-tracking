@@ -32,7 +32,7 @@ class EquipmentForm extends Form
         return [
             'responsible_person_id' => ['required', 'exists:responsible_people,id'],
             'organization_unit' => ['required'],
-            'operating_unit_project' => ['nullable', 'string'],
+            'operating_unit_project' => ['required', 'string'],
             'property_number' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
             'quantity' => ['required', 'integer', 'min:1'],
             'unit' => ['required', 'string', 'min:1'],
