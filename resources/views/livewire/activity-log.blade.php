@@ -9,6 +9,7 @@
                     <x-th>Description</x-th>
                     <x-th>Model Type</x-th>
                     <x-th>Model Id</x-th>
+                    <x-th>Actions</x-th>
                 </x-tr>
 
                 @foreach ($logs as $log)
@@ -18,6 +19,9 @@
                     <x-td>{{ $log->description }}</x-td>
                     <x-td>{{ $log->model_type }}</x-td>
                     <x-td>{{ $log->model_id }}</x-td>
+                    <x-td>
+                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                    </x-td>
                 </tr>
 
                 @endforeach

@@ -89,4 +89,14 @@ class Equipment extends Model
     {
         return $this->belongsTo(AccountingOfficer::class, ResponsiblePerson::class);
     }
+
+    public function quantity($query)
+    {
+        return match($query){
+            'All' => $this->quantity,
+            'Active' => $this->quantity,
+            'Borrowed' => $this->borrowed_log->sum('quantity'),
+            'Condemned' => $this->missing_equipment_log->sum('quantity')  
+        };
+    }
 }

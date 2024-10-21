@@ -25,7 +25,7 @@ class Equipments extends Component
     public ActivityLogForm $form;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
-    public $query = 'All';
+    public $query = 'Condemned';
     public $targetId;
     public $equipmentsList;
     public $operatingUnits;
@@ -87,7 +87,9 @@ class Equipments extends Component
             ->with([
                 'responsible_person',
                 'responsible_person.accounting_officer',
-                'total_missing_equipment',
+                'missing_equipment_log' => function ($query) {
+                    $query->where('is_condemned', true);
+                },
                 'borrowed_log' => function ($query) {
                     $query->whereNull('returned_date');
                 }
@@ -98,7 +100,7 @@ class Equipments extends Component
         }
 
         if ($this->query === 'Condemned') {
-            $query->whereHas('total_missing_equipment', function ($q) {
+            $query->whereHas('missing_equipment_log', function ($q) {
                 $q->where('is_condemned', true);
             });
         }
@@ -143,6 +145,7 @@ class Equipments extends Component
 
         $equipments = $query->latest()->paginate(10);
 
+    
 
         return view('livewire.equipments', [
             'equipments' => $equipments

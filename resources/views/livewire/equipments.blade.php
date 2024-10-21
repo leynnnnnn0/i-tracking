@@ -73,7 +73,7 @@
                 <x-td>{{ $equipment->id }}</x-td>
                 <x-td>{{ $equipment->name }}</x-td>
                 <x-td>{{ $equipment->property_number }}</x-td>
-                <x-td>{{ $query === 'All' ||  $query === 'Active' ? $equipment->quantity : $equipment->borrowed_log->sum('quantity') ?? $equipment->total_borrowed  }}</x-td>
+                <x-td>{{ $equipment->quantity($query)}}</x-td>
                 <x-td>{{ $equipment->organization_unit }}</x-td>
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>

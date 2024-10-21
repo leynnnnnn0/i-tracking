@@ -26,7 +26,7 @@
             <x-stats-container>
                 <x-ri-group-line class="size-10 text-white" />
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-white font-bold text-sm">Personnels</h1>
+                    <h1 class="text-white font-bold text-sm">Personnel</h1>
                     <span class="text-white font-bold text-2xl">{{ $personnels ?? 0 }}</span>
                 </div>
             </x-stats-container>

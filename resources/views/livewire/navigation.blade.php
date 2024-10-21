@@ -1,5 +1,5 @@
 <nav x-data="{showNotificationBar: false}" class="h-16 shadow-lg bg-white px-10 flex items-center justify-between dark:bg-black/25">
-    <img src="{{ Vite::asset('/resources/images/iTrackLogo.png')}}" class="size-24" alt="logo">
+    <img src="{{ Vite::asset('resources/images/iTrackLogo.png')}}" class="size-24" alt="logo">
     <div class="flex items-center gap-3">
         <button @click="showNotificationBar = true" class="relative">
             <span class="absolute -right-3 -top-5 font-bold text-primary-brown p-1 rounded-full ">{{ $notificationCount }}</span>
@@ -17,7 +17,6 @@
         </x-tsdropdown>
     </div>
 
-    <!-- This code -->
     <div class="absolute" x-show="showNotificationBar">
         <livewire:notification-bar />
     </div>
