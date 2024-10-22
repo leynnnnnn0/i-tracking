@@ -2,6 +2,7 @@
 
 use App\Enum\Position;
 use App\Models\Department;
+use App\Models\Office;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personnels', function (Blueprint $table) {
+        Schema::create('personnel', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Department::class)->constrained();
+            $table->foreignId('office_id')->constrained('offices')->cascadeOnDelete();
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');

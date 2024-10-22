@@ -22,7 +22,8 @@ class EquipmentFactory extends Factory
         $estimatedUsefulYears = fake()->numberBetween(1, 10);
 
         return [
-            'responsible_person_id' => fake()->numberBetween(1, 10),
+            'personnel_id' => fake()->numberBetween(1, 100),
+            'accounting_officer_id' => fake()->numberBetween(1, 100),
             'organization_unit' => 'R & E', 
             'operating_unit_project' => 'OVPRE',  
             'property_number' => fake()->unique()->numerify('PN#####'),

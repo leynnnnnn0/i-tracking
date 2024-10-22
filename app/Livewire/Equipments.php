@@ -8,7 +8,6 @@ use App\Enum\OrganizationUnit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\AccountingOfficer;
-use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
 use App\Traits\Deletable;
@@ -92,8 +91,8 @@ class Equipments extends Component
     {
         $query = Equipment::query()
             ->with([
-                'responsible_person',
-                'responsible_person.accounting_officer',
+                'accounting_officer',
+                'personnel',
                 'missing_equipment_log' => function ($query) {
                     $query->where('is_condemned', true);
                 },

@@ -2,16 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Livewire\BorrowedLog;
 use App\Models\AccountingOfficer;
-use App\Models\BorrowedEquipment;
 use App\Models\Category;
 use App\Models\Department;
 use App\Models\Equipment;
 use App\Models\Office;
 use App\Models\Personnel;
 use App\Models\ResponsiblePerson;
-use App\Models\Supply;
 use App\Models\SupplyCategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -34,15 +31,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(20)->create();
+        Department::factory(5)->create();
 
-        Office::factory(10)->create();
-        AccountingOfficer::factory(10)->create();
-        ResponsiblePerson::factory(10)->create();
+        Office::factory(5)->create();
+        AccountingOfficer::factory(100)->create();
+        Personnel::factory(100)->create();
+        // ResponsiblePerson::factory(10)->create();
         // Equipment::factory(100)
         //     ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
         //     ->create();
 
-        Equipment::factory(100)
+        Equipment::factory(1000)
             ->create();
 
         $this->call(SupplySeeder::class);
@@ -55,9 +54,6 @@ class DatabaseSeeder extends Seeder
                 'category_id' => random_int(1, 5)
             ]);
         }
-
-        Department::factory(5)->create();
-        Personnel::factory(100)->create();
         // BorrowedEquipment::factory(20)->create();
     }
 }

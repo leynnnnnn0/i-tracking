@@ -5,15 +5,14 @@ namespace App\Livewire\Forms;
 use App\Enum\EquipmentStatus;
 use App\Models\Equipment;
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class EquipmentForm extends Form
 {
     public $equipment_id;
-    public $responsible_person_id;
+    public $personnel_id;
+    public $accounting_officer_id;
     public $organization_unit;
     public $operating_unit_project;
     public $property_number;
@@ -33,7 +32,8 @@ class EquipmentForm extends Form
     public function rules()
     {
         return [
-            'responsible_person_id' => ['required', 'exists:responsible_people,id'],
+            'personnel_id' => ['required', 'exists:personnel,id'],
+            'accounting_officer_id' => ['required', 'accounting_officers,id'],
             'organization_unit' => ['required'],
             'operating_unit_project' => ['required', 'string'],
             'property_number' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
@@ -61,7 +61,7 @@ class EquipmentForm extends Form
     public function setEquipment(Equipment $equipment)
     {
         $this->equipment_id = $equipment->id;
-        $this->responsible_person_id = $equipment->responsible_person_id;
+        $this->personnel_id = $equipment->personnel_id;
         $this->organization_unit = $equipment->organization_unit;
         $this->operating_unit_project = $equipment->operating_unit_project;
         $this->property_number = $equipment->property_number;

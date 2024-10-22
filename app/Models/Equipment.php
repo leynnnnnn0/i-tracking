@@ -15,7 +15,8 @@ class Equipment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'responsible_person_id',
+        'personnel_id',
+        'accounting_officer_id',
         'organization_unit',
         'operating_unit_project',
         'property_number',
@@ -36,9 +37,9 @@ class Equipment extends Model
     protected $casts = [
         'is_borrowed' => 'boolean',
         'date_acquired' => 'date',
-        'unit_price' => 'decimal:2', 
+        'unit_price' => 'decimal:2',
         'total_amount' => 'decimal:2',
-        'status' => EquipmentStatus::class  
+        'status' => EquipmentStatus::class
     ];
 
 
@@ -99,5 +100,10 @@ class Equipment extends Model
             'Borrowed' => $this->borrowed_log->sum('quantity'),
             'Condemned' => $this->missing_equipment_log->sum('quantity')
         };
+    }
+
+    public function personnel()
+    {
+        return $this->belongsTo(Personnel::class);
     }
 }

@@ -14,6 +14,7 @@ class Personnel extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'office_id',
         'department_id',
         'first_name',
         'middle_name',
@@ -27,6 +28,8 @@ class Personnel extends Model
         'end_date',
         'remarks'
     ];
+
+    protected $table = 'personnel';
 
     public function casts()
     {
@@ -42,6 +45,11 @@ class Personnel extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
     public function getFullNameAttribute()
     {
         return "$this->first_name $this->last_name";
@@ -50,5 +58,10 @@ class Personnel extends Model
     public function getDeleteNameAttribute()
     {
         return "$this->first_name $this->last_name";
+    }
+
+    public function equipments()
+    {
+        return $this->hasMany(Equipment::class);
     }
 }

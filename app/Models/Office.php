@@ -22,4 +22,9 @@ class Office extends Model
     {
         return $this->hasMany(AccountingOfficer::class);
     }
+
+    public function personnels()
+    {
+        return $this->hasMany(Personnel::class);
+    }
 }

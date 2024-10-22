@@ -11,6 +11,8 @@ use Livewire\Form;
 class PersonnelForm extends Form
 {
     public $personnel_id;
+    public $department_id;
+    public $office_id;
     public $first_name;
     public $middle_name;
     public $last_name;
@@ -22,10 +24,11 @@ class PersonnelForm extends Form
     public $start_date;
     public $end_date;
     public $remarks;
-    public $department_id = 1;
 
     public function setPersonnel(Personnel $personnel)
     {
+        $this->department_id = $personnel->department_id;
+        $this->office_id = $personnel->office_id;
         $this->first_name = $personnel->first_name;
         $this->middle_name = $personnel->middle_name;
         $this->last_name = $personnel->last_name;
@@ -44,14 +47,15 @@ class PersonnelForm extends Form
     {
         return [
             'department_id' => ['required', 'exists:departments,id'],
+            'office_id' => ['required', 'exists:offices,id'],
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'gender' => ['required', 'in:' . implode(',', Gender::values())],
+            'gender' => ['required'],
             'date_of_birth' => ['required', 'date', 'before:today'],
             'phone_number' => ['required', 'regex:/^09\d{9}$/'],
             'email' => ['required', 'email', Rule::unique('personnels')->ignore($this->personnel_id)],
-            'position' => ['required', 'in:' . implode(',', Position::values())],
+            'position' => ['required'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after:start_date'],
             'remarks' => ['nullable', 'string'],

@@ -4,6 +4,8 @@ use App\Enum\EquipmentStatus;
 use App\Enum\OperatingUnitAndProject;
 use App\Enum\OrganizationUnit;
 use App\Enum\Unit;
+use App\Models\AccountingOfficer;
+use App\Models\Personnel;
 use App\Models\ResponsiblePerson;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +20,8 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(ResponsiblePerson::class)->constrained();
+            $table->foreignId('personnel_id')->constrained('personnel')->cascadeOnDelete();
+            $table->foreignIdFor(AccountingOfficer::class)->constrained();
             $table->enum('organization_unit', OrganizationUnit::values());
             $table->enum('operating_unit_project', OperatingUnitAndProject::values());
             $table->string('property_number')->unique();
