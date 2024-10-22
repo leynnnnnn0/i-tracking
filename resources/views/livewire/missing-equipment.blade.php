@@ -40,10 +40,10 @@
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $report->is_condemned ? 'Yes' : 'No'}}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <x-link href="/missing-equipments/view/{{ $report->id}}">
+                    <x-link href="/missing-equipment/view/{{ $report->id}}">
                         <x-bi-eye class="size-5 text-green-500" />
                     </x-link>
-                    <x-link href="/missing-equipments/edit/{{ $report->id}}">
+                    <x-link href="/missing-equipment/edit/{{ $report->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </x-link>
                     @if($report->status === 'Reported to SPMO' && !$report->is_condemned)

@@ -8,7 +8,7 @@
             })
         },
     }">
-    <x-plain-heading>Edit {{ $title }} Details</x-plain-heading>
+    <x-plain-heading class="mb-3">Edit {{ $title }} Details</x-plain-heading>
     <div class="bg-white rounded-xl p-5">
         <section class="pb-5 border-b border-gray-300">
             <h1 class="text-gray-700 font-bold text-lg">{{ $title }} Details</h1>

@@ -4,7 +4,7 @@
     <x-form.input label="Reported By" name="form.reported_by" wire:model="form.reported_by" />
     <x-form.date label="Reported Date" name="form.reported_date" wire:model="form.reported_date" />
     <x-form.text-area label="Description" name="form.description" wire:model="form.description" :isRequired="false" />
-    <x-form.input label="Missing Equipment Quantity" name="form.quantity" wire:model="form.quantity" type="number" onkeydown="return event.keyCode !== 69" :hint="$quantityHint" />
+    <x-form.tsnumber label="Missing Equipment Quantity" name="form.quantity" wire:model="form.quantity" :hint="$quantityHint" />
     @if($form->status === 'Reported to SPMO')
     <div class="flex gap-1 flex-col">
         <label class="text-sm text-gray-700">Is Condemened? <span class="text-red-500">*</span></label>

@@ -9,6 +9,6 @@
     <x-form.select label="Position" :options="$positions" name="form.position" wire:model="form.position" />
     <x-form.date label="Start Date" name="form.start_date" wire:model="form.start_date" />
     <x-form.date label="End Date" name="form.end_date" wire:model="form.end_date" :isRequired="false" />
-    <x-form.text-area label="Remarks" name="form.remarks" wire:model="form.remarks" :isRequired="false" />
+    <x-tstextarea label="Remarks" name="form.remarks" wire:model="form.remarks" :isRequired="false" />
     <x-form.select label="Department" :options="$departments" name="form.department_id" wire:model="form.department_id" />
 </x-layouts.edit>
