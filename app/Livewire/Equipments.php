@@ -9,6 +9,7 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\AccountingOfficer;
 use App\Models\Equipment;
+use App\Models\Personnel;
 use App\Models\ResponsiblePerson;
 use App\Traits\Deletable;
 use Carbon\Carbon;
@@ -82,7 +83,7 @@ class Equipments extends Component
     {
         $this->operatingUnits = OperatingUnitAndProject::values();
         $this->organizationUnits = OrganizationUnit::values();
-        $this->responsiblePersons = ResponsiblePerson::get()->pluck('full_name', 'id');
+        $this->responsiblePersons = Personnel::get()->pluck('full_name', 'id');
         $this->accountingOfficers = AccountingOfficer::get()->pluck('full_name', 'id');
         $this->showDeleteModal = false;
     }
@@ -137,7 +138,7 @@ class Equipments extends Component
         }
 
         if ($this->responsiblePersonId) {
-            $query->where('responsible_person_id', $this->responsiblePersonId);
+            $query->where('personnel_id', $this->responsiblePersonId);
         }
 
         if ($this->accountingOfficerId) {
