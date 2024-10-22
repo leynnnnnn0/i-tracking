@@ -1,5 +1,2 @@
-@props(['label', 'isRequired' => true, 'data' => [], 'name'])
-<x-tsselect.styled label="{{ $label }} {{ $isRequired ? '*' : ''}}"
-    :options="$data"
-    {{$attributes}}>
-</x-tsselect.styled>
+@props(['isRequired' => true, 'label'])
+<x-tsselect.styled select="label:label|value:value" searchable {{ $attributes }} label="{{ $label }} {{ $isRequired ? '*' : ''}}" />

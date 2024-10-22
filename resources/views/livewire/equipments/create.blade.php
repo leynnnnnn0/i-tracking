@@ -10,13 +10,13 @@
         name="form.responsible_person_id" />
 
     <x-form.select label="Organization Unit"
-        :data="$organizations"
+        :options="$organizations"
         name="form.organization_unit"
         wire:model="form.organization_unit">
     </x-form.select>
 
     <x-form.select label="Operating Unit Project"
-        :data="$operating_units"
+        :options="$operating_units"
         name="form.operating_unit_project"
         wire:model="form.operating_unit_project" />
 

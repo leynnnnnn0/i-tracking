@@ -1,6 +1,6 @@
-<x-layouts.create title="Responsible Person" :cancelLocation="route('responsible-person.index')" wire:click="submit">
-    <x-form.select label="Officers"
-        :data="$officers"
+<x-layouts.create title="Responsible Person" :cancelLocation="route('responsible-people.index')" wire:click="submit">
+    <x-form.select label="Officer"
+        :options="$officers"
         name="form.accounting_officer_id"
         wire:model="form.accounting_officer_id">
     </x-form.select>

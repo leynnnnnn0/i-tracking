@@ -1,6 +1,6 @@
 <x-layouts.create title="Accounting Officer" :cancelLocation="route('accounting-officers.index')" wire:click="submit">
     <x-form.select label="Office"
-        :data="$offices"
+        :options="$offices"
         name="form.office_id"
         wire:model="form.office_id">
     </x-form.select>

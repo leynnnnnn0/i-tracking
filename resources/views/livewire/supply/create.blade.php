@@ -1,6 +1,6 @@
 <x-layouts.create title="Supply" :cancelLocation="route('supplies.index')" wire:click="submit">
     <x-form.input wire:model="form.description" name="form.description" label="Description" />
-    <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :data="$units" />
+    <x-form.select wire:model="form.unit" name="form.unit" label="Unit" :options="$units" />
     <x-form.tsnumber wire:model="form.quantity" name="form.quantity" label="Quantity" />
     <x-form.date wire:model="form.expiry_date" name="form.expiry_date" label="Expiry Date" :isRequired="false" />
 

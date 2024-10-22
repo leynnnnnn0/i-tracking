@@ -25,12 +25,19 @@ class Create extends Component
 
     protected function getModelName(): string
     {
-        return 'office';
+        return 'accounting officer';
     }
 
     public function mount()
     {
-        $this->offices = Office::pluck('name', 'id')->toArray();
+        $this->offices = Office::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
     }
     public function render()
     {

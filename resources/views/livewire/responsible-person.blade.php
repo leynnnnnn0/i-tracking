@@ -11,7 +11,7 @@
     }">
 
     <section class="space-y-3">
-        <x-index-header heading="Responsible Persons" buttonName="Add New Responsible Person" location="/responsible-person/create" wire:click="downloadPdf" />
+        <x-index-header heading="Responsible Persons" buttonName="Add New Responsible Person" location="/responsible-people/create" wire:click="downloadPdf" />
 
         <!-- Filter -->
         <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
