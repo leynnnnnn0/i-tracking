@@ -193,6 +193,7 @@ class Equipments extends Component
 
     public function submit()
     {
+        $this->borrowEquipmentForm->validate();
         try {
             DB::transaction(function () {
                 $data = $this->borrowEquipmentForm->store();

@@ -76,30 +76,45 @@ class BorrowEquipmentForm extends Form
     public function store()
     {
         $borrowedEquipment = BorrowedEquipment::create($this->all());
+        $this->updateEquipmentStatus($borrowedEquipment);
+        return $borrowedEquipment->fresh();
+    }
+
+    public function updateEquipmentStatus(BorrowedEquipment $borrowedEquipment)
+    {
         $equipment = $borrowedEquipment->equipment;
-        // add borrowed equipment quantity to equipment borrowed quantity
-        $totalBorrowedQuantity = $equipment->quantity_borrowed + $borrowedEquipment->quantity;
-        // if total total quantity borrowed is equals to equipment quantity mark equipment as fully borrowed else partially borrowed
-        if ($totalBorrowedQuantity === $equipment->quantity) {
+        if ($borrowedEquipment->returned_date) {
+            $quantityBorrowed = $equipment->quantity_borrowed - $borrowedEquipment->quantity;
+            $status = EquipmentStatus::ACTIVE->value;
+            if ($quantityBorrowed > 0) {
+                $status = EquipmentStatus::PARTIALLY_BORROWED->value;
+            }
             $equipment->update([
-                'quantity_borrowed' => $totalBorrowedQuantity,
-                'status' => EquipmentStatus::FULLY_BORROWED->value
+                'quantity_borrowed' => $quantityBorrowed,
+                'status' => $status
             ]);
         } else {
-            $equipment->update([
-                'quantity_borrowed' => $totalBorrowedQuantity,
-                'status' => EquipmentStatus::PARTIALLY_BORROWED->value
-            ]);
+            // add borrowed equipment quantity to equipment borrowed quantity
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
+            // if total total quantity borrowed is equals to equipment quantity mark equipment as fully borrowed else partially borrowed
+            if ($totalBorrowedQuantity === $equipment->quantity) {
+                $equipment->update([
+                    'quantity_borrowed' => $totalBorrowedQuantity,
+                    'status' => EquipmentStatus::FULLY_BORROWED->value
+                ]);
+            } else {
+                $equipment->update([
+                    'quantity_borrowed' => $totalBorrowedQuantity,
+                    'status' => EquipmentStatus::PARTIALLY_BORROWED->value
+                ]);
+            }
         }
-
-        return $borrowedEquipment;
     }
 
     public function update(BorrowedEquipment $borrowedEquipment)
     {
         $borrowedEquipment->update($this->all());
+        $this->updateEquipmentStatus($borrowedEquipment);
         return $borrowedEquipment->fresh();
     }
-
-    public function returned() {}
 }

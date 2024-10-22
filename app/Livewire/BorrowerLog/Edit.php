@@ -32,7 +32,6 @@ class Edit extends Component
                     'label' => $item->name
                 ];
             })->toArray();
-        $this->form->returned_date =  Carbon::today()->format('Y-m-d');
     }
     public function render()
     {
@@ -51,6 +50,9 @@ class Edit extends Component
         $this->form->validate();
         try {
             DB::transaction(function () {
+                if ($this->form->is_returned) {
+                    $this->form->returned_date =  Carbon::today()->format('Y-m-d');
+                }
                 $equipment = $this->form->update($this->borrowedEquipment);
                 $this->activityLogForm->setActivityLog($this->borrowedEquipment, $equipment, 'Updated Borrow Log', 'Update');
                 $this->activityLogForm->store();
