@@ -1,6 +1,6 @@
 <x-layouts.edit title="Officer" cancelLocation="/accounting-officers" wire:click="update">
     <x-form.select label="Office"
-        :data="$offices"
+        :options="$offices"
         name="form.office_id"
         wire:model="form.office_id">
     </x-form.select>

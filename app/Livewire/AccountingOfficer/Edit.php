@@ -20,7 +20,14 @@ class Edit extends Component
 
     public function mount($id)
     {
-        $this->offices = Office::pluck('name', 'id')->toArray();
+        $this->offices = Office::select('id', 'name')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })->toArray();
         $this->officer = AccountingOfficer::findOrFail($id);
         $this->form->setForm($this->officer);
     }
@@ -32,17 +39,20 @@ class Edit extends Component
     public function update()
     {
         $this->dispatch('Confirm Update');
+        $this->form->validate();
         try {
+
             DB::transaction(function () {
                 $officer = $this->form->update($this->officer);
                 $this->activityLogForm->setActivityLog($this->officer, $officer, 'Updated Accounting Officer', 'Update');
                 $this->activityLogForm->store();
             });
             Toaster::success('Updated Successfully');
-            return $this->redirect('/accounting-officers');
+            return $this->redirect('/accounting-officers', true);
         } catch (Exception $e) {
+
+            dd($e);
             Toaster::error($e->getMessage());
-            throw $e;
         }
     }
 }

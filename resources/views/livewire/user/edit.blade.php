@@ -17,7 +17,7 @@
         wire:model="form.date_of_birth" />
 
     <x-form.select label="gender"
-        :data="$genders"
+        :options="$genders"
         name="form.gender"
         wire:model="form.gender">
     </x-form.select>
@@ -32,7 +32,7 @@
         wire:model="form.email" />
 
     <x-form.select label="Role"
-        :data="$roles"
+        :options="$roles"
         name="form.role"
         wire:model="form.role">
     </x-form.select>

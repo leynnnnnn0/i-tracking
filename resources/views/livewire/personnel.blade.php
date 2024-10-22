@@ -42,10 +42,10 @@
                     <x-td>{{ $personnel->position }}</x-td>
                     <x-td>{{ $personnel->phone_number }}</x-td>
                     <x-td class="flex items-center gap-3">
-                        <a href="/personnels/view/{{ $personnel->id}}">
+                        <a href="/personnel/view/{{ $personnel->id}}">
                             <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                         </a>
-                        <a href="/personnels/edit/{{ $personnel->id}}">
+                        <a href="/personnel/edit/{{ $personnel->id}}">
                             <x-bi-pencil-square class="size-5 text-blue-500" />
                         </a>
                         <x-bi-trash @click="openDeleteModal({{ $personnel->id }})" class="cursor-pointer size-5 text-red-500" />

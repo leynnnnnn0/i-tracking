@@ -36,7 +36,7 @@ class Edit extends Component
                 $this->activityLogForm->store();
             });
             Toaster::success('Updated Successfully');
-            return $this->redirect('/offices');
+            return $this->redirect('/offices', true);
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
             throw $e;

@@ -20,7 +20,12 @@ class Edit extends Component
 
     public function mount($id)
     {
-        $this->officers = AccountingOfficer::all()->pluck('full_name', 'id')->toArray();
+        $this->officers = AccountingOfficer::select('id', 'first_name', 'last_name')->get()->map(function ($item) {
+            return [
+                'value' => $item->id,
+                'label' => $item->full_name
+            ];
+        })->toArray();
         $this->person = ResponsiblePerson::findOrFail($id);
         $this->form->setForm($this->person);
     }
@@ -32,6 +37,7 @@ class Edit extends Component
     public function update()
     {
         $this->dispatch('Confirm Update');
+        $this->form->validate();
         try {
             DB::transaction(function () {
                 $person = $this->form->update($this->person);
@@ -39,10 +45,9 @@ class Edit extends Component
                 $this->activityLogForm->store();
             });
             Toaster::success('Updated Successfully');
-            return $this->redirect('/responsible-persons');
+            return $this->redirect('/responsible-people', true);
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
-            throw $e;
         }
     }
 }

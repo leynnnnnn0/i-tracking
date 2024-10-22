@@ -24,6 +24,7 @@ class UserForm extends Form
 
     public function setUserForm(User $user)
     {
+        $this->user_id = $user->id;
         $this->first_name = $user->first_name;
         $this->middle_name = $user->middle_name;
         $this->last_name = $user->last_name;
@@ -45,7 +46,7 @@ class UserForm extends Form
             'date_of_birth' => ['required', 'date', 'before:today'],
             'phone_number' => ['required', 'string', 'regex:/^09\d{9}$/'],
             'email' => ['required', 'email', 'max:255',  Rule::unique('users')->ignore($this->user_id)],
-            'password' => ['sometimes','required', 'string', 'min:8'],
+            'password' => ['sometimes', 'required', 'string', 'min:8'],
             'role' => ['required', 'string', Rule::in(UserRole::values())]
         ];
     }

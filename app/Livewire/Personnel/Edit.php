@@ -26,7 +26,12 @@ class Edit extends Component
     {
         $this->genders = Gender::values();
         $this->positions = Position::values();
-        $this->departments = Department::pluck('name', 'id')->toArray();
+        $this->departments = Department::select('name', 'id')->get()->map(function ($item) {
+            return [
+                'value' => $item->id,
+                'label' => $item->name
+            ];
+        })->toArray();
         $this->personnel = Personnel::findOrFail($id);
         $this->form->setPersonnel($this->personnel);
     }
@@ -45,7 +50,7 @@ class Edit extends Component
                 $this->activityLogForm->store();
             });
             Toaster::success('Updated Successfully!');
-            return $this->redirect('/personnels');
+            return $this->redirect(route('personnel.index'), true);
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
             throw $e;
