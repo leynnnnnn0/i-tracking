@@ -5,6 +5,7 @@ use App\Livewire\AccountingOfficer;
 use App\Livewire\AccountingOfficer\Edit as AccountingOfficerEdit;
 use App\Livewire\AccountingOfficer\View as AccountingOfficerView;
 use App\Livewire\ActivityLog;
+use App\Livewire\ActivityLog\View as ActivityLogView;
 use App\Livewire\BorrowedLog;
 use App\Livewire\BorrowerLog\Create as BorrowerLogCreate;
 use App\Livewire\BorrowerLog\Edit as BorrowerLogEdit;
@@ -60,6 +61,11 @@ Route::middleware('auth')->group(function () {
     Route::get('activity-logs', ActivityLog::class)->name('activity-logs');
     Route::get('supplies-history', SupplyHistory::class)->name('supplies-history');
 
+    Route::prefix('activity-logs')->name('activity-logs.')->group(function () {
+        Route::get('/', ActivityLog::class)->name('index');
+        Route::get('/view/{id}', ActivityLogView::class)->name('view');
+    });
+
     Route::prefix('missing-equipment')->name('missing-equipment.')->group(function () {
         Route::get('/', MissingEquipment::class)->name('index');
         Route::get('/create', MissingEquipment\Create::class)->name('create');
@@ -98,11 +104,11 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    Route::middleware('can:admin-access')->group(function(){
+    Route::middleware('can:admin-access')->group(function () {
         Route::prefix('delete-archives')->name('delete-archives.')->group(function () {
             Route::get('/', DeleteArchives::class)->name('index');
         });
-        
+
         Route::prefix('responsible-people')->name('responsible-people.')->group(function () {
             Route::get('/', ResponsiblePerson::class)->name('index');
             Route::get('/create', ResponsiblePersonCreate::class)->name('create');
@@ -138,8 +144,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/view/{id}', User\View::class)->name('view');
         });
     });
-
-    
 });
 
 Route::view('profile', 'profile')

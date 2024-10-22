@@ -22,6 +22,18 @@ class ResponsiblePerson extends Model
         'phone_number'
     ];
 
+    public function getJsonAttribute()
+    {
+        return [
+            $this->accounting_officer_id,
+            $this->first_name,
+            $this->middle_name,
+            $this->last_name,
+            $this->email,
+            $this->phone_number
+        ];
+    }
+
     public function accounting_officer()
     {
         return $this->belongsTo(AccountingOfficer::class);
@@ -36,4 +48,5 @@ class ResponsiblePerson extends Model
     {
         return $this->hasMany(Equipment::class);
     }
+
 }

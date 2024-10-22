@@ -40,12 +40,12 @@
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $report->is_condemned ? 'Yes' : 'No'}}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <a href="/missing-equipments/view/{{ $report->id}}">
-                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </a>
-                    <a href="/missing-equipments/edit/{{ $report->id}}">
+                    <x-link href="/missing-equipments/view/{{ $report->id}}">
+                        <x-bi-eye class="size-5 text-green-500" />
+                    </x-link>
+                    <x-link href="/missing-equipments/edit/{{ $report->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </a>
+                    </x-link>
                     @if($report->status === 'Reported to SPMO' && !$report->is_condemned)
                     <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as condemned?')" class="hover:underline text-red-500 text-xs">
                         Condemned

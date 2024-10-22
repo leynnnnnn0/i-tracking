@@ -18,7 +18,7 @@
             {{ $slot }}
         </section>
         <section class="flex justify-end gap-3">
-            <a href="{{ $cancelLocation }}" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</a>
+            <x-link href="{{ $cancelLocation }}" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</x-link>
             <x-primary-button @click="openConfirmationModal">Update</x-primary-button>
         </section>
     </div>

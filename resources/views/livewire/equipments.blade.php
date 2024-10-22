@@ -83,12 +83,12 @@
                     </span>
                 </x-td>
                 <x-td class="flex items-center gap-2">
-                    <a href="/equipment/view/{{ $equipment->id }}" wire:navigate.hover>
-                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </a>
-                    <a href="/equipment/edit/{{ $equipment->id }}" wire:navigate.hover>
+                    <x-link href="/equipment/view/{{ $equipment->id }}">
+                        <x-bi-eye class="size-5 text-green-500" />
+                    </x-link>
+                    <x-link href="/equipment/edit/{{ $equipment->id }}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </a>
+                    </x-link>
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                     @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemned')
                     <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrowed</x-text-button>

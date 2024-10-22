@@ -22,12 +22,12 @@
             <x-td>{{ $category->name }}</x-td>
             <x-td class="flex items-center gap-2">
                 <x-bi-trash @click="openDeleteModal({{ $category->id }})" class="cursor-pointer size-5 text-red-500" />
-                <a href="/categories/edit/{{ $category->id }}">
+                <x-link href="/categories/edit/{{ $category->id }}">
                     <x-bi-pencil-square class="size-5 text-blue-500" />
-                </a>
-                <a href="/categories/view/{{ $category->id }}">
+                </x-link>
+                <x-link href="/categories/view/{{ $category->id }}">
                     <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                </a>
+                </x-link>
             </x-td>
         <tr>
             @endforeach

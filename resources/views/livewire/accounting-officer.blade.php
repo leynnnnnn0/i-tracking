@@ -42,13 +42,13 @@
                 <x-td>{{ $officer->email }}</x-td>
                 <x-td>{{ $officer->phone_number }}</x-td>
                 <x-td class="flex items-center gap-2">
-                    <x-bi-trash @click="openDeleteModal({{ $officer->id }})" class="cursor-pointer size-5 text-red-500" />
-                    <a href="/accounting-officers/edit/{{ $officer->id }}">
-                        <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </a>
-                    <a href="/accounting-officers/view/{{ $officer->id }}">
+                    <x-link href="/accounting-officers/view/{{ $officer->id }}">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </a>
+                    </x-link>
+                    <x-link href="/accounting-officers/edit/{{ $officer->id }}">
+                        <x-bi-pencil-square class="size-5 text-blue-500" />
+                    </x-link>
+                    <x-bi-trash @click="openDeleteModal({{ $officer->id }})" class="cursor-pointer size-5 text-red-500" />
                 </x-td>
             </tr>
             @endforeach

@@ -42,13 +42,13 @@
                 <x-td>{{ $user->email }}</x-td>
                 <x-td>{{ $user->role }}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <a href="/users/view/{{ $user->id}}">
+                    <x-link href="/users/view/{{ $user->id}}">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </a>
+                    </x-link>
                     <x-bi-trash @click="openDeleteModal({{ $user->id }})" class="cursor-pointer size-5 text-red-500" />
-                    <a href="/users/edit/{{ $user->id}}">
+                    <x-link href="/users/edit/{{ $user->id}}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </a>
+                    </x-link>
                 </x-td>
             </tr>
             @endforeach

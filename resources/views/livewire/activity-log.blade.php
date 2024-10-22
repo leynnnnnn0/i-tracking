@@ -20,7 +20,9 @@
                     <x-td>{{ $log->model_type }}</x-td>
                     <x-td>{{ $log->model_id }}</x-td>
                     <x-td>
-                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                        <x-link href="/activity-logs/view/{{ $log->id }}">
+                            <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                        </x-link>
                     </x-td>
                 </tr>
 

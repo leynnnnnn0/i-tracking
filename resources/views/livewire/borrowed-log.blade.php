@@ -58,13 +58,13 @@
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
                 <x-td class="flex items-center gap-3">
-                    <a href="/borrowed-logs/view/{{ $log->id }}">
+                    <x-link href="/borrowed-logs/view/{{ $log->id }}">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </a>
+                    </x-link>
 
-                    <a href="/borrowed-logs/edit/{{ $log->id }}">
+                    <x-link href="/borrowed-logs/edit/{{ $log->id }}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </a>
+                    </x-link>
                     @if($log->is_returned)
                     <x-bi-trash @click="openDeleteModal({{ $log->id }})" class="cursor-pointer size-5 text-red-500" />
                     @endif
