@@ -5,15 +5,13 @@ namespace App\Livewire;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\AccountingOfficer;
 use App\Models\ResponsiblePerson as ModelsResponsiblePerson;
-use Exception;
-use Illuminate\Support\Facades\DB;
+use App\Traits\Deletable;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Masmerise\Toaster\Toaster;
 
 class ResponsiblePerson extends Component
 {
-    use WithPagination;
+    use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
     public $keyword;
     public $officers;
@@ -22,6 +20,11 @@ class ResponsiblePerson extends Component
     public function mount()
     {
         $this->officers = AccountingOfficer::all()->pluck('full_name', 'id');
+    }
+
+    protected function getModel(): string
+    {
+        return ModelsResponsiblePerson::class;
     }
 
     public function downloadPdf()
@@ -61,21 +64,5 @@ class ResponsiblePerson extends Component
         return view('livewire.responsible-person', [
             'persons' => $persons
         ]);
-    }
-
-    public function delete($id)
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $person = ModelsResponsiblePerson::findOrFail($id);
-                $person->delete();
-                $this->activityLogForm->setActivityLog($person, null, 'Deleted Responsible Person', 'Delete');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Deleted Successfully');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-        }
     }
 }

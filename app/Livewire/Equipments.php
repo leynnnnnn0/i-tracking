@@ -10,6 +10,7 @@ use App\Models\AccountingOfficer;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use App\Models\ResponsiblePerson;
+use App\Traits\Deletable;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +22,8 @@ use Masmerise\Toaster\Toaster;
 
 class Equipments extends Component
 {
-    use WithPagination, WithoutUrlPagination;
-    public ActivityLogForm $form;
+    use WithPagination, WithoutUrlPagination, Deletable;
+    public ActivityLogForm $activityLogForm;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
     public $query = 'All';
@@ -41,6 +42,11 @@ class Equipments extends Component
     public $quantityHint = "";
 
     public $showPdfModal = false;
+
+    protected function getModel(): string
+    {
+        return Equipment::class;
+    }
 
     public function resetFilter()
     {
@@ -215,21 +221,5 @@ class Equipments extends Component
     public function setQuery($query)
     {
         $this->query = $query;
-    }
-
-    public function delete($id)
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $equipment = Equipment::findOrFail($id);
-                $equipment->delete();
-                $this->form->setActivityLog($equipment, null, 'Delete Equipment', 'Delete');
-                $this->form->store();
-            });
-            Toaster::success('Successfully Deleted!');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            Toaster::error('Something Went Wrong!');
-        }
     }
 }

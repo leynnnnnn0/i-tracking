@@ -2,22 +2,27 @@
 
 namespace App\Livewire;
 
-use App\Enum\EquipmentStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\MissingEquipment as ModelsMissingEquipment;
-use App\Models\Equipment;
+use App\Traits\Deletable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
 class MissingEquipment extends Component
 {
+    use WithPagination, Deletable;
     public $query = 'All';
     public ActivityLogForm $activityLogForm;
     public MissingEquipmentForm $form;
 
+    protected function getModel(): string
+    {
+        return ModelsMissingEquipment::class;
+    }
 
     public function setQuery($query)
     {

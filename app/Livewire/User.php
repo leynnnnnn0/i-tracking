@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Enum\UserRole;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\User as ModelsUser;
+use App\Traits\Deletable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,11 +14,16 @@ use Masmerise\Toaster\Toaster;
 
 class User extends Component
 {
-    use WithPagination;
+    use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
     public $keyword;
     public $roles;
     public $role;
+
+    protected function getModel(): string
+    {
+        return ModelsUser::class;
+    }
 
     public function mount()
     {
@@ -62,19 +68,5 @@ class User extends Component
         return redirect()->route('users-pdf', $params);
     }
 
-    public function delete($id): void
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $user = ModelsUser::findOrFail($id);
-                $this->activityLogForm->setActivityLog($user, null, 'Delete User', 'Delete');
-                $user->delete();
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Successfully Deleted!');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-        }
-    }
+
 }

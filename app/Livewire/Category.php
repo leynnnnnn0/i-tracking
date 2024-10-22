@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\Category as ModelsCategory;
-use App\Models\Office;
+use App\Traits\Deletable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,8 +13,13 @@ use Masmerise\Toaster\Toaster;
 
 class Category extends Component
 {
-    use WithPagination;
+    use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
+
+    protected function getModel(): string
+    {
+        return ModelsCategory::class;
+    }
     
     public function render()
     {

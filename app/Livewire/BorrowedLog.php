@@ -3,9 +3,8 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\ActivityLogForm;
-use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
-use App\Models\Equipment;
+use App\Traits\Deletable;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -15,10 +14,15 @@ use Masmerise\Toaster\Toaster;
 
 class BorrowedLog extends Component
 {
-    use WithPagination;
+    use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
     public $keyword;
     public $query = 'All';
+
+    protected function getModel(): string
+    {
+        return BorrowedEquipment::class;
+    }
 
     public function render()
     {
@@ -50,28 +54,6 @@ class BorrowedLog extends Component
     {
         $this->keyword = null;
         $this->query = 'All';
-    }
-
-    public function delete($id): void
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $equipment = BorrowedEquipment::findOrFail($id);
-                $equipment->delete();
-                $this->activityLogForm->setActivityLog(
-                    $equipment,
-                    null,
-                    'Delete Borrow Log',
-                    'Delete'
-                );
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Successfully Deleted!');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            dd($e);
-            Toaster::error($e->getMessage());
-        }
     }
 
     public function downloadPdf()

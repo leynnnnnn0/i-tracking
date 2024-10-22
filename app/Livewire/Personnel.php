@@ -6,20 +6,25 @@ use App\Enum\Position;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\Department;
 use App\Models\Personnel as ModelsPersonnel;
-use Exception;
+use App\Traits\Deletable;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
+use Livewire\WithPagination;
 
 class Personnel extends Component
 {
+    use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
-
     public $keyword;
     public $departments;
     public $positions;
 
     public $departmentId;
     public $position;
+
+    protected function getModel(): string
+    {
+        return ModelsPersonnel::class;
+    }
 
     public function mount()
     {
@@ -76,20 +81,5 @@ class Personnel extends Component
         $this->keyword = "";
         $this->departmentId = null;
         $this->position = null;
-    }
-
-
-    public function delete($id): void
-    {
-        try {
-            $personnel = ModelsPersonnel::findOrFail($id);
-            $personnel->delete();
-            $this->activityLogForm->setActivityLog($personnel, null, 'Delete Personnel', 'Delete');
-            $this->activityLogForm->store();
-            Toaster::success('Successfully Deleted!');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-        }
     }
 }

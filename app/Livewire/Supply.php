@@ -7,6 +7,7 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\SupplyForm;
 use App\Models\Category;
 use App\Models\Supply as ModelsSupply;
+use App\Traits\Deletable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -15,12 +16,17 @@ use Masmerise\Toaster\Toaster;
 
 class Supply extends Component
 {
-    use WithPagination;
+    use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
     public SupplyForm $form;
     public $keyword;
     public $categories;
     public $category;
+
+    protected function getModel(): string
+    {
+        return ModelsSupply::class;
+    }
 
     public function mount()
     {
@@ -88,27 +94,6 @@ class Supply extends Component
         }
     }
 
-    public function delete($id)
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $supply = ModelsSupply::findOrFail($id);
-                $supply->delete();
-                $this->activityLogForm->setActivityLog(
-                    $supply,
-                    null,
-                    'Delete Supply',
-                    'Delete'
-                );
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Successfully Deleted!');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            dd($e);
-            Toaster::error('Something went wrong: ' . $e->getMessage());
-        }
-    }
 
     public function addQuantity($id)
     {

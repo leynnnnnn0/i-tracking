@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\AccountingOfficer as ModelsAccountingOfficer;
 use App\Models\Office;
+use App\Traits\Deletable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,11 +14,17 @@ use Masmerise\Toaster\Toaster;
 
 class AccountingOfficer extends Component
 {
-    use WithPagination;
+    use WithPagination, Deletable;
     public $keyword;
     public $offices;
     public $office;
     public ActivityLogForm $activityLogForm;
+
+    protected function getModel(): string
+    {
+        return ModelsAccountingOfficer::class;
+    }
+
     public function mount()
     {
         $this->offices = Office::pluck('name', 'id');
@@ -61,19 +68,4 @@ class AccountingOfficer extends Component
         $this->office = null;
     }
 
-    public function delete($id)
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $officer = ModelsAccountingOfficer::findOrFail($id);
-                $officer->delete();
-                $this->activityLogForm->setActivityLog($officer, null, 'Deleted Accounting Officer', 'Delete');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Deleted Successfully');
-            $this->dispatch('Data Deleted');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-        }
-    }
 }

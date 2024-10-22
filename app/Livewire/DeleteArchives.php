@@ -49,7 +49,7 @@ class DeleteArchives extends Component
 
     public function delete($id, $type)
     {
-        Gate::authorize('can-handle-delete-archives');
+        Gate::authorize('admin-access');
 
         $modelClass = $this->modelClasses[$type];
         $modelClass::withTrashed()->findOrFail($id)->forceDelete();
@@ -61,7 +61,7 @@ class DeleteArchives extends Component
 
     public function restore($id, $type)
     {
-        Gate::authorize('can-handle-delete-archives');
+        Gate::authorize('admin-access');
 
         $modelClass = $this->modelClasses[$type];
         $modelClass::withTrashed()->findOrFail($id)->restore();
