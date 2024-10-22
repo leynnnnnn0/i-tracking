@@ -33,7 +33,7 @@
         <!-- Filter tab -->
         <x-filter-tab>
             <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Active'" wire:click="setQuery('Active')">Active</x-filter-tab-button>
+            <x-filter-tab-button :active="$query == 'Available'" wire:click="setQuery('Available')">Available</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
             <x-filter-tab-button :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
         </x-filter-tab>

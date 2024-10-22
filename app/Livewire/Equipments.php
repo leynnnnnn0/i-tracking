@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enum\EquipmentStatus;
 use App\Enum\OperatingUnitAndProject;
 use App\Enum\OrganizationUnit;
 use App\Livewire\Forms\ActivityLogForm;
@@ -105,10 +106,11 @@ class Equipments extends Component
             $query->where('quantity', '>', 0);
         }
 
-        if ($this->query === 'Active') {
-            $query->where('status', 'active');
+        if ($this->query === 'Available') {
+            $query->whereNot('status', EquipmentStatus::FULLY_BORROWED->value);
+            $query->where('quantity', '>', 0);
         }
-
+ 
         if ($this->query === 'Condemned') {
             $query->whereHas('missing_equipment_log', function ($q) {
                 $q->where('is_condemned', true);
@@ -209,27 +211,27 @@ class Equipments extends Component
         }
     }
 
-    public function updateStatus($id)
-    {
-        try {
-            DB::transaction(function () use ($id) {
-                $borrowedEquipment = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
-                $before = $log;
-                $log->update([
-                    'returned_date' => Carbon::today()->format('Y-m-d')
-                ]);
-                Equipment::find($id)->update([
-                    'status' => 'Active'
-                ]);
-                $this->form->setActivityLog($before, $borrowedEquipment->fresh(), 'Mark Equipment as Returned', 'Update');
-                $this->form->store();
-            });
-            Toaster::success('Status Updated!');
-            $this->dispatch('Status Updated');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-        }
-    }
+    // public function updateStatus($id)
+    // {
+    //     try {
+    //         DB::transaction(function () use ($id) {
+    //             $borrowedEquipment = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
+    //             $before = $log;
+    //             $log->update([
+    //                 'returned_date' => Carbon::today()->format('Y-m-d')
+    //             ]);
+    //             Equipment::find($id)->update([
+    //                 'status' => 'Active'
+    //             ]);
+    //             $this->form->setActivityLog($before, $borrowedEquipment->fresh(), 'Mark Equipment as Returned', 'Update');
+    //             $this->form->store();
+    //         });
+    //         Toaster::success('Status Updated!');
+    //         $this->dispatch('Status Updated');
+    //     } catch (Exception $e) {
+    //         Toaster::error($e->getMessage());
+    //     }
+    // }
 
     public function setQuery($query)
     {

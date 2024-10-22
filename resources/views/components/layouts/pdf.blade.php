@@ -53,7 +53,7 @@
             /* Adjust the size to your preference */
             font-weight: bold;
             border: 1px solid #000;
-            padding: 8px;
+            padding: 5px;
             text-align: left;
         }
 
@@ -61,7 +61,7 @@
         .print-table thead th {
             background-color: #f2f2f2;
             border: 1px solid #000;
-            padding: 8px;
+            padding: 5px;
             font-weight: bold;
             text-align: left;
         }

@@ -103,7 +103,7 @@ class Edit extends Component
                     'equipment_id' => $this->equipment->id,
                     'previous_responsible_person' => $this->previous_responsible_person
                 ]);
-                return redirect()->to(route('equipments.index') . '?' . $query);
+                return redirect()->to(route('equipment.index') . '?' . $query);
             } else {
                 return $this->redirect('/equipments');
             }

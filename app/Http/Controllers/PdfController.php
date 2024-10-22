@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\EquipmentStatus;
 use App\Models\AccountingOfficer;
 use App\Models\BorrowedEquipment;
 use App\Models\Category;
@@ -118,7 +119,7 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.MissingEquipmentList', [
             'equipments' => MissingEquipment::with('equipment')->get(),
         ]);
-        return $pdf->setPaper('a4', 'landscape')->download('missing-equipments.pdf');
+        return $pdf->setPaper([0, 0, 612, 936], 'landscape')->download('missing-equipments.pdf');
     }
 
     public function handleEquipmentNewResponsiblePerson(Request $request)
@@ -128,7 +129,7 @@ class PdfController extends Controller
             'equipment' => $equipment,
             'previous_responsible_person' => $request->previous_responsible_person
         ]);
-        return $pdf->setPaper('a4')->download('newResponsiblePerson.pdf');
+        return $pdf->setPaper('a4', 'landscape')->download('newResponsiblePerson.pdf');
     }
 
     public function borrowedEquipmentList(Request $request)
@@ -210,22 +211,40 @@ class PdfController extends Controller
     public function equipmentListPdf(Request $request)
     {
 
-        $query = Equipment::query()
-            ->with('responsible_person', 'borrowed_log', 'responsible_person.accounting_officer', 'total_missing_equipment');
 
-            if ($request->query === 'All') {
-                $query->where('quantity', '>', 0);
-            }
-    
-            if ($request->query === 'Condemned') {
-                $query->whereHas('total_missing_equipment', function ($q) {
-                    $q->where('is_condemned', true);
-                });
-            }
-    
-            if ($request->query === 'Borrowed') {
-                $query->where('status', $request->query);
-            }
+        $query = Equipment::query()
+            ->with([
+                'responsible_person',
+                'responsible_person.accounting_officer',
+                'missing_equipment_log' => function ($query) {
+                    $query->where('is_condemned', true);
+                },
+                'borrowed_log' => function ($query) {
+                    $query->whereNull('returned_date');
+                }
+            ]);
+
+        if ($request->filter === 'All') {
+            $query->where('quantity', '>', 0);
+        }
+
+
+        if ($request->filter === 'Available') {
+            $query->whereNot('status', EquipmentStatus::FULLY_BORROWED->value);
+            $query->where('quantity', '>', 0);
+        }
+
+        if ($request->filter === 'Condemned') {
+            $query->whereHas('total_missing_equipment', function ($q) {
+                $q->where('is_condemned', true);
+            });
+        }
+
+        if ($request->filter === 'Borrowed') {
+            $query->whereHas('borrowed_log', function ($q) {
+                $q->whereNull('returned_date');
+            });
+        }
 
         if ($request->keyword) {
             $query->where(function ($q) use ($request) {
