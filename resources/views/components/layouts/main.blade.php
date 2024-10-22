@@ -87,9 +87,9 @@
                     Accounting Officers
                 </x-nav-link>
 
-                <x-nav-link href="/responsible-persons" :active="request()->is('responsible-persons*')">
+                <x-nav-link href="/responsible-person" :active="request()->is('responsible-person*')">
                     <x-bi-people-fill class="size-4" />
-                    Responsible Persons
+                    Responsible Person
                 </x-nav-link>
                 @endcan
 

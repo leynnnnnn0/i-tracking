@@ -103,7 +103,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', DeleteArchives::class)->name('index');
         });
         
-        Route::prefix('responsible-persons')->name('responsible-persons.')->group(function () {
+        Route::prefix('responsible-person')->name('responsible-person.')->group(function () {
             Route::get('/', ResponsiblePerson::class)->name('index');
             Route::get('/create', ResponsiblePersonCreate::class)->name('create');
             Route::get('/edit/{id}', \App\Livewire\ResponsiblePerson\Edit::class)->name('edit');

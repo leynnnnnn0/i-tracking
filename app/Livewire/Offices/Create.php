@@ -13,24 +13,18 @@ class Create extends Component
 {
     public OfficeForm $form;
     public ActivityLogForm $activityLogForm;
+    protected function performStoreOperation()
+    {
+        return $this->form->store();
+    }
+
+    protected function getModelName(): string
+    {
+        return 'office';
+    }
     public function render()
     {
         return view('livewire.offices.create');
     }
 
-    public function submit()
-    {
-        try {
-            DB::transaction(function () {
-                $office = $this->form->store();
-                $this->activityLogForm->setActivityLog(null, $office, 'Created Office', 'Create');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Updated Successfully');
-            return $this->redirect('/offices');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-            throw $e;
-        }
-    }
 }

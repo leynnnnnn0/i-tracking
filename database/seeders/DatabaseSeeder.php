@@ -40,11 +40,6 @@ class DatabaseSeeder extends Seeder
         ResponsiblePerson::factory(10)->create();
         Equipment::factory(100)
             ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
-            ->afterCreating(function ($equipment) {
-                if ($equipment->borrowed_log->count() > 0) {
-                    $equipment->update(['status' => 'Borrowed']);
-                }
-            })
             ->create();
 
         $this->call(SupplySeeder::class);
