@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\ActivityLogForm;
+use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
 use App\Traits\Deletable;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ class BorrowedLog extends Component
 {
     use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
+    public BorrowEquipmentForm $borrowEquipmentForm;
     public $keyword;
     public $query = 'All';
 
@@ -72,13 +74,12 @@ class BorrowedLog extends Component
     {
         try {
             DB::transaction(function () use ($id) {
-                $log = BorrowedEquipment::orderBy('created_at', 'desc')->findOrFail($id);
-                $before = $log;
-                $log->update([
-                    'is_returned' => true,
-                    'returned_date' => Carbon::today()->format('Y-m-d')
-                ]);
-                $this->activityLogForm->setActivityLog($before, $log->fresh(), 'Mark Borrowed Item as Returned', 'Update');
+                $borrowedEquipment = BorrowedEquipment::findOrFail($id);
+                $this->borrowEquipmentForm->setBorrowEquipment($borrowedEquipment);
+                $this->borrowEquipmentForm->is_returned = true;
+                $this->borrowEquipmentForm->returned_date = Carbon::today()->format('Y-m-d');
+                $this->borrowEquipmentForm->update($borrowedEquipment);
+                $this->activityLogForm->setActivityLog($borrowedEquipment, $borrowedEquipment->fresh(), 'Mark Borrowed Item as Returned', 'Update');
                 $this->activityLogForm->store();
             });
             $this->dispatch('Mark As Returned');

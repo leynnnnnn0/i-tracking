@@ -175,6 +175,7 @@ class Equipments extends Component
                 ];
             })->toArray();
         $this->borrowEquipmentForm->equipment_id = $id;
+        $this->borrowEquipmentForm->start_date = Carbon::today()->format('Y-m-d');
 
         if ($this->borrowEquipmentForm->equipment_id) {
             $equipment = Equipment::with(['borrowed_log' => function ($query) {
@@ -212,7 +213,7 @@ class Equipments extends Component
     {
         try {
             DB::transaction(function () use ($id) {
-                $log = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
+                $borrowedEquipment = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
                 $before = $log;
                 $log->update([
                     'returned_date' => Carbon::today()->format('Y-m-d')
@@ -220,7 +221,7 @@ class Equipments extends Component
                 Equipment::find($id)->update([
                     'status' => 'Active'
                 ]);
-                $this->form->setActivityLog($before, $log->fresh(), 'Mark Equipment as Returned', 'Update');
+                $this->form->setActivityLog($before, $borrowedEquipment->fresh(), 'Mark Equipment as Returned', 'Update');
                 $this->form->store();
             });
             Toaster::success('Status Updated!');
