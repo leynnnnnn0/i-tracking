@@ -4,7 +4,6 @@ namespace App\Livewire\Forms;
 
 use App\Enum\Unit;
 use App\Models\Supply;
-use App\Models\SupplyCategory;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -31,7 +30,7 @@ class SupplyForm extends Form
             'quantity' => ['required', 'numeric', 'min:1'],
             'used' => ['sometimes', 'required', 'lte:quantity'],
             'recently_added' => ['sometimes', 'nullable', 'required'],
-            'expiry_date' => ['nullable', 'date'],
+            'expiry_date' => ['nullable', 'date', 'after_or_equal:today'],
             'is_consumable' => ['required'],
             'category' => ['required',  'exists:categories,id'],
             'total' => ['sometimes', 'numeric']
