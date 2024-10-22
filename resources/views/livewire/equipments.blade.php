@@ -78,9 +78,8 @@
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
                 <x-td>
-                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ App\Enum\EquipmentStatus::getColor($equipment->status) }}">
-                        {{ Str::headline($equipment->status->value) }}
-                    </span>
+                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'Condemned' ? App\Enum\EquipmentStatus::getColor(App\Enum\EquipmentStatus::CONDEMNED)  : App\Enum\EquipmentStatus::getColor($equipment->status) }}">
+                        {{ $query === 'Condemned' ? $query : Str::headline($equipment->status->value) }}
                 </x-td>
                 <x-td class="flex items-center gap-2">
                     <x-link href="/equipment/view/{{ $equipment->id }}">
@@ -90,11 +89,8 @@
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </x-link>
                     <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
-                    @if($equipment->status != 'Borrowed' && $equipment->status != 'Condemned')
-                    <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrowed</x-text-button>
-                    @endif
-                    @if($equipment->status == 'Borrowed')
-                    <x-text-button @click="openConfirmationModal({{ $equipment->id }})" class="text-emerald-500">Returned</x-text-button>
+                    @if($equipment->quantity > $equipment->quantity_borrowed)
+                    <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrow</x-text-button>
                     @endif
                 </x-td>
             </tr>

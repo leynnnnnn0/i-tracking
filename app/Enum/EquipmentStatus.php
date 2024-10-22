@@ -7,6 +7,7 @@ enum EquipmentStatus: string
     case ACTIVE = 'active';
     case PARTIALLY_BORROWED = 'partially_borrowed';
     case FULLY_BORROWED = 'fully_borrowed';
+    case CONDEMNED = 'condemned';
 
     public static function labels(): array
     {
@@ -29,7 +30,7 @@ enum EquipmentStatus: string
             self::PARTIALLY_BORROWED->value => 'bg-yellow-500 border-yellow-500 text-white',
             self::FULLY_BORROWED->value => 'bg-orange-500 border-orange-500 text-white',
             self::ACTIVE->value => 'bg-green-500 border-green-500 text-white',
-            default => 'bg-gray-500 border-gray-500 text-white'
+            default => 'bg-red-500 border-red-500 text-white'
         };
     }
 
