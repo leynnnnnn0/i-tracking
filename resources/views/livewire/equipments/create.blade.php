@@ -1,13 +1,13 @@
 <x-layouts.create title="Equipment" :cancelLocation="route('equipment.index')" wire:click="submit">
     <x-form.tsselect :options="$officers"
-        wire:model.live="officer"
+        wire:model.live="form.accounting_officer_id"
         label="Accounting Officer"
-        name="officer" />
+        name="form.accounting_officer_id" />
 
     <x-form.tsselect :options="$persons"
-        wire:model.live="form.responsible_person_id"
+        wire:model.live="form.personnel_id"
         label="Responsible Person"
-        name="form.responsible_person_id" />
+        name="form.personnel_id" />
 
     <x-form.select label="Organization Unit"
         :options="$organizations"
@@ -47,15 +47,15 @@
         type="date"
         wire:model="form.date_acquired" />
 
-    <x-form.input label="Fund"
+    <x-form.input label="Fund" :isRequired="false"
         name="form.fund"
         wire:model="form.fund" />
 
-    <x-form.input label="PPE Class"
+    <x-form.input label="PPE Class" :isRequired="false"
         name="form.ppe_class"
         wire:model="form.ppe_class" />
 
-    <x-tsdate month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
+    <x-tsdate :isRequired="false" month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
 
     <x-form.tsnumber label="Unit Price"
         name="form.unit_price"

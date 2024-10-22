@@ -33,7 +33,7 @@ class EquipmentForm extends Form
     {
         return [
             'personnel_id' => ['required', 'exists:personnel,id'],
-            'accounting_officer_id' => ['required', 'accounting_officers,id'],
+            'accounting_officer_id' => ['required', 'exists:accounting_officers,id'],
             'organization_unit' => ['required'],
             'operating_unit_project' => ['required', 'string'],
             'property_number' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
@@ -62,6 +62,7 @@ class EquipmentForm extends Form
     {
         $this->equipment_id = $equipment->id;
         $this->personnel_id = $equipment->personnel_id;
+        $this->accounting_officer_id = $equipment->accounting_officer_id;
         $this->organization_unit = $equipment->organization_unit;
         $this->operating_unit_project = $equipment->operating_unit_project;
         $this->property_number = $equipment->property_number;
