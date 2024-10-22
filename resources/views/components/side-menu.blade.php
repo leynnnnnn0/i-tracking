@@ -7,7 +7,7 @@
         <x-ri-tools-fill class="size-4" />
         Equipment
     </x-nav-link>
-    <x-nav-link href="/supplies" :active="request()->is('supplies*')">
+    <x-nav-link href="/supplies" :active="request()->is('supplies') || request()->is('supplies/*')">
         <x-ri-product-hunt-line class="size-4" />
         Supplies
     </x-nav-link>

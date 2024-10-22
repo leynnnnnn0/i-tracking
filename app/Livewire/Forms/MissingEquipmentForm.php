@@ -62,13 +62,11 @@ class MissingEquipmentForm extends Form
     }
     public function store()
     {
-        $this->validate();
         return MissingEquipment::create($this->all());
     }
 
     public function update(MissingEquipment $missingEquipment)
     {
-        $this->validate();
         $missingEquipment->update($this->all());
         return $missingEquipment->fresh();
     }

@@ -72,7 +72,6 @@ class BorrowEquipmentForm extends Form
 
     public function store()
     {
-        $this->validate();
         $equipment = BorrowedEquipment::create($this->all());
         $this->reset();
         return $equipment;
@@ -80,7 +79,6 @@ class BorrowEquipmentForm extends Form
 
     public function update(BorrowedEquipment $borrowedEquipment)
     {
-        $this->validate();
         $borrowedEquipment->update($this->all());
         return $borrowedEquipment->fresh();
     }

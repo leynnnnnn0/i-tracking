@@ -19,7 +19,6 @@ class OfficeForm extends Form
 
     public function store()
     {
-        $this->validate();
         return Office::create($this->all());
     }
 
@@ -30,7 +29,6 @@ class OfficeForm extends Form
 
     public function update(Office $office)
     {
-        $this->validate();
         $office->update($this->all());
         return $office->fresh();
     }

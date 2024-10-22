@@ -84,7 +84,6 @@ class EquipmentForm extends Form
     public function update(Equipment $equipment)
     {
         $this->equipment_id = $equipment->id;
-        $this->validate();
         $equipment->update($this->all());
         return $equipment->fresh();
     }

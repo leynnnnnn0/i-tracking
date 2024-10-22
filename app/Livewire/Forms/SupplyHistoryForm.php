@@ -26,7 +26,6 @@ class SupplyHistoryForm extends Form
 
     public function store()
     {
-        $this->validate();
         return SupplyHistory::create($this->all());
     }
 }

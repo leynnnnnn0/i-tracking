@@ -38,8 +38,11 @@ class DatabaseSeeder extends Seeder
         Office::factory(10)->create();
         AccountingOfficer::factory(10)->create();
         ResponsiblePerson::factory(10)->create();
+        // Equipment::factory(100)
+        //     ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
+        //     ->create();
+
         Equipment::factory(100)
-            ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
             ->create();
 
         $this->call(SupplySeeder::class);

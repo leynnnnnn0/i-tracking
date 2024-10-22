@@ -41,13 +41,12 @@ class AccountingOfficerForm extends Form
 
     public function store()
     {
-        $this->validate();
         return AccountingOfficer::create($this->all());
     }
 
     public function update(AccountingOfficer $accountingOfficer)
     {
-        $this->validate();
+
         $accountingOfficer->update($this->all());
         return $accountingOfficer->fresh();
     }

@@ -65,11 +65,9 @@ class SupplyForm extends Form
     public function update(Supply $supply)
     {
         self::setTotal();
-        $validatedData = $this->validate();
-
         try {
-            DB::transaction(function () use ($supply, $validatedData) {
-                $supply->update($validatedData);
+            DB::transaction(function () use ($supply) {
+                $supply->update($this->all());
                 $supply->categories()->sync($this->category);
             });
         } catch (Exception $e) {

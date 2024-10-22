@@ -51,14 +51,12 @@ class UserForm extends Form
     }
     public function store()
     {
-        $this->validate();
         return User::create($this->all());
     }
 
     public function update(User $user)
     {
         $this->user_id = $user->id;
-        $this->validate();
         $user->update($this->except('password'));
         return $user->fresh();
     }

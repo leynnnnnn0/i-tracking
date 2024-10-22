@@ -36,4 +36,11 @@
         name="form.role"
         wire:model="form.role">
     </x-form.select>
+
+    <x-tspassword
+        label="New Password"
+        wire:model="newPassword"
+        name="newPassword" />
+
+
 </x-layouts.edit>

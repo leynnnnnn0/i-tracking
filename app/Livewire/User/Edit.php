@@ -19,6 +19,14 @@ class Edit extends Component
     public $user;
     public $genders;
     public $roles;
+    public $newPassword;
+
+    public function rules()
+    {
+        return [
+            'newPassword' => ['sometimes', 'required', 'min:8']
+        ];
+    }
 
     public function mount($id)
     {
@@ -36,9 +44,15 @@ class Edit extends Component
     public function update()
     {
         $this->dispatch('Confirm Update');
+        $this->form->validate();
         try {
             DB::transaction(function () {
                 $user = $this->form->update($this->user);
+                if ($this->newPassword) {
+                    $user->update([
+                        'password' => $this->newPassword
+                    ]);
+                }
                 $this->activityLogForm->setActivityLog($this->user, $user, 'Update User', 'Update');
                 $this->activityLogForm->store();
             });
@@ -46,7 +60,6 @@ class Edit extends Component
             return $this->redirect('/users');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
-            throw $e;
-        } 
+        }
     }
 }

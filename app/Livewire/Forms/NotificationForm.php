@@ -25,7 +25,6 @@ class NotificationForm extends Form
 
     public function store()
     {
-        $this->validate();
         Notification::create([
             'user_id' => $this->user_id,
             'title' => $this->title,

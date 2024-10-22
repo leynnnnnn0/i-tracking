@@ -39,13 +39,12 @@ class ResponsiblePersonForm extends Form
 
     public function store()
     {
-        $this->validate();
+
         return ResponsiblePerson::create($this->all());
     }
 
     public function update(ResponsiblePerson $responsiblePerson)
     {
-        $this->validate();
         $responsiblePerson->update($this->all());
         return $responsiblePerson->fresh();
     }

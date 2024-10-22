@@ -19,7 +19,6 @@ class CategoryForm extends Form
 
     public function store()
     {
-        $this->validate();
         return Category::create($this->all());
     }
 
@@ -30,7 +29,6 @@ class CategoryForm extends Form
 
     public function update(Category $category)
     {
-        $this->validate();
         $category->update($this->all());
         return $category->fresh();
     }
