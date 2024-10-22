@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\EquipmentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,15 +32,14 @@ class Equipment extends Model
         'status'
     ];
 
-    public function casts()
-    {
-        return [
-            'is_borrowed' => 'boolean',
-            'date_acquired' => 'date',
-            'unit_price' => 'double',
-            'total_amount' => 'double'
-        ];
-    }
+    protected $casts = [
+        'is_borrowed' => 'boolean',
+        'date_acquired' => 'date',
+        'unit_price' => 'decimal:2', 
+        'total_amount' => 'decimal:2',
+        'status' => EquipmentStatus::class  
+    ];
+
 
     public function getDeleteNameAttribute()
     {
@@ -92,11 +92,11 @@ class Equipment extends Model
 
     public function quantity($query)
     {
-        return match($query){
+        return match ($query) {
             'All' => $this->quantity,
             'Active' => $this->quantity,
             'Borrowed' => $this->borrowed_log->sum('quantity'),
-            'Condemned' => $this->missing_equipment_log->sum('quantity')  
+            'Condemned' => $this->missing_equipment_log->sum('quantity')
         };
     }
 }

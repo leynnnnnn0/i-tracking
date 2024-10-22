@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enum\EquipmentStatus;
 use App\Models\Equipment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
@@ -44,7 +45,7 @@ class EquipmentForm extends Form
             'estimated_useful_time' => ['nullable', 'after:date_acquired'],
             'unit_price' => ['required', 'numeric', 'min:0'],
             'total_amount' => ['required', 'numeric', 'min:0'],
-            'status' => ['required', 'string']
+            'status' => ['required', Rule::enum(EquipmentStatus::class)],
         ];
     }
 

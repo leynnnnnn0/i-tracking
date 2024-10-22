@@ -4,8 +4,18 @@ namespace App\Enum;
 
 enum EquipmentStatus: string
 {
-    case ACTIVE = 'Active';
-    case BORROWED = 'Borrowed';
+    case ACTIVE = 'active';
+    case PARTIALLY_BORROWED = 'partially_borrowed';
+    case FULLY_BORROWED = 'fully_borrowed';
+
+    public static function labels(): array
+    {
+        return [
+            self::ACTIVE->value => 'Active',
+            self::PARTIALLY_BORROWED->value => 'Partially Borrowed',
+            self::FULLY_BORROWED->value => 'Fully Borrowed',
+        ];
+    }
 
     public static function values()
     {
@@ -15,10 +25,16 @@ enum EquipmentStatus: string
 
     public static function getColor($status)
     {
-        return match ($status) {
-            'Borrowed' => 'bg-orange-500 border-orange-500 text-white',
-            'Active' => 'bg-green-500 border-green-500 text-white',
-            'Condemned' => 'bg-red-500 border-red-500 text-white'
+        return match ($status->value) {
+            'partially_borrowed' => 'bg-yellow-500 border-yellow-500 text-white',
+            'fully_borrowed' => 'bg-orange-500 border-orange-500 text-white',
+            'active' => 'bg-green-500 border-green-500 text-white',
+            default => 'bg-gray-500 border-gray-500 text-white'
         };
+    }
+
+    public function label(): string
+    {
+        return self::labels()[$this->value];
     }
 }

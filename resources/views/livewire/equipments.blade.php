@@ -78,8 +78,8 @@
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
                 <x-td>
-                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'All' ? App\Enum\EquipmentStatus::getColor($equipment->status) : App\Enum\EquipmentStatus::getColor($query) }}">
-                        {{ $query === 'All' ? 'Active' : $query }}
+                    <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ App\Enum\EquipmentStatus::getColor($equipment->status) }}">
+                        {{ Str::title($equipment->status->value) }}
                     </span>
                 </x-td>
                 <x-td class="flex items-center gap-2">

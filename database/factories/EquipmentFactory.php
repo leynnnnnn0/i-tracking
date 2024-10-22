@@ -36,7 +36,7 @@ class EquipmentFactory extends Factory
             'estimated_useful_time' => $this->calculateEstimatedUsefulTime($dateAcquired, $estimatedUsefulYears),
             'unit_price' => fake()->randomFloat(2, 10, 1000), 
             'total_amount' => fake()->randomFloat(2, 10, 1000), 
-            'status' => 'Active',
+            'status' => 'active',
         ];
     }
 
