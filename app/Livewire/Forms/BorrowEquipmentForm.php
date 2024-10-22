@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enum\EquipmentStatus;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Livewire\Form;
 
 class BorrowEquipmentForm extends Form
 {
+    public $currentQuantity;
     public $equipment_id;
     public $borrower_first_name;
     public $borrower_last_name;
@@ -30,19 +32,19 @@ class BorrowEquipmentForm extends Form
                 'integer',
                 'min:1',
                 function ($attribute, $value, $fail) {
-                    $equipment = Equipment::with(['borrowed_log' => function ($query) {
-                        $query->whereNull('returned_date');
-                    }])->find($this->equipment_id);
-
-                    if ($equipment) {
-                        $borrowedQuantity = $equipment->borrowed_log->sum('quantity');
-                        $availableQuantity = $equipment->quantity - $borrowedQuantity;
-
-                        if ($value > $availableQuantity) {
-                            $fail("The {$attribute} must not exceed the available quantity of {$availableQuantity}.");
-                        }
-                    } else {
+                    $equipment = Equipment::find($this->equipment_id);
+                    if (!$equipment) {
                         $fail("Unable to verify equipment quantity. Please ensure a valid equipment is selected.");
+                        return;
+                    }
+
+                    $availableQuantity = $equipment->quantity - $equipment->quantity_borrowed;
+                    if ($this->currentQuantity) {
+                        $availableQuantity += $this->currentQuantity;
+                    }
+
+                    if ($value > $availableQuantity) {
+                        $fail("The {$attribute} must not exceed the available quantity of {$availableQuantity}.");
                     }
                 },
             ],
@@ -58,6 +60,7 @@ class BorrowEquipmentForm extends Form
 
     public function setBorrowEquipment(BorrowedEquipment $borrowedEquipment)
     {
+        $this->currentQuantity = $borrowedEquipment->quantity;
         $this->equipment_id = $borrowedEquipment->equipment_id;
         $this->quantity = $borrowedEquipment->quantity;
         $this->borrower_first_name = $borrowedEquipment->borrower_first_name;
@@ -72,9 +75,24 @@ class BorrowEquipmentForm extends Form
 
     public function store()
     {
-        $equipment = BorrowedEquipment::create($this->all());
-        $this->reset();
-        return $equipment;
+        $borrowedEquipment = BorrowedEquipment::create($this->all());
+        $equipment = $borrowedEquipment->equipment;
+        // add borrowed equipment quantity to equipment borrowed quantity
+        $totalBorrowedQuantity = $equipment->quantity_borrowed + $borrowedEquipment->quantity;
+        // if total total quantity borrowed is equals to equipment quantity mark equipment as fully borrowed else partially borrowed
+        if ($totalBorrowedQuantity === $equipment->quantity) {
+            $equipment->update([
+                'quantity_borrowed' => $totalBorrowedQuantity,
+                'status' => EquipmentStatus::FULLY_BORROWED->value
+            ]);
+        } else {
+            $equipment->update([
+                'quantity_borrowed' => $totalBorrowedQuantity,
+                'status' => EquipmentStatus::PARTIALLY_BORROWED->value
+            ]);
+        }
+
+        return $borrowedEquipment;
     }
 
     public function update(BorrowedEquipment $borrowedEquipment)

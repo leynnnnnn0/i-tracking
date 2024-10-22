@@ -22,7 +22,7 @@ class PersonnelForm extends Form
     public $start_date;
     public $end_date;
     public $remarks;
-    public $department_id;
+    public $department_id = 1;
 
     public function setPersonnel(Personnel $personnel)
     {

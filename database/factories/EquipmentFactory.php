@@ -27,6 +27,7 @@ class EquipmentFactory extends Factory
             'operating_unit_project' => 'OVPRE',  
             'property_number' => fake()->unique()->numerify('PN#####'),
             'quantity' => fake()->numberBetween(1, 100),
+            'quantity_borrowed' => 0,
             'unit' => fake()->randomElement(['pcs', 'unit', 'pack']),
             'name' => fake()->word(),
             'description' => fake()->sentence(),

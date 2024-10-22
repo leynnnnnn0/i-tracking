@@ -20,6 +20,7 @@ class Equipment extends Model
         'operating_unit_project',
         'property_number',
         'quantity',
+        'quantity_borrowed',
         'unit',
         'name',
         'description',

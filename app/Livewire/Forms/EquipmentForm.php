@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use App\Enum\EquipmentStatus;
 use App\Models\Equipment;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
@@ -17,6 +18,7 @@ class EquipmentForm extends Form
     public $operating_unit_project;
     public $property_number;
     public $quantity;
+    public $quantity_borrowed = 0;
     public $unit;
     public $name;
     public $description;
@@ -26,7 +28,7 @@ class EquipmentForm extends Form
     public $estimated_useful_time;
     public $unit_price;
     public $total_amount;
-    public $status = 'Active';
+    public $status = 'active';
 
     public function rules()
     {
@@ -75,7 +77,6 @@ class EquipmentForm extends Form
         $this->total_amount = $equipment->total_amount;
         $this->status = $equipment->status;
     }
-
 
     public function store()
     {

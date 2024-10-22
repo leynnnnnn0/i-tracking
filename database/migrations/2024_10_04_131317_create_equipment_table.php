@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('operating_unit_project', OperatingUnitAndProject::values());
             $table->string('property_number')->unique();
             $table->integer('quantity');
+            $table->integer('quantity_borrowed');
             $table->enum('unit', Unit::values());
             $table->string('name');
             $table->text('description')->nullable();

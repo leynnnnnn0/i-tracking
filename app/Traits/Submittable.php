@@ -16,11 +16,11 @@ trait Submittable
     public function submit()
     {
         $this->form->validate();
-
         try {
             DB::transaction(function () {
                 $model = $this->performStoreOperation();
                 $this->activityLogForm->setActivityLog(null, $model, $this->getActivityLogMessage(), 'Create');
+
                 $this->activityLogForm->store();
             });
             Toaster::success($this->getSuccessMessage());

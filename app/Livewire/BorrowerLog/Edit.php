@@ -24,13 +24,23 @@ class Edit extends Component
     {
         $this->borrowedEquipment = BorrowedEquipment::findOrFail($id);
         $this->form->setBorrowEquipment($this->borrowedEquipment);
-        $this->equipments = Equipment::where('status', 'Borrowed')->get()->pluck('name', 'id');
+        $this->equipments = Equipment::where('quantity', '>', 0)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })->toArray();
         $this->form->returned_date =  Carbon::today()->format('Y-m-d');
     }
     public function render()
     {
+
+        // Availble quantity = quantity - borrowed equipomt 
         if ($this->form->equipment_id) {
-            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
+            $equipment = Equipment::find($this->form->equipment_id);
+            $this->quantityHint = "Available: " . $equipment->quantity - $equipment->quantity_borrowed;
         }
         return view('livewire.borrower-log.edit');
     }
@@ -38,6 +48,7 @@ class Edit extends Component
     public function update()
     {
         $this->dispatch('Confirm Update');
+        $this->form->validate();
         try {
             DB::transaction(function () {
                 $equipment = $this->form->update($this->borrowedEquipment);

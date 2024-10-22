@@ -3,9 +3,6 @@
 namespace App\Livewire\Forms;
 
 use App\Models\ActivityLog;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class ActivityLogForm extends Form

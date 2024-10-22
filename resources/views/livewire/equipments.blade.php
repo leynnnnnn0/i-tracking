@@ -79,7 +79,7 @@
                 <x-td>{{ $equipment->responsible_person->full_name }}</x-td>
                 <x-td>
                     <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ App\Enum\EquipmentStatus::getColor($equipment->status) }}">
-                        {{ Str::title($equipment->status->value) }}
+                        {{ Str::headline($equipment->status->value) }}
                     </span>
                 </x-td>
                 <x-td class="flex items-center gap-2">
@@ -112,7 +112,7 @@
     <template x-if="showFormModal">
         <x-form-modal heading="Borrow Equipment Form">
             <x-form.select label="Equipment"
-                name="borrowEquipmentForm.equipment_id" :data="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" disabled />
+                name="borrowEquipmentForm.equipment_id" :options="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" disabled />
             <x-form.input label="Borrower First Name"
                 name="borrowEquipmentForm.borrower_first_name" wire:model="borrowEquipmentForm.borrower_first_name" />
             <x-form.input label="Borrower Last Name"

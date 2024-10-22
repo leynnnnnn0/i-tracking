@@ -29,7 +29,7 @@
         wire:model.lazy="form.quantity" />
 
     <x-form.select label="Unit"
-        :data="$units"
+        :options="$units"
         name="form.unit"
         wire:model="form.unit" />
 
@@ -55,7 +55,7 @@
         name="form.ppe_class"
         wire:model="form.ppe_class" />
 
-    <x-form.date month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
+    <x-tsdate month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
 
     <x-form.tsnumber label="Unit Price"
         name="form.unit_price"

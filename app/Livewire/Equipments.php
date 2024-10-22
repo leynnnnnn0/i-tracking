@@ -105,6 +105,10 @@ class Equipments extends Component
             $query->where('quantity', '>', 0);
         }
 
+        if ($this->query === 'Active') {
+            $query->where('status', 'active');
+        }
+
         if ($this->query === 'Condemned') {
             $query->whereHas('missing_equipment_log', function ($q) {
                 $q->where('is_condemned', true);
@@ -162,7 +166,14 @@ class Equipments extends Component
     public function setTargetId($id)
     {
         $this->targetId = $id;
-        $this->equipmentsList = Equipment::where('id', $this->targetId)->pluck('name', 'id');
+        $this->equipmentsList = Equipment::where('id', $this->targetId)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })->toArray();
         $this->borrowEquipmentForm->equipment_id = $id;
 
         if ($this->borrowEquipmentForm->equipment_id) {
@@ -185,8 +196,8 @@ class Equipments extends Component
         try {
             DB::transaction(function () {
                 $data = $this->borrowEquipmentForm->store();
-                $this->form->setActivityLog(null, $data, "Created a borrow log", "Create");
-                $this->form->store();
+                $this->activityLogForm->setActivityLog(null, $data, "Created a borrow log", "Create");
+                $this->activityLogForm->store();
             });
             Toaster::success('Successfully Created!');
             $this->dispatch('borrowLogCreated');

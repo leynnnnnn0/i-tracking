@@ -32,7 +32,7 @@
 
 
     <x-form.select label="Role"
-        :data="$roles"
+        :options="$roles"
         name="form.role"
         wire:model="form.role">
     </x-form.select>

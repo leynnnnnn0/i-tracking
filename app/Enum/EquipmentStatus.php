@@ -26,9 +26,9 @@ enum EquipmentStatus: string
     public static function getColor($status)
     {
         return match ($status->value) {
-            'partially_borrowed' => 'bg-yellow-500 border-yellow-500 text-white',
-            'fully_borrowed' => 'bg-orange-500 border-orange-500 text-white',
-            'active' => 'bg-green-500 border-green-500 text-white',
+            self::PARTIALLY_BORROWED->value => 'bg-yellow-500 border-yellow-500 text-white',
+            self::FULLY_BORROWED->value => 'bg-orange-500 border-orange-500 text-white',
+            self::ACTIVE->value => 'bg-green-500 border-green-500 text-white',
             default => 'bg-gray-500 border-gray-500 text-white'
         };
     }
