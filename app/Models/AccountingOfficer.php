@@ -28,7 +28,7 @@ class AccountingOfficer extends Model
 
     public function equipment()
     {
-        return $this->hasManyThrough(Equipment::class, ResponsiblePerson::class);
+        return $this->hasMany(Equipment::class);
     }
 
     public function responsible_persons()

@@ -89,7 +89,7 @@ class Equipment extends Model
 
     public function accounting_officer()
     {
-        return $this->belongsTo(AccountingOfficer::class, ResponsiblePerson::class);
+        return $this->belongsTo(AccountingOfficer::class);
     }
 
     public function quantity($query)

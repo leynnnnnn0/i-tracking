@@ -64,6 +64,7 @@
                 <x-th>Quantity</x-th>
                 <x-th>Organization Unit</x-th>
                 <x-th>Operating Unit/Project</x-th>
+                <x-th>Accounting Officer</x-th>
                 <x-th>Responsible Person</x-th>
                 <x-th>Status</x-th>
                 <x-th>Actions</x-th>
@@ -76,6 +77,7 @@
                 <x-td>{{ $equipment->quantity($query)}}</x-td>
                 <x-td>{{ $equipment->organization_unit }}</x-td>
                 <x-td>{{ $equipment->operating_unit_project }}</x-td>
+                <x-td>{{ $equipment->accounting_officer->full_name }}</x-td>
                 <x-td>{{ $equipment->personnel->full_name }}</x-td>
                 <x-td>
                     <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'Condemned' ? App\Enum\EquipmentStatus::getColor(App\Enum\EquipmentStatus::CONDEMNED)  : App\Enum\EquipmentStatus::getColor($equipment->status) }}">

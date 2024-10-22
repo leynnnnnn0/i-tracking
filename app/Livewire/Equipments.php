@@ -109,7 +109,7 @@ class Equipments extends Component
             $query->whereNot('status', EquipmentStatus::FULLY_BORROWED->value);
             $query->where('quantity', '>', 0);
         }
- 
+
         if ($this->query === 'Condemned') {
             $query->whereHas('missing_equipment_log', function ($q) {
                 $q->where('is_condemned', true);
@@ -141,7 +141,7 @@ class Equipments extends Component
         }
 
         if ($this->accountingOfficerId) {
-            $query->whereHas('responsible_person.accounting_officer', function ($q) {
+            $query->whereHas('accounting_officer', function ($q) {
                 $q->where('id', $this->accountingOfficerId);
             });
         }
@@ -155,7 +155,6 @@ class Equipments extends Component
         }
 
         $equipments = $query->latest()->paginate(10);
-
 
 
         return view('livewire.equipments', [
