@@ -27,16 +27,12 @@
     <section class="space-y-3">
         <x-index-header heading="Supplies" buttonName="Create New Supply" location="/supplies/create" wire:click="downloadPdf" />
         <!-- Filter -->
-
         <x-others-filter wire:click="resetFilter">
-
             <x-input wire:model.live="keyword" />
-            <x-form.filter-select :data="$categories" wire:model.live="category">
-                <option value="">Category</option>
-            </x-form.filter-select>
+            <div class="w-[300px]">
+                <x-form.filter-select :options="$categories" wire:model.live="category" multiple placeholder="Filter by Category" />
+            </div>
         </x-others-filter>
-
-
 
         <section>
             <x-table>

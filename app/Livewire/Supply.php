@@ -21,7 +21,7 @@ class Supply extends Component
     public SupplyForm $form;
     public $keyword;
     public $categories;
-    public $category;
+    public $category = [];
 
     protected function getModel(): string
     {
@@ -30,7 +30,12 @@ class Supply extends Component
 
     public function mount()
     {
-        $this->categories = Category::all()->pluck('name', 'id');
+        $this->categories = Category::all()->map(function ($item) {
+            return [
+                'value' => $item->id,
+                'label' => $item->name
+            ];
+        });
     }
 
     public function render()
@@ -42,11 +47,11 @@ class Supply extends Component
         }
 
         if ($this->category) {
-            $query->when($this->category, function ($query) {
-                return $query->whereHas('categories', function ($q) {
-                    $q->where('categories.id', $this->category);
+            if ($this->category && is_array($this->category)) {
+                $query->whereHas('categories', function ($q) {
+                    $q->whereIn('categories.id', $this->category);
                 });
-            });
+            }
         }
 
         $supplies = $query->orderByDesc('total')->paginate(10);
@@ -70,7 +75,7 @@ class Supply extends Component
     public function resetFilter()
     {
         $this->keyword = null;
-        $this->category = null;
+        $this->category = [];
     }
 
     public function getColor($total)
