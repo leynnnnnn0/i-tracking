@@ -12,6 +12,7 @@ trait Submittable
 {
     abstract protected function performStoreOperation();
     abstract protected function getModelName(): string;
+    
 
     public function submit()
     {

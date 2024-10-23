@@ -87,7 +87,7 @@
             <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2 dark:bg-secondary-dark">
                 <x-bi-x @click="toggle" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">
-                    <h1 class="text-gray-700 font-bold text-lg dark:text-white">Add Used Value for item #<span x-text="targetId"></span></h1>
+                    <h1 class="text-gray-700 font-bold text-lg dark:text-white">Update Used Value for item #<span x-text="targetId"></span></h1>
                 </section>
                 <x-tsnumber wire:model="form.used" />
                 <x-primary-button @click="$wire.add(targetId)" class="w-full flex justify-center">Add</x-primary-button>

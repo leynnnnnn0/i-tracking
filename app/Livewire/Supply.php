@@ -56,7 +56,7 @@ class Supply extends Component
             }
         }
 
-        $supplies = $query->orderByDesc('total')->paginate(10);
+        $supplies = $query->orderBy('total')->paginate(10);
         return view('livewire.supply', [
             'data' => $supplies
         ]);
