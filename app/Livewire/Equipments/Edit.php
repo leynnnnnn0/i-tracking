@@ -11,11 +11,8 @@ use App\Livewire\Forms\EquipmentForm;
 use App\Models\AccountingOfficer;
 use App\Models\Equipment;
 use App\Models\Personnel;
-use App\Models\ResponsiblePerson;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
