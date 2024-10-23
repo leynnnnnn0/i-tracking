@@ -13,17 +13,10 @@
         <x-index-header wire:click="downloadPdf" heading="Users" buttonName="Add New User" location="/users/create" />
 
         <!-- Filter -->
-        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
-            <div>
-                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
-                <x-form.filter-select :data="$roles" wire:model.live="role">
-                    <option value="">Role</option>
-                </x-form.filter-select>
-            </div>
-            <div class="flex items-center gap-3">
-                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
-            </div>
-        </div>
+        <x-others-filter wire:click="resetFilter">
+            <x-input wire:model.live="keyword" />
+            <x-form.filter-select :options="$roles" wire:model.live="role" placeholder="Role" />
+        </x-others-filter>
 
         <x-table>
             <x-tr>
@@ -41,14 +34,16 @@
                 <x-td>{{ $user->phone_number }}</x-td>
                 <x-td>{{ $user->email }}</x-td>
                 <x-td>{{ $user->role }}</x-td>
-                <x-td class="flex items-center gap-3">
-                    <x-link href="/users/view/{{ $user->id}}">
-                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </x-link>
-                    <x-bi-trash @click="openDeleteModal({{ $user->id }})" class="cursor-pointer size-5 text-red-500" />
-                    <x-link href="/users/edit/{{ $user->id}}">
-                        <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </x-link>
+                <x-td>
+                    <div class="flex items-center gap-2">
+                        <x-link href="/users/view/{{ $user->id}}">
+                            <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                        </x-link>
+                        <x-bi-trash @click="openDeleteModal({{ $user->id }})" class="cursor-pointer size-5 text-red-500" />
+                        <x-link href="/users/edit/{{ $user->id}}">
+                            <x-bi-pencil-square class="size-5 text-blue-500" />
+                        </x-link>
+                    </div>
                 </x-td>
             </tr>
             @endforeach

@@ -42,9 +42,8 @@
         wire:model="form.description"
         :isRequired="false" />
 
-    <x-form.input label="Date Acquired"
+    <x-form.date label="Date Acquired"
         name="form.date_acquired"
-        type="date"
         wire:model="form.date_acquired" />
 
     <x-form.input label="Fund" :isRequired="false"

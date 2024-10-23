@@ -20,14 +20,16 @@
         <tr class="border-b border-gray-300">
             <x-td>{{ $office->id }}</x-td>
             <x-td>{{ $office->name }}</x-td>
-            <x-td class="flex items-center gap-2">
-                <x-bi-trash @click="openDeleteModal({{ $office->id }})" class="cursor-pointer size-5 text-red-500" />
-                <x-link href="/offices/edit/{{ $office->id }}">
-                    <x-bi-pencil-square class="size-5 text-blue-500" />
-                </x-link>
-                <x-link href="/offices/view/{{ $office->id }}">
-                    <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                </x-link>
+            <x-td>
+                <div class="flex items-center gap-2">
+                    <x-bi-trash @click="openDeleteModal({{ $office->id }})" class="cursor-pointer size-5 text-red-500" />
+                    <x-link href="/offices/edit/{{ $office->id }}">
+                        <x-bi-pencil-square class="size-5 text-blue-500" />
+                    </x-link>
+                    <x-link href="/offices/view/{{ $office->id }}">
+                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                    </x-link>
+                </div>
             </x-td>
         <tr>
             @endforeach

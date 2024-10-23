@@ -27,7 +27,14 @@ class AccountingOfficer extends Component
 
     public function mount()
     {
-        $this->offices = Office::pluck('name', 'id');
+        $this->offices = Office::select('name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ];
+            });;
     }
     public function render()
     {
@@ -67,5 +74,4 @@ class AccountingOfficer extends Component
         $this->keyword = null;
         $this->office = null;
     }
-
 }

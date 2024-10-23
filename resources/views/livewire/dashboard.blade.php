@@ -33,7 +33,7 @@
         </section>
 
         <section>
-            <h1 class="font-bold text-primary">Low Stock Supplies</h1>
+            <x-title>Low Stock Supplies</x-title>
             <x-table>
                 <x-tr>
                     <x-th>Id</x-th>
@@ -56,7 +56,8 @@
 
             </x-table>
             <x-no-data :data="$supplies" />
-            {{ $supplies->links() }}
+
         </section>
+        {{ $supplies->links() }}
     </div>
 </div>

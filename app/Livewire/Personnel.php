@@ -31,9 +31,23 @@ class Personnel extends Component
 
     public function mount()
     {
-        $this->departments = Department::pluck('name', 'id')->toArray();
+        $this->departments = Department::select('name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ];
+            });;
         $this->positions = Position::values();
-        $this->offices = Office::pluck('name', 'id')->toArray();
+        $this->offices = Office::select('name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ];
+            });;
     }
 
     public function downloadPdf()

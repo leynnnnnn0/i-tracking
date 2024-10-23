@@ -22,6 +22,8 @@
     <x-column-info :name="Str::title(Str::replace('_', ' ', $key))" :value="$value" />
     @endif
     @endforeach
+    @else
+    <h1 class="text-sm col-span-2">None</h1>
     @endif
 
 </x-layouts.view>

@@ -1,1 +1,1 @@
-<input {{ $attributes }} type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword">
+<x-tsinput placeholder="Search for keyword" {{ $attributes }} />

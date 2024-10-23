@@ -28,7 +28,7 @@
         <livewire:navigation />
         <section class="flex-1 flex min-h-full">
             <x-side-menu />
-            <div class="flex-1 p-5 bg-primary-gray min-w-[1250px] dark:bg-dark">
+            <div class="flex-1 p-5 bg-primary-gray min-w-[1250px] dark:bg-tertiary-dark">
                 {{ $slot}}
             </div>
         </section>

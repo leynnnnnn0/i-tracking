@@ -39,7 +39,8 @@
                 <x-td>{{ $report->reported_by}}</x-td>
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $report->is_condemned ? 'Yes' : 'No'}}</x-td>
-                <x-td class="flex items-center gap-3">
+                <x-td>
+                <div class="flex items-center gap-2">
                     <x-link href="/missing-equipment/view/{{ $report->id}}">
                         <x-bi-eye class="size-5 text-green-500" />
                     </x-link>
@@ -56,6 +57,7 @@
                         Reported To SPMO
                     </button>
                     @endif
+                    </div>
                 </x-td>
             </tr>
             @endforeach

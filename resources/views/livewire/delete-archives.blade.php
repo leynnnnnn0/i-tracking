@@ -36,13 +36,15 @@
                 <x-td>{{ ucfirst($item->type) }}</x-td>
                 <x-td>{{ $item->delete_name  }}</x-td>
                 <x-td>{{ Carbon\Carbon::parse($item->deleted_at)->format('F j, Y \a\t h:i a') }}</x-td>
-                <x-td class="flex items-center gap-3">
-                    <button @click="openDeleteModal({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-red-500">
-                        <x-bi-trash class="cursor-pointer size-5 text-red-500" /> Delete Permanently
-                    </button>
-                    <button @click="openConfirmationModal({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-blue-500">
-                        <x-ri-history-fill class="size-5" /> Restore
-                    </button>
+                <x-td>
+                    <div class="flex items-center gap-2">
+                        <button @click="openDeleteModal({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-red-500">
+                            <x-bi-trash class="cursor-pointer size-5 text-red-500" /> Delete Permanently
+                        </button>
+                        <button @click="openConfirmationModal({{ $item->id}}, '{{$item->type}}')" class="hover:underline flex items-center gap-1 text-xs text-blue-500">
+                            <x-ri-history-fill class="size-5" /> Restore
+                        </button>
+                    </div>
                 </x-td>
             </tr>
             @endforeach

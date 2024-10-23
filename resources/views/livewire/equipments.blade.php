@@ -40,19 +40,20 @@
 
         <!-- Filter -->
         <x-others-filter wire:click="resetFilter">
-            <x-input wire:model.live="keyword" />
-            <x-form.filter-select :data="$accountingOfficers" wire:model.live="accountingOfficerId">
-                <option value="">Accounting Officer</option>
-            </x-form.filter-select>
-            <x-form.filter-select :data="$responsiblePersons" wire:model.live="responsiblePersonId">
-                <option value="">Responsible Person</option>
-            </x-form.filter-select>
-            <x-form.filter-select :data="$operatingUnits" wire:model.live="operatingUnit">
-                <option value="">Operating Unit</option>
-            </x-form.filter-select>
-            <x-form.filter-select :data="$organizationUnits" wire:model.live="organizationUnit">
-                <option value="">Organization Unit</option>
-            </x-form.filter-select>
+            
+                <x-input wire:model.live="keyword" />
+                <x-form.filter-select placeholder="Accounting Officer"
+                    :options="$accountingOfficers"
+                    wire:model.live="accountingOfficerId" />
+                <x-form.filter-select placeholder="Responsible Person"
+                    :options="$responsiblePersons"
+                    wire:model.live="responsiblePersonId" />
+                <x-form.filter-select placeholder="Operating Unit"
+                    :options="$operatingUnits"
+                    wire:model.live="operatingUnit" />
+                <x-form.filter-select placeholder="Organization Unit"
+                    :options="$organizationUnits"
+                    wire:model.live="organizationUnit" />
         </x-others-filter>
 
         <!-- Table -->
@@ -83,17 +84,19 @@
                     <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'Condemned' ? App\Enum\EquipmentStatus::getColor(App\Enum\EquipmentStatus::CONDEMNED)  : App\Enum\EquipmentStatus::getColor($equipment->status) }}">
                         {{ $query === 'Condemned' ? $query : Str::headline($equipment->status->value) }}
                 </x-td>
-                <x-td class="flex items-center gap-2">
-                    <x-link href="/equipment/view/{{ $equipment->id }}">
-                        <x-bi-eye class="size-5 text-green-500" />
-                    </x-link>
-                    <x-link href="/equipment/edit/{{ $equipment->id }}">
-                        <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </x-link>
-                    <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
-                    @if($equipment->quantity > $equipment->quantity_borrowed)
-                    <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrow</x-text-button>
-                    @endif
+                <x-td>
+                    <div class="flex items-center gap-2">
+                        <x-link href="/equipment/view/{{ $equipment->id }}">
+                            <x-bi-eye class="size-5 text-green-500" />
+                        </x-link>
+                        <x-link href="/equipment/edit/{{ $equipment->id }}">
+                            <x-bi-pencil-square class="size-5 text-blue-500" />
+                        </x-link>
+                        <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
+                        @if($equipment->quantity > $equipment->quantity_borrowed)
+                        <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrow</x-text-button>
+                        @endif
+                    </div>
                 </x-td>
             </tr>
             @endforeach
@@ -125,12 +128,13 @@
                 name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" />
             <x-form.input label="Equipment Quantity" name="borrowEquipmentForm.quantity" wire:model="borrowEquipmentForm.quantity" type="number" onkeydown="return event.keyCode !== 69" :hint="$quantityHint" />
             <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
-                <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300">Cancel</button>
+                <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300 dark:text-white dark:border-white">Cancel</button>
                 <x-primary-button wire:click="submit">Submit</x-primary-button>
             </section>
         </x-form-modal>
     </template>
     @endif
+
 
     <!-- Delete Modal -->
     <template x-if="showDeleteModal">

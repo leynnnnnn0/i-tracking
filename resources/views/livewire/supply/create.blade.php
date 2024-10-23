@@ -7,7 +7,7 @@
     <div class="grid grid-cols-3 gap-2">
         <x-form.label class="col-span-3">Categories <span class="text-red-500">*</span></x-form.label>
         @foreach ($categories as $key => $value)
-        <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category) ? 'text-white bg-primary' : ''}} text-xs border border-gray-500 rounded-lg px-2 py-1">{{ $value }}</button>
+        <button wire:click="addToCategories('{{ $key }}')" class="{{ in_array($key, $form->category) ? 'text-white bg-primary dark:bg-dark-primary' : ''}} text-xs border border-gray-500 dark:border-white dark:text-white rounded-lg px-2 py-1">{{ $value }}</button>
         @endforeach
         <br>
         <x-form.error name="form.category" />

@@ -10,8 +10,8 @@ use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\AccountingOfficer;
 use App\Models\Equipment;
 use App\Models\Personnel;
-use App\Models\ResponsiblePerson;
 use App\Traits\Deletable;
+use App\Traits\HasSelectOptions;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +23,7 @@ use Masmerise\Toaster\Toaster;
 
 class Equipments extends Component
 {
-    use WithPagination, WithoutUrlPagination, Deletable;
+    use WithPagination, WithoutUrlPagination, Deletable, HasSelectOptions;
     public ActivityLogForm $activityLogForm;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
@@ -83,8 +83,22 @@ class Equipments extends Component
     {
         $this->operatingUnits = OperatingUnitAndProject::values();
         $this->organizationUnits = OrganizationUnit::values();
-        $this->responsiblePersons = Personnel::get()->pluck('full_name', 'id');
-        $this->accountingOfficers = AccountingOfficer::get()->pluck('full_name', 'id');
+        $this->responsiblePersons = Personnel::select('first_name', 'last_name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->full_name,
+                ];
+            });
+        $this->accountingOfficers = AccountingOfficer::select('first_name', 'last_name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->full_name,
+                ];
+            });
         $this->showDeleteModal = false;
     }
 

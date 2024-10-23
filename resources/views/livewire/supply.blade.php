@@ -27,17 +27,16 @@
     <section class="space-y-3">
         <x-index-header heading="Supplies" buttonName="Create New Supply" location="/supplies/create" wire:click="downloadPdf" />
         <!-- Filter -->
-        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
-            <div>
-                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
-                <x-form.filter-select :data="$categories" wire:model.live="category">
-                    <option value="">Category</option>
-                </x-form.filter-select>
-            </div>
-            <div class="flex items-center gap-3">
-                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
-            </div>
-        </div>
+
+        <x-others-filter wire:click="resetFilter">
+
+            <x-input wire:model.live="keyword" />
+            <x-form.filter-select :data="$categories" wire:model.live="category">
+                <option value="">Category</option>
+            </x-form.filter-select>
+        </x-others-filter>
+
+
 
         <section>
             <x-table>
@@ -63,16 +62,17 @@
                             {{ $supply->total }}</x-td>
                     </span>
                     <x-td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/A' }}</x-td>
-                    <x-td class="flex items-center gap-3">
-                        <x-link href="/supplies/view/{{ $supply->id}}">
-                            <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                        </x-link>
-                        <x-link href="/supplies/edit/{{ $supply->id}}">
-                            <x-bi-pencil-square class="size-5 text-blue-500" />
-                        </x-link>
-                        <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="openDeleteModal({{ $supply->id }})" />
-
-                        <x-text-button class="text-green-500" @click="showAddQuantityModal({{$supply->id}})">Add Quantity</x-text-button>
+                    <x-td>
+                        <div class="flex items-center gap-2">
+                            <x-link href="/supplies/view/{{ $supply->id}}">
+                                <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                            </x-link>
+                            <x-link href="/supplies/edit/{{ $supply->id}}">
+                                <x-bi-pencil-square class="size-5 text-blue-500" />
+                            </x-link>
+                            <x-bi-trash class="cursor-pointer size-5 text-red-500" @click="openDeleteModal({{ $supply->id }})" />
+                            <x-text-button class="text-green-500" @click="showAddQuantityModal({{$supply->id}})">Add Quantity</x-text-button>
+                            <div class="flex items-center gap-2"></div>
                     </x-td>
                 </tr>
                 @endforeach

@@ -28,14 +28,12 @@
         </x-filter-tab>
 
         <!-- Filter -->
-        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
-            <div>
-                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
-            </div>
-            <div class="flex items-center gap-3">
-                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
-            </div>
-        </div>
+        <x-others-filter wire:click="resetFilter">
+
+            <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+
+        </x-others-filter>
+
 
         <x-table>
             <x-tr>
@@ -57,7 +55,8 @@
                 <x-td>{{ $log->start_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
-                <x-td class="flex items-center gap-3">
+                <x-td>
+                <div class="flex items-center gap-2">
                     <x-link href="/borrowed-logs/view/{{ $log->id }}">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </x-link>
@@ -74,6 +73,7 @@
                         Returned
                     </x-text-button>
                     @endif
+                    </div>
                 </x-td>
             </tr>
             @endforeach

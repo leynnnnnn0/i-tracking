@@ -12,23 +12,19 @@
     <div class="space-y-3">
         <x-index-header heading="Personnel" buttonName="Create New Personnel" location="/personnel/create" wire:click="downloadPdf" />
         <!-- Filter -->
-        <div class="bg-white rounded-lg h-fit p-3 flex items-center gap-3 justify-between">
-            <div>
-                <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
-                <x-form.filter-select :data="$positions" wire:model.live="position">
-                    <option value="">Position</option>
-                </x-form.filter-select>
-                <x-form.filter-select :data="$departments" wire:model.live="departmentId">
-                    <option value="">Department</option>
-                </x-form.filter-select>
-                <x-form.filter-select :data="$offices" wire:model.live="officeId">
-                    <option value="">Office</option>
-                </x-form.filter-select>
+        <x-others-filter wire:click="resetFilter">
+            <x-input wire:model.live="keyword" />
+            <div class="w-[300px]">
+                <x-form.filter-select placeholder="Position" :options="$positions" wire:model.live="position" />
             </div>
-            <div class="flex items-center gap-3">
-                <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
+            <div class="w-[200px]">
+                <x-form.filter-select placeholder="Department" :options="$departments" wire:model.live="departmentId" />
             </div>
-        </div>
+            <div class="w-[300px]">
+                <x-form.filter-select placeholder="Office" :options="$offices" wire:model.live="officeId" />
+            </div>
+        </x-others-filter>
+
         <section>
             <x-table>
                 <x-tr>
@@ -46,14 +42,16 @@
                     <x-td>{{ $personnel->department->name }}</x-td>
                     <x-td>{{ $personnel->position }}</x-td>
                     <x-td>{{ $personnel->phone_number }}</x-td>
-                    <x-td class="flex items-center gap-3">
-                        <x-link href="/personnel/view/{{ $personnel->id}}">
-                            <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                        </x-link>
-                        <x-link href="/personnel/edit/{{ $personnel->id}}">
-                            <x-bi-pencil-square class="size-5 text-blue-500" />
-                        </x-link>
-                        <x-bi-trash @click="openDeleteModal({{ $personnel->id }})" class="cursor-pointer size-5 text-red-500" />
+                    <x-td>
+                        <div class="flex items-center gap-2">
+                            <x-link href="/personnel/view/{{ $personnel->id}}">
+                                <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                            </x-link>
+                            <x-link href="/personnel/edit/{{ $personnel->id}}">
+                                <x-bi-pencil-square class="size-5 text-blue-500" />
+                            </x-link>
+                            <x-bi-trash @click="openDeleteModal({{ $personnel->id }})" class="cursor-pointer size-5 text-red-500" />
+                        </div>
                     </x-td>
                 </tr>
                 @endforeach
