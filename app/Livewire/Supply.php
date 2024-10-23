@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Helper\ColorStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\SupplyForm;
+use App\Livewire\Forms\SupplyHistoryForm;
 use App\Models\Category;
 use App\Models\Supply as ModelsSupply;
 use App\Traits\Deletable;
@@ -19,6 +20,7 @@ class Supply extends Component
     use WithPagination, Deletable;
     public ActivityLogForm $activityLogForm;
     public SupplyForm $form;
+    public SupplyHistoryForm $supplyHistoryForm;
     public $keyword;
     public $categories;
     public $category = [];
@@ -91,6 +93,8 @@ class Supply extends Component
                 $after = $this->form->updateUsedValue($before);
                 $this->activityLogForm->setActivityLog($before, $after, 'Add Supply Quanity', 'Update');
                 $this->activityLogForm->store();
+                $this->supplyHistoryForm->setSupplyHistoryForm($after);
+                $this->supplyHistoryForm->store();
             });
             Toaster::success('Updated Successfully');
             $this->dispatch('usedValueUpdated');
@@ -108,6 +112,8 @@ class Supply extends Component
                 $after = $this->form->updateQuantity($before);
                 $this->activityLogForm->setActivityLog($before, $after, 'Update Quantity', 'Update');
                 $this->activityLogForm->store();
+                $this->supplyHistoryForm->setSupplyHistoryForm($after);
+                $this->supplyHistoryForm->store();
             });
             Toaster::success('Quantity Updated');
             $this->dispatch('quantityValueUpdated');

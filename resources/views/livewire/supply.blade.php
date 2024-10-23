@@ -84,24 +84,24 @@
 
     <template x-if="open">
         <div class="flex items-center justify-center fixed bg-black/50 inset-0">
-            <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2">
+            <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2 dark:bg-secondary-dark">
                 <x-bi-x @click="toggle" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">
-                    <h1 class="text-gray-700 font-bold text-lg">Add Used Value for item #<span x-text="targetId"></span></h1>
+                    <h1 class="text-gray-700 font-bold text-lg dark:text-white">Add Used Value for item #<span x-text="targetId"></span></h1>
                 </section>
-                <input wire:model="form.used" class="rounded-lg border-gray-300 w-full" type="number">
+                <x-tsnumber wire:model="form.used" />
                 <x-primary-button @click="$wire.add(targetId)" class="w-full flex justify-center">Add</x-primary-button>
             </div>
         </div>
     </template>
     <template x-if="showAddQuantity">
         <div class="flex items-center justify-center fixed bg-black/50 inset-0">
-            <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2">
+            <div class="relative bg-white rounded-lg h-fit min-w-[300px] p-5 space-y-2 dark:bg-secondary-dark">
                 <x-bi-x @click="showAddQuantityModal" class="absolute top-3 right-3 size-5 cursor-pointer" />
                 <section class="pb-3 border-b border-gray-300">
-                    <h1 class="text-gray-700 font-bold text-lg">Add Quantity for item #<span x-text="targetId"></span></h1>
+                    <h1 class="text-gray-700 font-bold text-lg dark:text-white">Add Quantity for item #<span x-text="targetId"></span></h1>
                 </section>
-                <input wire:model="form.recently_added" class="rounded-lg border-gray-300 w-full" type="number">
+                <x-tsnumber wire:model="form.recently_added" />
                 <x-primary-button @click="$wire.addQuantity(targetId)" class="w-full flex justify-center">Add</x-primary-button>
             </div>
         </div>
