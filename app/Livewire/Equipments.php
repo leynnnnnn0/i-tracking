@@ -124,17 +124,7 @@ class Equipments extends Component
         }
 
         if ($this->keyword) {
-            $query->where(function ($q) {
-                $q->where('name', 'like', '%' . $this->keyword . '%')
-                    ->orWhere('property_number', 'like', '%' . $this->keyword . '%')
-                    ->orWhere('description', 'like', '%' . $this->keyword . '%')
-                    ->orWhereHas('responsible_person', function ($subQuery) {
-                        $subQuery->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $this->keyword . '%')
-                            ->orWhere('first_name', 'like', '%' . $this->keyword . '%')
-                            ->orWhere('last_name', 'like', '%' . $this->keyword . '%')
-                            ->orWhere('middle_name', 'like', '%' . $this->keyword . '%');
-                    });
-            });
+            $query->whereAny(['name', 'property_number', 'id'], 'like', "%$this->keyword%");
         }
 
         if ($this->responsiblePersonId) {
@@ -142,9 +132,7 @@ class Equipments extends Component
         }
 
         if ($this->accountingOfficerId) {
-            $query->whereHas('accounting_officer', function ($q) {
-                $q->where('id', $this->accountingOfficerId);
-            });
+            $query->where('accounting_officer_id', $this->accountingOfficerId);
         }
 
         if ($this->operatingUnit) {

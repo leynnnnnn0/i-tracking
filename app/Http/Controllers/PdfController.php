@@ -214,8 +214,8 @@ class PdfController extends Controller
 
         $query = Equipment::query()
             ->with([
-                'responsible_person',
-                'responsible_person.accounting_officer',
+                'accounting_officer',
+                'personnel',
                 'missing_equipment_log' => function ($query) {
                     $query->where('is_condemned', true);
                 },
@@ -247,27 +247,15 @@ class PdfController extends Controller
         }
 
         if ($request->keyword) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('property_number', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('description', 'like', '%' . $request->keyword . '%')
-                    ->orWhereHas('responsible_person', function ($subQuery) use ($request) {
-                        $subQuery->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $request->keyword . '%')
-                            ->orWhere('first_name', 'like', '%' . $request->keyword . '%')
-                            ->orWhere('last_name', 'like', '%' . $request->keyword . '%')
-                            ->orWhere('middle_name', 'like', '%' . $request->keyword . '%');
-                    });
-            });
+            $query->whereAny(['name', 'property_number', 'id'], 'like', "%$request->keyword%");;
         }
 
         if ($request->accountingOfficerId) {
-            $query->whereHas('responsible_person.accounting_officer', function ($q) use ($request) {
-                $q->where('id', $request->accountingOfficerId);
-            });
+            $query->where('accounting_officer_id', $request->accountingOfficerId);
         }
 
         if ($request->responsiblePersonId) {
-            $query->where('responsible_person_id', $request->responsiblePersonId);
+            $query->where('personnel_id', $request->responsiblePersonId);
         }
 
         if ($request->operatingUnit) {
@@ -287,7 +275,7 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.EquipmentList', [
             'data' => $equipments,
             'isAccountingOfficerFiltered' => $isAccountingOfficerFiltered,
-            'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('responsible_person_id', $request->responsiblePersonId)->first()->responsible_person->full_name : false,
+            'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('personnel_id', $request->responsiblePersonId)->first()->personnel->full_name : false,
             'query' => $request->query
         ]);
 
