@@ -17,6 +17,7 @@ use App\Livewire\Category\View as CategoryView;
 use App\Livewire\Dashboard;
 use App\Livewire\DeleteArchives;
 use App\Livewire\Department;
+use App\Livewire\Department\Create as DepartmentCreate;
 use App\Livewire\Equipments;
 use App\Livewire\MissingEquipment;
 use App\Livewire\Offices;
@@ -69,6 +70,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('departments')->name('departments.')->group(function () {
         Route::get('/', Department::class)->name('index');
+        Route::get('/create', DepartmentCreate::class)->name('create');
     });
 
 
