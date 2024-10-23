@@ -1,4 +1,4 @@
-<nav x-data="{showNotificationBar: false}" class="h-16 shadow-lg bg-white px-10 flex items-center justify-between dark:bg-black/25">
+<nav x-data="{showNotificationBar: false}" class="h-16 shadow-lg bg-white px-10 flex items-center justify-between dark:bg-dark-primary">
     <img src="{{ Vite::asset('resources/images/iTrackLogo.png')}}" class="size-24" alt="logo">
     <div class="flex items-center gap-3">
         <button @click="showNotificationBar = true" class="relative">
