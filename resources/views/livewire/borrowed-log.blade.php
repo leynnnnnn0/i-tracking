@@ -30,7 +30,7 @@
         <!-- Filter -->
         <x-others-filter wire:click="resetFilter">
 
-            <input type="text" class="w-42 rounded-lg border border-gray-300" placeholder="Search for keyword" wire:model.live="keyword">
+            <x-input wire:model.live="keyword" />
 
         </x-others-filter>
 
@@ -56,23 +56,23 @@
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
                 <x-td>
-                <div class="flex items-center gap-2">
-                    <x-link href="/borrowed-logs/view/{{ $log->id }}">
-                        <x-bi-eye class="cursor-pointer size-5 text-green-500" />
-                    </x-link>
+                    <div class="flex items-center gap-2">
+                        <x-link href="/borrowed-logs/view/{{ $log->id }}">
+                            <x-bi-eye class="cursor-pointer size-5 text-green-500" />
+                        </x-link>
 
-                    <x-link href="/borrowed-logs/edit/{{ $log->id }}">
-                        <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </x-link>
-                    @if($log->is_returned)
-                    <x-bi-trash @click="openDeleteModal({{ $log->id }})" class="cursor-pointer size-5 text-red-500" />
-                    @endif
+                        <x-link href="/borrowed-logs/edit/{{ $log->id }}">
+                            <x-bi-pencil-square class="size-5 text-blue-500" />
+                        </x-link>
+                        @if($log->is_returned)
+                        <x-bi-trash @click="openDeleteModal({{ $log->id }})" class="cursor-pointer size-5 text-red-500" />
+                        @endif
 
-                    @if(!$log->is_returned)
-                    <x-text-button @click="openConfirmationModal({{ $log->id }})" class="text-green-500">
-                        Returned
-                    </x-text-button>
-                    @endif
+                        @if(!$log->is_returned)
+                        <x-text-button @click="openConfirmationModal({{ $log->id }})" class="text-green-500">
+                            Returned
+                        </x-text-button>
+                        @endif
                     </div>
                 </x-td>
             </tr>

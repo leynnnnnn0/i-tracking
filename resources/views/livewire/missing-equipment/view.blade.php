@@ -2,8 +2,8 @@
     <x-layouts.view heading="Missing Equipment" backLocation="/missing-equipment">
         <x-span class="col-span-2 text-primary font-bold">About Equipment</x-span>
         <x-column-info name="Equipment" :value="$equipment->equipment->name" />
-        <x-column-info name="Equipment Accounting Officer" :value="$equipment->equipment->responsible_person->accounting_officer->full_name" />
-        <x-column-info name="Equipment Responsible Person" :value="$equipment->equipment->responsible_person->full_name" />
+        <x-column-info name="Equipment Accounting Officer" :value="$equipment->equipment->accounting_officer->full_name" />
+        <x-column-info name="Equipment Responsible Person" :value="$equipment->equipment->personnel->full_name" />
         <x-column-info name="Quantity" :value="$equipment->equipment->quantity" />
         <x-column-info name="Organization Unit" :value="$equipment->equipment->organization_unit" />
         <x-column-info name="Operating Unit/Project" :value="$equipment->equipment->operating_unit_project" />

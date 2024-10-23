@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\AccountingOfficer;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\Equipment;
 use App\Models\Office;
 use App\Models\Personnel;
@@ -32,7 +33,8 @@ class DeleteArchives extends Component
             'offices' => Office::class,
             'categories' => Category::class,
             'accounting-officers' => AccountingOfficer::class,
-            'responsible-person' => ResponsiblePerson::class
+            'responsible-person' => ResponsiblePerson::class,
+            'departments' => Department::class
         ];
     }
     public function render()

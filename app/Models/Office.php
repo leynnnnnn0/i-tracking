@@ -27,4 +27,9 @@ class Office extends Model
     {
         return $this->hasMany(Personnel::class);
     }
+
+    public function getDeleteNameAttribute()
+    {
+        return $this->name;
+    }
 }

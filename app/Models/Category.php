@@ -21,4 +21,10 @@ class Category extends Model
     {
         return $this->belongsToMany(Supply::class, 'supply_categories');
     }
+
+
+    public function getDeleteNameAttribute()
+    {
+        return $this->name;
+    }
 }

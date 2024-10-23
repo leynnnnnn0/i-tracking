@@ -53,6 +53,11 @@
         <x-ri-home-office-line class="size-4" />
         Offices
     </x-nav-link>
+
+    <x-nav-link href="/departments" :active="request()->is('departments*')">
+        <x-ri-home-office-line class="size-4" />
+        Departments
+    </x-nav-link>
     <x-nav-link href="/accounting-officers" :active="request()->is('accounting-officers*')">
         <x-ri-user-line class="size-4" />
         Accounting Officers

@@ -34,4 +34,6 @@ class Offices extends Component
     {
         return redirect()->route('offices-pdf');
     }
+
+    
 }

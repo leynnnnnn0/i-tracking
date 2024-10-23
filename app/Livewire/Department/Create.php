@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Livewire\Offices;
+namespace App\Livewire\Department;
 
 use App\Livewire\Forms\ActivityLogForm;
-use App\Livewire\Forms\OfficeForm;
+use App\Livewire\Forms\DepartmentForm;
 use App\Traits\Submittable;
 use Livewire\Component;
-
 
 class Create extends Component
 {
     use Submittable;
-    public OfficeForm $form;
+    public DepartmentForm $form;
     public ActivityLogForm $activityLogForm;
     protected function performStoreOperation()
     {
@@ -20,11 +19,10 @@ class Create extends Component
 
     protected function getModelName(): string
     {
-        return 'office';
+        return 'department';
     }
     public function render()
     {
-        return view('livewire.offices.create');
+        return view('livewire.department.create');
     }
-
 }

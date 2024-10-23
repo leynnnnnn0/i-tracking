@@ -38,8 +38,8 @@
                 @foreach ($data as $personnel)
                 <tr class="border-b border-gray-300">
                     <x-td>{{ $personnel->full_name }}</x-td>
-                    <x-td>{{ $personnel->office->name }}</x-td>
-                    <x-td>{{ $personnel->department->name }}</x-td>
+                    <x-td>{{ $personnel->office ? $personnel->office->name : 'N/a' }}</x-td>
+                    <x-td>{{ $personnel->department ? $personnel->department->name : 'N/a' }}</x-td>
                     <x-td>{{ $personnel->position }}</x-td>
                     <x-td>{{ $personnel->phone_number }}</x-td>
                     <x-td>
