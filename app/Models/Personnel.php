@@ -62,6 +62,7 @@ class Personnel extends Model
 
     public function equipments()
     {
-        return $this->hasOne(Equipment::class);
+        return $this->hasMany(Equipment::class);
     }
+
 }

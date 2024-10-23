@@ -21,6 +21,9 @@
                 <x-form.filter-select :data="$departments" wire:model.live="departmentId">
                     <option value="">Department</option>
                 </x-form.filter-select>
+                <x-form.filter-select :data="$offices" wire:model.live="officeId">
+                    <option value="">Office</option>
+                </x-form.filter-select>
             </div>
             <div class="flex items-center gap-3">
                 <button wire:click="resetFilter" class="hover:bg-green-100 transition-colors duration-300 border border-gray-300 px-3 py-1 rounded-lg text-gray-500">Reset filter</button>
@@ -30,6 +33,7 @@
             <x-table>
                 <x-tr>
                     <x-th>Full Name</x-th>
+                    <x-th>Office</x-th>
                     <x-th>Department</x-th>
                     <x-th>Position</x-th>
                     <x-th>Phone Number</x-th>
@@ -38,6 +42,7 @@
                 @foreach ($data as $personnel)
                 <tr class="border-b border-gray-300">
                     <x-td>{{ $personnel->full_name }}</x-td>
+                    <x-td>{{ $personnel->office->name }}</x-td>
                     <x-td>{{ $personnel->department->name }}</x-td>
                     <x-td>{{ $personnel->position }}</x-td>
                     <x-td>{{ $personnel->phone_number }}</x-td>

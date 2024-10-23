@@ -54,14 +54,13 @@ class PersonnelForm extends Form
             'gender' => ['required'],
             'date_of_birth' => ['required', 'date', 'before:today'],
             'phone_number' => ['required', 'regex:/^09\d{9}$/'],
-            'email' => ['required', 'email', Rule::unique('personnels')->ignore($this->personnel_id)],
+            'email' => ['required', 'email', Rule::unique('personnel')->ignore($this->personnel_id)],
             'position' => ['required'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date', 'after:start_date'],
             'remarks' => ['nullable', 'string'],
         ];
     }
-
 
     public function update(Personnel $personnel)
     {

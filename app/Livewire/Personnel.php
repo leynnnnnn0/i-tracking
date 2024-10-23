@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Enum\Position;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\Department;
+use App\Models\Office;
 use App\Models\Personnel as ModelsPersonnel;
 use App\Traits\Deletable;
 use Livewire\Component;
@@ -17,9 +18,11 @@ class Personnel extends Component
     public $keyword;
     public $departments;
     public $positions;
+    public $offices;
 
     public $departmentId;
     public $position;
+    public $officeId;
 
     protected function getModel(): string
     {
@@ -30,19 +33,21 @@ class Personnel extends Component
     {
         $this->departments = Department::pluck('name', 'id')->toArray();
         $this->positions = Position::values();
+        $this->offices = Office::pluck('name', 'id')->toArray();
     }
 
     public function downloadPdf()
     {
 
         $params = [
-            'keyword' => $this->keyword ?? "",
-            'departmentId' => $this->departmentId ?? "",
-            'position' => $this->position ?? "",
+            'keyword' => $this->keyword,
+            'departmentId' => $this->departmentId,
+            'position' => $this->position,
+            'officeId' => $this->officeId
         ];
 
         $params = array_filter($params, function ($value) {
-            return $value !== null && $value !== '';
+            return $value !== null;
         });
 
 
@@ -53,20 +58,23 @@ class Personnel extends Component
 
     public function render()
     {
-        $query = ModelsPersonnel::query();
+        $query = ModelsPersonnel::query()
+            ->with('office', 'department');
+
         if ($this->keyword) {
-            $query->where(function ($q) {
-                $q->orwhere('first_name', 'like', '%' . $this->keyword . '%')
-                    ->orWhere('last_name', 'like', '%' . $this->keyword . '%')
-                    ->orWhere('middle_name', 'like', '%' . $this->keyword . '%');
-            });
+            $query->whereAny(['first_name', 'middle_name', 'last_name'], 'like', '%' . $this->keyword . '%');
         }
+
         if ($this->departmentId) {
             $query->where('department_id', $this->departmentId);
         }
 
         if ($this->position) {
             $query->where('position', $this->position);
+        }
+
+        if ($this->officeId) {
+            $query->where('office_id', $this->officeId);
         }
 
         $personnels = $query->latest()->paginate(10);
@@ -78,8 +86,9 @@ class Personnel extends Component
 
     public function resetFilter()
     {
-        $this->keyword = "";
+        $this->keyword = null;
         $this->departmentId = null;
         $this->position = null;
+        $this->officeId = null;
     }
 }
