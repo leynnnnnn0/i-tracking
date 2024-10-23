@@ -1,22 +1,22 @@
 <x-layouts.edit title="Equipment" cancelLocation="/equipment" wire:click="update">
     <x-form.tsselect :options="$officers"
-        wire:model.live="officer"
+        wire:model.live="form.accounting_officer_id"
         label="Accounting Officer"
-        name="officer" />
+        name="form.accounting_officer_id" />
 
     <x-form.tsselect :options="$persons"
-        wire:model.live="form.responsible_person_id"
+        wire:model.live="form.personnel_id"
         label="Responsible Person"
-        name="form.responsible_person_id" />
+        name="form.personnel_id" />
 
     <x-form.select label="Organization Unit"
-        :data="$organizations"
+        :options="$organizations"
         name="form.organization_unit"
         wire:model="form.organization_unit">
     </x-form.select>
 
     <x-form.select label="Operating Unit Project"
-        :data="$operating_units"
+        :options="$operating_units"
         name="form.operating_unit_project"
         wire:model="form.operating_unit_project" />
 
@@ -29,7 +29,7 @@
         wire:model.lazy="form.quantity" />
 
     <x-form.select label="Unit"
-        :data="$units"
+        :options="$units"
         name="form.unit"
         wire:model="form.unit" />
 
@@ -47,15 +47,15 @@
         type="date"
         wire:model="form.date_acquired" />
 
-    <x-form.input label="Fund"
+    <x-form.input label="Fund" :isRequired="false"
         name="form.fund"
         wire:model="form.fund" />
 
-    <x-form.input label="PPE Class"
+    <x-form.input label="PPE Class" :isRequired="false"
         name="form.ppe_class"
         wire:model="form.ppe_class" />
 
-    <x-form.date month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
+    <x-tsdate :isRequired="false" month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
 
     <x-form.tsnumber label="Unit Price"
         name="form.unit_price"

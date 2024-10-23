@@ -124,7 +124,7 @@ class PdfController extends Controller
 
     public function handleEquipmentNewResponsiblePerson(Request $request)
     {
-        $equipment = Equipment::with('responsible_person')->findOrFail($request->equipment_id);
+        $equipment = Equipment::with('personnel', 'accounting_officer')->findOrFail($request->equipment_id);
         $pdf = Pdf::loadView('pdf.EquipmentNewResponsiblePerson', [
             'equipment' => $equipment,
             'previous_responsible_person' => $request->previous_responsible_person

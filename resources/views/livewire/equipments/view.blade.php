@@ -28,6 +28,8 @@
         :value="$equipment->total_amount" />
     <x-column-info name="Status"
         :value="$equipment->status" />
-    <x-column-info name="Status"
-        :value="$equipment->responsible_person->full_name" />
+    <x-column-info name="Responsible Person"
+        :value="$equipment->personnel->full_name" />
+        <x-column-info name="Accounting Officer"
+        :value="$equipment->accounting_officer->full_name" />
 </x-layouts.view>

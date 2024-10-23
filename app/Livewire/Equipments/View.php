@@ -10,7 +10,7 @@ class View extends Component
     public $equipment;
     public function mount($id)
     {
-        $this->equipment = Equipment::with('responsible_person')->findOrFail($id);
+        $this->equipment = Equipment::with('personnel', 'accounting_officer')->findOrFail($id);
     }
     public function render()
     {
