@@ -12,9 +12,9 @@ class SupplyHistory extends Model
 
     protected $fillable = [
         'supply_id',
-        'total_quantity',
-        'total_used',
-        'total_added',
+        'quantity',
+        'used',
+        'added',
         'total',
         'created_at'
     ];

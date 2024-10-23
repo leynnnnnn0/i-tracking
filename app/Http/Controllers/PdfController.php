@@ -165,11 +165,11 @@ class PdfController extends Controller
         }
 
         if ($request->category) {
-            $query->when($request->category, function ($query) use ($request) {
-                return $query->whereHas('categories', function ($q) use ($request) {
-                    $q->where('categories.id', $request->category);
+            if ($request->category && is_array($request->category)) {
+                $query->whereHas('categories', function ($q) use ($request) {
+                    $q->whereIn('categories.id', $request->category);
                 });
-            });
+            }
         }
         $supplies = $query->get();
         $pdf = Pdf::loadView('pdf.SupplyList', [

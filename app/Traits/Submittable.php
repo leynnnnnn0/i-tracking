@@ -20,8 +20,8 @@ trait Submittable
             DB::transaction(function () {
                 $model = $this->performStoreOperation();
                 $this->activityLogForm->setActivityLog(null, $model, $this->getActivityLogMessage(), 'Create');
-
                 $this->activityLogForm->store();
+                $this->afterTransaction($model);
             });
             Toaster::success($this->getSuccessMessage());
             return $this->redirect(route($this->getRedirectRoute()), true);
@@ -48,5 +48,10 @@ trait Submittable
     protected function getSuccessMessage(): string
     {
         return 'New ' . ucfirst($this->getModelName()) . ' Created!';
+    }
+
+    protected function afterTransaction($model)
+    {
+        
     }
 }

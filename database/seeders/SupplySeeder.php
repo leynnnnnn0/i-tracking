@@ -11,7 +11,7 @@ class SupplySeeder extends Seeder
 {
     protected $startDate = '2024-01-01';
     protected $historyPerSupply = 10; // Number of history entries per supply
-    
+
     /**
      * Run the database seeds.
      */
@@ -31,9 +31,9 @@ class SupplySeeder extends Seeder
     {
         // Create initial history entry
         $this->createHistoryEntry($supply, [
-            'total_quantity' => $supply->quantity,
-            'total_used' => $supply->used,
-            'total_added' => $supply->recently_added,
+            'quantity' => $supply->quantity,
+            'used' => $supply->used,
+            'added' => $supply->recently_added,
             'total' => $supply->total
         ]);
 
@@ -50,7 +50,7 @@ class SupplySeeder extends Seeder
     {
         $added = random_int(1, 30);
         $used = fake()->numberBetween(0, $supply->total);
-        
+
         // Calculate new values
         $newQuantity = $added + $supply->quantity;
         $newUsed = $supply->used + $used;
@@ -66,9 +66,9 @@ class SupplySeeder extends Seeder
 
         // Create history entry
         $this->createHistoryEntry($supply, [
-            'total_quantity' => $newQuantity,
-            'total_used' => $newUsed,
-            'total_added' => $added,
+            'quantity' => $newQuantity,
+            'used' => $newUsed,
+            'added' => $added,
             'total' => $newTotal,
         ]);
     }

@@ -20,7 +20,7 @@ class SupplyHistory extends Component
         $query = ModelsSupplyHistory::query()->with('supply');
         if ($this->name) {
             $query->whereHas('supply', function ($q) {
-                $q->where('supplies.description', $this->name);
+                $q->where('supplies.description', 'like',"%$this->name%");
             });
         }
         if ($this->from && $this->to) {
