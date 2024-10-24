@@ -24,6 +24,7 @@
 
 <body class="font-poppins text-gray-900 antialiased">
     <x-toaster-hub />
+    <x-tsdialog />
     <div class="flex flex-col min-h-screen">
         <livewire:navigation />
         <section class="flex-1 flex min-h-full">

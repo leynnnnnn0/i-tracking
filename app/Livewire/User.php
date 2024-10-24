@@ -20,6 +20,16 @@ class User extends Component
     public $roles;
     public $role;
 
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedRole()
+    {
+        $this->resetPage();
+    }
+
     protected function getModel(): string
     {
         return ModelsUser::class;
@@ -50,6 +60,7 @@ class User extends Component
 
     public function resetFilter()
     {
+        $this->resetPage();
         $this->keyword = null;
         $this->role = null;
     }

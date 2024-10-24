@@ -15,7 +15,9 @@
         <!-- Filter -->
         <x-others-filter wire:click="resetFilter">
             <x-input wire:model.live="keyword" />
-            <x-form.filter-select :options="$roles" wire:model.live="role" placeholder="Role" />
+            <div class="w-[200px]">
+                <x-form.filter-select :options="$roles" wire:model.live="role" placeholder="Role" />
+            </div>
         </x-others-filter>
 
         <x-table>

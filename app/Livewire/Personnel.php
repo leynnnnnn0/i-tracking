@@ -19,10 +19,29 @@ class Personnel extends Component
     public $departments;
     public $positions;
     public $offices;
-
     public $departmentId;
     public $position;
     public $officeId;
+
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedPosition()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedOfficeId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedDepartmentId()
+    {
+        $this->resetPage();
+    }
 
     protected function getModel(): string
     {
@@ -100,6 +119,7 @@ class Personnel extends Component
 
     public function resetFilter()
     {
+        $this->resetPage();
         $this->keyword = null;
         $this->departmentId = null;
         $this->position = null;

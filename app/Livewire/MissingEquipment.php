@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Exceptions\InsufficientQuantityException;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\MissingEquipment as ModelsMissingEquipment;
@@ -11,10 +12,11 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
+use TallStackUi\Traits\Interactions;
 
 class MissingEquipment extends Component
 {
-    use WithPagination, Deletable;
+    use WithPagination, Deletable, Interactions;
     public $query = 'All';
     public ActivityLogForm $activityLogForm;
     public MissingEquipmentForm $form;
@@ -89,10 +91,16 @@ class MissingEquipment extends Component
                 $this->activityLogForm->setActivityLog($before, $after, 'Tag Missing Equipment as ' . $after->status, 'Update');
                 $this->activityLogForm->store();
             });
-            $this->dispatch('Condemned');
             Toaster::success('Updated Successfully');
+        } catch (InsufficientQuantityException $ie) {
+            $this->dialog()->error(
+                'Missing Quantity Exceeds the Equipment Quantity',
+                'The quantity you are trying to process is greater than the available stock.'
+            )->send();
         } catch (Exception $e) {
-            Toaster::error($e->getMessage());
+            dd($e);
+        } finally {
+            $this->dispatch('Condemned');
         }
     }
 }

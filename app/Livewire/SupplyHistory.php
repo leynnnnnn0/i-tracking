@@ -14,13 +14,26 @@ class SupplyHistory extends Component
     public $to;
     public $name;
 
+    public function updatedFrom()
+    {
+        $this->resetPage();
+    }
+    public function updatedTo()
+    {
+        $this->resetPage();
+    }
+    public function updatedName()
+    {
+        $this->resetPage();
+    }
+
     #[On('filter-supplies-history')]
     public function render()
     {
         $query = ModelsSupplyHistory::query()->with('supply');
         if ($this->name) {
             $query->whereHas('supply', function ($q) {
-                $q->where('supplies.description', 'like',"%$this->name%");
+                $q->where('supplies.description', 'like', "%$this->name%");
             });
         }
         if ($this->from && $this->to) {
@@ -48,6 +61,7 @@ class SupplyHistory extends Component
 
     public function resetFilter()
     {
+        $this->resetPage();
         $this->from = null;
         $this->to = null;
         $this->name = null;

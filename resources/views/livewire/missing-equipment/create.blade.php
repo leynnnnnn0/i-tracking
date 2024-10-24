@@ -1,10 +1,18 @@
-<x-layouts.create title="Missing Equipment" :cancelLocation="route('missing-equipment.index')" wire:click="submit">
-    <x-form.tsselect :options="$equipments" wire:model.live="form.equipment_id" :options="$equipments" label="Equipment" />
+<x-layouts.create title="Missing Equipment" :cancelLocation="route('missing-equipment.index')" wire:click="submit" wire:loading.attr="disabled">
+    <x-form.tsselect
+        wire:ignore
+        :options="$equipments"
+        wire:model.live="form.equipment_id"
+        label="Equipment"
+        searchable
+        placeholder="Search equipment..."
+        hint="Type at least 2 characters to search" />
+
     <x-form.select label="Status" :options="$statuses" name="form.status" wire:model.live="form.status" />
     <x-form.input label="Reported By" name="form.reported_by" wire:model="form.reported_by" />
-    <x-form.input label="Reported Date" name="form.reported_date" type="date" wire:model="form.reported_date" />
+    <x-form.date label="Reported Date" name="form.reported_date" wire:model="form.reported_date" />
     <x-form.text-area label="Description" name="form.description" wire:model="form.description" :isRequired="false" />
-    <x-form.tsnumber label="Missing Equipment Quantity" name="form.quantity" wire:model="form.quantity" :hint="$quantityHint" />
+    <x-form.tsnumber label="Missing Equipment Quantity" name="form.quantity" wire:model.live.debounce.300ms="form.quantity" :hint="$quantityHint" />
 
     @if($form->status === 'Reported to SPMO')
     <div class="flex gap-1 flex-col">

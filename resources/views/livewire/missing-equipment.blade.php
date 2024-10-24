@@ -1,5 +1,6 @@
 <div x-data="{
     showConfirmationModal: false,
+    showDeleteModal: false,
     targetId: null,
     message:  null,
     openConfirmationModal(id, message){
@@ -8,6 +9,13 @@
         this.showConfirmationModal = true;
         Livewire.on('Condemned', () => {
             this.showConfirmationModal = false;
+        })
+    },
+    openDeleteModal(id) {
+        this.showDeleteModal = true;
+        this.targetId = id;
+        Livewire.on('Data Deleted', () => {
+            this.showDeleteModal = false;
         })
     }
 }">
@@ -31,6 +39,7 @@
 
         <x-table>
             <x-tr>
+                <x-th>Report Id</x-th>
                 <x-th>Equipment</x-th>
                 <x-th>status</x-th>
                 <x-th>Reported By</x-th>
@@ -40,6 +49,7 @@
             </x-tr>
             @foreach ($data as $report)
             <tr class="border-b border-gray-300">
+                <x-td>{{ $report->id}}</x-td>
                 <x-td>{{ $report->equipment->name}}</x-td>
                 <x-td>{{ Str::headline($report->status)}}</x-td>
                 <x-td>{{ $report->reported_by}}</x-td>
@@ -53,6 +63,7 @@
                         <x-link href="/missing-equipment/edit/{{ $report->id}}">
                             <x-bi-pencil-square class="size-5 text-blue-500" />
                         </x-link>
+                        <x-bi-trash @click="openDeleteModal({{ $report->id }})" class="cursor-pointer size-5 text-red-500" />
                         @if($report->status === 'Reported to SPMO' && !$report->is_condemned)
                         <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as condemned?')" class="hover:underline text-red-500 text-xs">
                             Condemned
@@ -75,5 +86,9 @@
     </section>
     <template x-if="showConfirmationModal">
         <x-confirmation-modal @click="$wire.changeStatus(targetId)" />
+    </template>
+    <!-- Delete Modal -->
+    <template x-if="showDeleteModal">
+        <x-delete-modal @click="$wire.delete(targetId)" message="Are you sure you want to delete this equipment?" />
     </template>
 </div>

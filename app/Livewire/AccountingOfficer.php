@@ -20,6 +20,16 @@ class AccountingOfficer extends Component
     public $office;
     public ActivityLogForm $activityLogForm;
 
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedOffice()
+    {
+        $this->resetPage();
+    }
+
     protected function getModel(): string
     {
         return ModelsAccountingOfficer::class;

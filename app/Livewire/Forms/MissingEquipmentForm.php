@@ -4,17 +4,15 @@ namespace App\Livewire\Forms;
 
 use App\Enum\EquipmentStatus;
 use App\Enum\MissingStatus;
+use App\Exceptions\InsufficientQuantityException;
 use App\Models\Equipment;
 use App\Models\MissingEquipment;
-use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class MissingEquipmentForm extends Form
 {
-
+    public $report_id;
     public $equipment_id;
     public $status = 'Reported';
     public $description;
@@ -26,6 +24,7 @@ class MissingEquipmentForm extends Form
 
     public function setMissingEquipmentForm(MissingEquipment $missingEquipment)
     {
+        $this->report_id = $missingEquipment->id;
         $this->equipment_id = $missingEquipment->equipment_id;
         $this->status = $missingEquipment->status;
         $this->quantity = $missingEquipment->quantity;
@@ -56,7 +55,7 @@ class MissingEquipmentForm extends Form
             ],
             'description' => ['nullable', 'string', 'max:255'],
             'reported_by' => ['required', 'string', 'max:100'],
-            'reported_date' => ['required', 'date'],
+            'reported_date' => ['required', 'date', 'before_or_equal:today'],
             'is_condemned' => ['sometimes', 'required', 'boolean']
         ];
     }
@@ -74,6 +73,10 @@ class MissingEquipmentForm extends Form
     public function condemned($equipment_id)
     {
         $equipment = Equipment::findOrFail($equipment_id);
+        $equipmentQuantityLeft = (int) $equipment->quantity - (int) $this->quantity;
+        if ($equipmentQuantityLeft < 0) {
+            throw new InsufficientQuantityException();
+        }
         $equipment->update([
             'quantity' => (int) $equipment->quantity - (int) $this->quantity,
         ]);

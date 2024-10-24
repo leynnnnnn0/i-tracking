@@ -17,6 +17,7 @@ trait Submittable
     public function submit()
     {
         $this->form->validate();
+        $this->beforeTransaction();
         try {
             DB::transaction(function () {
                 $model = $this->performStoreOperation();
@@ -51,8 +52,6 @@ trait Submittable
         return 'New ' . ucfirst($this->getModelName()) . ' Created!';
     }
 
-    protected function afterTransaction($model)
-    {
-        
-    }
+    protected function afterTransaction($model){}
+    protected function beforeTransaction(){}
 }

@@ -40,6 +40,7 @@ class Edit extends Component
     public function update()
     {
         $this->dispatch('Confirm Update');
+        $this->form->validate();
         try {
             DB::transaction(function () {
                 $data = $this->form->update($this->report);
@@ -50,7 +51,7 @@ class Edit extends Component
                 }
             });
             Toaster::success('Updated Successfully.');
-            $this->redirect('/missing-equipments');
+            $this->redirect('/missing-equipment', true);
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
         }
