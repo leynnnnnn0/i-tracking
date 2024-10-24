@@ -50,6 +50,18 @@
         Accounting Officers
     </x-nav-link>
 
+    <span class="px-5 mt-5 text-white/50 text-xs">Managements</span>
+    <x-nav-link href="/departments" :active="request()->is('departments*')">
+        <x-ri-home-office-line class="size-4" />
+        Departments
+    </x-nav-link>
+
+    <x-nav-link href="/offices" :active="request()->is('offices*')">
+        <x-ri-home-office-line class="size-4" />
+        Offices
+    </x-nav-link>
+
+
 
     <span class="px-5 mt-5 text-white/50 text-xs">Others</span>
     <x-nav-link href="/delete-archives" :active="request()->is('delete-archives*')">
@@ -62,15 +74,7 @@
         Activity Log
     </x-nav-link>
 
-    <x-nav-link href="/departments" :active="request()->is('departments*')">
-        <x-ri-home-office-line class="size-4" />
-        Departments
-    </x-nav-link>
 
-    <x-nav-link href="/offices" :active="request()->is('offices*')">
-        <x-ri-home-office-line class="size-4" />
-        Offices
-    </x-nav-link>
 
 
     @endcan

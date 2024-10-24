@@ -6,9 +6,11 @@
     </button>
     <div class="flex flex-col w-64 bg-white shadow-l-lg h-full p-3 gap-3 max-h-full overflow-y-scroll dark:bg-dark-primary">
         <x-title>Notifications</x-title>
+        @if($notifications)
         @foreach ($notifications as $notification)
         <x-notification-container :identification="$notification->title" :message="$notification->message" wire:click="markAsRead({{ $notification->id }})">
         </x-notification-container>
         @endforeach
+        @endif
     </div>
 </div>
