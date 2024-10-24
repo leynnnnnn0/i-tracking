@@ -1,11 +1,11 @@
 <x-layouts.create title="Equipment" :cancelLocation="route('equipment.index')" wire:click="submit">
     <x-form.tsselect :options="$officers"
-        wire:model.live="form.accounting_officer_id"
+        wire:model="form.accounting_officer_id"
         label="Accounting Officer"
         name="form.accounting_officer_id" />
 
     <x-form.tsselect :options="$persons"
-        wire:model.live="form.personnel_id"
+        wire:model="form.personnel_id"
         label="Responsible Person"
         name="form.personnel_id" />
 

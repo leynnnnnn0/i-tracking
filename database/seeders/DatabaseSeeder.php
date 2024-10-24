@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         //     ->has(BorrowedEquipment::factory()->count(rand(0, 1)), 'borrowed_log')
         //     ->create();
 
-        Equipment::factory(1000)
+        Equipment::factory(100)
             ->create();
 
         $this->call(SupplySeeder::class);

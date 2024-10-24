@@ -20,7 +20,7 @@ class AccountingOfficerFactory extends Factory
             'office_id' => fake()->numberBetween(1, 5),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
-            'email' => fake()->safeEmail(),
+            'email' => fake()->unique()->email(),
             'phone_number' => fake()->phoneNumber(),
         ];
     }
