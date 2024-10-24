@@ -16,6 +16,7 @@ class Personnel extends Model
     protected $fillable = [
         'office_id',
         'department_id',
+        'position_id',
         'first_name',
         'middle_name',
         'last_name',
@@ -23,7 +24,6 @@ class Personnel extends Model
         'date_of_birth',
         'phone_number',
         'email',
-        'position',
         'start_date',
         'end_date',
         'remarks'
@@ -65,4 +65,8 @@ class Personnel extends Model
         return $this->hasMany(Equipment::class);
     }
 
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }

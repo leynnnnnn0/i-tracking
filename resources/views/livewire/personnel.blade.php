@@ -15,7 +15,7 @@
         <x-others-filter wire:click="resetFilter">
             <x-input wire:model.live="keyword" />
             <div class="w-[300px]">
-                <x-form.filter-select placeholder="Position" :options="$positions" wire:model.live="position" />
+                <x-form.filter-select placeholder="Position" :options="$positions" wire:model.live="positionId" />
             </div>
             <div class="w-[200px]">
                 <x-form.filter-select placeholder="Department" :options="$departments" wire:model.live="departmentId" />
@@ -40,7 +40,7 @@
                     <x-td>{{ $personnel->full_name }}</x-td>
                     <x-td>{{ $personnel->office ? $personnel->office->name : 'N/a' }}</x-td>
                     <x-td>{{ $personnel->department ? $personnel->department->name : 'N/a' }}</x-td>
-                    <x-td>{{ $personnel->position }}</x-td>
+                    <x-td>{{ $personnel->position->name }}</x-td>
                     <x-td>{{ $personnel->phone_number }}</x-td>
                     <x-td>
                         <div class="flex items-center gap-2">

@@ -2,11 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Enum\Position;
+
 use App\Livewire\Forms\ActivityLogForm;
 use App\Models\Department;
 use App\Models\Office;
 use App\Models\Personnel as ModelsPersonnel;
+use App\Models\Position;
 use App\Traits\Deletable;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,7 +21,7 @@ class Personnel extends Component
     public $positions;
     public $offices;
     public $departmentId;
-    public $position;
+    public $positionId;
     public $officeId;
 
     public function updatedKeyword()
@@ -28,7 +29,7 @@ class Personnel extends Component
         $this->resetPage();
     }
 
-    public function updatedPosition()
+    public function updatedPositionId()
     {
         $this->resetPage();
     }
@@ -58,7 +59,14 @@ class Personnel extends Component
                     'label' => $item->name,
                 ];
             });;
-        $this->positions = Position::values();
+        $this->positions = Position::select('name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ];
+            });;
         $this->offices = Office::select('name', 'id')
             ->get()
             ->map(function ($item) {
@@ -75,7 +83,7 @@ class Personnel extends Component
         $params = [
             'keyword' => $this->keyword,
             'departmentId' => $this->departmentId,
-            'position' => $this->position,
+            'positionId' => $this->positionId,
             'officeId' => $this->officeId
         ];
 
@@ -92,7 +100,7 @@ class Personnel extends Component
     public function render()
     {
         $query = ModelsPersonnel::query()
-            ->with('office', 'department');
+            ->with('office', 'department', 'position');
 
         if ($this->keyword) {
             $query->whereAny(['first_name', 'middle_name', 'last_name'], 'like', '%' . $this->keyword . '%');
@@ -102,8 +110,8 @@ class Personnel extends Component
             $query->where('department_id', $this->departmentId);
         }
 
-        if ($this->position) {
-            $query->where('position', $this->position);
+        if ($this->positionId) {
+            $query->where('position_id', $this->positionId);
         }
 
         if ($this->officeId) {
@@ -122,7 +130,7 @@ class Personnel extends Component
         $this->resetPage();
         $this->keyword = null;
         $this->departmentId = null;
-        $this->position = null;
+        $this->positionId = null;
         $this->officeId = null;
     }
 }

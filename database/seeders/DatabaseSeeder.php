@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Equipment;
 use App\Models\Office;
 use App\Models\Personnel;
+use App\Models\Position;
 use App\Models\ResponsiblePerson;
 use App\Models\SupplyCategory;
 use App\Models\User;
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(20)->create();
         Department::factory(5)->create();
-
+        Position::factory(5)->create();
         Office::factory(5)->create();
         AccountingOfficer::factory(100)->create();
         Personnel::factory(100)->create();

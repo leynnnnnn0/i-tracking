@@ -20,6 +20,7 @@ class PersonnelFactory extends Factory
         return [
             'department_id' => fake()->numberBetween(1, 5),
             'office_id' => fake()->numberBetween(1, 5),
+            'position_id' => fake()->numberBetween(1, 5),
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->optional()->firstName(),
             'last_name' => fake()->lastName(),
@@ -27,7 +28,6 @@ class PersonnelFactory extends Factory
             'date_of_birth' => fake()->date(),
             'phone_number' => '09' . fake()->numberBetween(000000000, 999999999),
             'email' => fake()->unique()->safeEmail(),
-            'position' => fake()->randomElement(Position::values()),
             'start_date' => fake()->date(),
             'end_date' => fake()->optional()->date(),
             'remarks' => fake()->optional()->sentence(),
