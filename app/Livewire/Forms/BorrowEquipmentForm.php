@@ -5,8 +5,6 @@ namespace App\Livewire\Forms;
 use App\Enum\EquipmentStatus;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Livewire\Form;
 
 class BorrowEquipmentForm extends Form
@@ -69,6 +67,7 @@ class BorrowEquipmentForm extends Form
         $this->borrower_email = $borrowedEquipment->borrower_email;
         $this->start_date = $borrowedEquipment->start_date->format('Y-m-d');
         $this->end_date = $borrowedEquipment->end_date->format('Y-m-d');
+        $this->returned_date = $borrowedEquipment->returned_date;
         $this->is_returned = $borrowedEquipment->is_returned;
     }
 

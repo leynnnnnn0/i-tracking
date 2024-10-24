@@ -17,8 +17,10 @@ class Equipment extends Model
     protected $fillable = [
         'personnel_id',
         'accounting_officer_id',
-        'organization_unit',
-        'operating_unit_project',
+        'organization_unit_id',
+        'operating_unit_project_id',
+        'fund_id',
+        'personal_protective_equipment_id',
         'property_number',
         'quantity',
         'quantity_borrowed',
@@ -26,8 +28,6 @@ class Equipment extends Model
         'name',
         'description',
         'date_acquired',
-        'fund',
-        'ppe_class',
         'estimated_useful_time',
         'unit_price',
         'total_amount',
@@ -105,5 +105,26 @@ class Equipment extends Model
     public function personnel()
     {
         return $this->belongsTo(Personnel::class);
+    }
+
+
+    public function ppe()
+    {
+        return $this->belongsTo(PersonalProtectiveEquipment::class);
+    }
+
+    public function operatingUnitProject()
+    {
+        return $this->belongsTo(OperatingUnitProject::class);
+    }
+
+    public function organizationUnit()
+    {
+        return $this->belongsTo(OrganizationUnit::class);
+    }
+
+    public function fund()
+    {
+        return $this->belongsTo(Fund::class);
     }
 }
