@@ -3,12 +3,12 @@
 namespace App\Livewire;
 
 use App\Enum\EquipmentStatus;
-use App\Enum\OperatingUnitAndProject;
-use App\Enum\OrganizationUnit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\AccountingOfficer;
 use App\Models\Equipment;
+use App\Models\OperatingUnitProject;
+use App\Models\OrganizationUnit;
 use App\Models\Personnel;
 use App\Traits\Deletable;
 use App\Traits\HasSelectOptions;
@@ -104,8 +104,22 @@ class Equipments extends Component
 
     public function mount()
     {
-        $this->operatingUnits = OperatingUnitAndProject::values();
-        $this->organizationUnits = OrganizationUnit::values();
+        $this->operatingUnits = OperatingUnitProject::select('name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ];
+            });;
+        $this->organizationUnits = OrganizationUnit::select('name', 'id')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ];
+            });;
         $this->responsiblePersons = Personnel::select('first_name', 'last_name', 'id')
             ->get()
             ->map(function ($item) {
@@ -131,6 +145,10 @@ class Equipments extends Component
             ->with([
                 'accounting_officer',
                 'personnel',
+                'ppe',
+                'organization_unit',
+                'operating_unit_project',
+                'fund',
                 'missing_equipment_log' => function ($query) {
                     $query->where('is_condemned', true);
                 },
@@ -173,11 +191,11 @@ class Equipments extends Component
         }
 
         if ($this->operatingUnit) {
-            $query->where('operating_unit_project', $this->operatingUnit);
+            $query->where('operating_unit_project_id', $this->operatingUnit);
         }
 
         if ($this->organizationUnit) {
-            $query->where('organization_unit', $this->organizationUnit);
+            $query->where('organization_unit_id', $this->organizationUnit);
         }
 
         $equipments = $query->latest()->paginate(10);

@@ -113,12 +113,12 @@ class Equipment extends Model
         return $this->belongsTo(PersonalProtectiveEquipment::class);
     }
 
-    public function operatingUnitProject()
+    public function operating_unit_project()
     {
         return $this->belongsTo(OperatingUnitProject::class);
     }
 
-    public function organizationUnit()
+    public function organization_unit()
     {
         return $this->belongsTo(OrganizationUnit::class);
     }

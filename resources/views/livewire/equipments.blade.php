@@ -74,8 +74,8 @@
                 <x-td>{{ $equipment->name }}</x-td>
                 <x-td>{{ $equipment->property_number }}</x-td>
                 <x-td>{{ $equipment->quantity($query)}}</x-td>
-                <x-td>{{ $equipment->organization_unit }}</x-td>
-                <x-td>{{ $equipment->operating_unit_project }}</x-td>
+                <x-td>{{ $equipment->organization_unit->name }}</x-td>
+                <x-td>{{ $equipment->operating_unit_project->name }}</x-td>
                 <x-td>
                     <span class="px-3 py-1 border font-bold rounded-lg bg-opacity-75 {{ $query === 'Condemned' ? App\Enum\EquipmentStatus::getColor(App\Enum\EquipmentStatus::CONDEMNED)  : App\Enum\EquipmentStatus::getColor($equipment->status) }}">
                         {{ $query === 'Condemned' ? $query : Str::headline($equipment->status->value) }}
