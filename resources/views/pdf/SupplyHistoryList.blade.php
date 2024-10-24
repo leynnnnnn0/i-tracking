@@ -21,9 +21,9 @@
             @foreach ($supplies as $supply)
             <tr>
                 <td>{{ $supply->supply->description }}</td>
-                <td>{{ $supply->total_quantity }}</td>
-                <td>{{ $supply->total_used }}</td>
-                <td>{{ $supply->total_added }}</td>
+                <td>{{ $supply->quantity }}</td>
+                <td>{{ $supply->used }}</td>
+                <td>{{ $supply->added }}</td>
                 <td>{{ $supply->total }}</td>
                 <td>{{ $supply->expiry_date ? $supply->expiry_date->format('F d, Y') : 'N/A' }}</td>
                 <td>{{ $supply->is_consumable ? 'Yes' : 'No' }}</td>
