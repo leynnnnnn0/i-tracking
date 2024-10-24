@@ -11,14 +11,25 @@
 
     <x-form.select label="Organization Unit"
         :options="$organizations"
-        name="form.organization_unit"
-        wire:model="form.organization_unit">
+        name="form.organization_unit_id"
+        wire:model="form.organization_unit_id">
     </x-form.select>
 
     <x-form.select label="Operating Unit Project"
         :options="$operating_units"
-        name="form.operating_unit_project"
-        wire:model="form.operating_unit_project" />
+        name="form.operating_unit_project_id"
+        wire:model="form.operating_unit_project_id">
+    </x-form.select>
+
+    <x-form.select label="Fund"
+        :options="$funds"
+        name="form.fund_id"
+        wire:model="form.fund_id" />
+
+    <x-form.select label="PPE"
+        :options="$personalProtectiveEquipment"
+        name="form.personal_protective_equipment_id"
+        wire:model="form.personal_protective_equipment_id" />
 
     <x-form.input label="Property Number"
         name="form.property_number"
@@ -45,14 +56,6 @@
     <x-form.date label="Date Acquired"
         name="form.date_acquired"
         wire:model="form.date_acquired" />
-
-    <x-form.input label="Fund" :isRequired="false"
-        name="form.fund"
-        wire:model="form.fund" />
-
-    <x-form.input label="PPE Class" :isRequired="false"
-        name="form.ppe_class"
-        wire:model="form.ppe_class" />
 
     <x-tsdate :isRequired="false" month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
 

@@ -13,8 +13,10 @@ class EquipmentForm extends Form
     public $equipment_id;
     public $personnel_id;
     public $accounting_officer_id;
-    public $organization_unit;
-    public $operating_unit_project;
+    public $fund_id;
+    public $personal_protective_equipment_id;
+    public $organization_unit_id;
+    public $operating_unit_project_id;
     public $property_number;
     public $quantity;
     public $quantity_borrowed = 0;
@@ -22,8 +24,6 @@ class EquipmentForm extends Form
     public $name;
     public $description;
     public $date_acquired;
-    public $fund;
-    public $ppe_class;
     public $estimated_useful_time;
     public $unit_price;
     public $total_amount;
@@ -34,16 +34,16 @@ class EquipmentForm extends Form
         return [
             'personnel_id' => ['required', 'exists:personnel,id'],
             'accounting_officer_id' => ['required', 'exists:accounting_officers,id'],
-            'organization_unit' => ['required'],
-            'operating_unit_project' => ['required', 'string'],
+            'organization_unit_id' => ['required', 'exists:organization_units,id'],
+            'operating_unit_project_id' => ['required', 'exists:operating_unit_projects,id'],
+            'fund_id' => ['required', 'exists:funds,id'],
+            'personal_protective_equipment_id' => ['required', 'exists:personal_protective_equipment,id'],
             'property_number' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
             'quantity' => ['required', 'integer', 'min:1'],
             'unit' => ['required', 'string', 'min:1'],
             'name' => ['required', 'min:2'],
             'description' => ['nullable', 'string'],
             'date_acquired' => ['required', 'date', 'before_or_equal:' . Carbon::today()],
-            'fund' => ['nullable', 'string'],
-            'ppe_class' => ['nullable', 'string'],
             'estimated_useful_time' => ['nullable', 'after:date_acquired'],
             'unit_price' => ['required', 'numeric', 'min:0'],
             'total_amount' => ['required', 'numeric', 'min:0'],
@@ -63,16 +63,16 @@ class EquipmentForm extends Form
         $this->equipment_id = $equipment->id;
         $this->personnel_id = $equipment->personnel_id;
         $this->accounting_officer_id = $equipment->accounting_officer_id;
-        $this->organization_unit = $equipment->organization_unit;
-        $this->operating_unit_project = $equipment->operating_unit_project;
+        $this->operating_unit_project_id = $equipment->operating_unit_project_id;
+        $this->organization_unit_id = $equipment->organization_unit_id;
+        $this->personal_protective_equipment_id = $equipment->personal_protective_equipment_id;
+        $this->fund_id = $equipment->fund_id;
         $this->property_number = $equipment->property_number;
         $this->quantity = $equipment->quantity;
         $this->unit = $equipment->unit;
         $this->name = $equipment->name;
         $this->description = $equipment->description;
         $this->date_acquired = $equipment->date_acquired->format('Y-m-d');
-        $this->fund = $equipment->fund;
-        $this->ppe_class = $equipment->ppe_class;
         $this->estimated_useful_time = $equipment->estimated_useful_time;
         $this->unit_price = $equipment->unit_price;
         $this->total_amount = $equipment->total_amount;

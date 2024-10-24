@@ -3,16 +3,16 @@
 namespace App\Livewire\Equipments;
 
 use App\Enum\EquipmentStatus;
-use App\Enum\OperatingUnitAndProject;
-use App\Enum\OrganizationUnit;
 use App\Enum\Unit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
 use App\Models\AccountingOfficer;
+use App\Models\Fund;
+use App\Models\OperatingUnitProject;
+use App\Models\OrganizationUnit;
+use App\Models\PersonalProtectiveEquipment;
 use App\Models\Personnel;
-use App\Models\ResponsiblePerson;
 use App\Traits\Submittable;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Create extends Component
@@ -26,6 +26,8 @@ class Create extends Component
     public $operating_units;
     public $units;
     public $officers;
+    public $personalProtectiveEquipment;
+    public $funds;
 
 
     protected function getModelName(): string
@@ -58,8 +60,38 @@ class Create extends Component
             ->toArray();
         $this->units = Unit::values();
         $this->statuses = EquipmentStatus::values();
-        $this->organizations = OrganizationUnit::values();
-        $this->operating_units = OperatingUnitAndProject::values();
+        $this->organizations = OrganizationUnit::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();;
+        $this->operating_units = OperatingUnitProject::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
+        $this->funds = Fund::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
+        $this->personalProtectiveEquipment = PersonalProtectiveEquipment::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
     }
 
 
