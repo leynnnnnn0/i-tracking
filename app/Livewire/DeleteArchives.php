@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\ActivityLogForm;
 use App\Models\AccountingOfficer;
 use App\Models\Category;
 use App\Models\Department;
@@ -11,17 +12,19 @@ use App\Models\Personnel;
 use App\Models\ResponsiblePerson;
 use App\Models\Supply;
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
-use ReflectionClass;
 
 class DeleteArchives extends Component
 {
     use WithPagination;
     public $deleteHistory;
     public $modelClasses;
+    public ActivityLogForm $activityLogForm;
 
     public function mount()
     {
@@ -51,24 +54,35 @@ class DeleteArchives extends Component
 
     public function delete($id, $type)
     {
-        Gate::authorize('admin-access');
-
-        $modelClass = $this->modelClasses[$type];
-        $modelClass::withTrashed()->findOrFail($id)->forceDelete();
-
-
-        Toaster::success('Deleted Successfully');
-        $this->dispatch('Data Deleted');
+        try {
+            DB::transaction(function () use ($id, $type) {
+                $modelClass = $this->modelClasses[$type];
+                $model = $modelClass::withTrashed()->findOrFail($id);
+                $model->forceDelete();
+                $this->activityLogForm->setActivityLog($model, null, 'Deleted Data Permanently', 'Delete');
+                $this->activityLogForm->store();
+            });
+            Toaster::success('Deleted Successfully');
+            $this->dispatch('Data Deleted');
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 
     public function restore($id, $type)
     {
-        Gate::authorize('admin-access');
-
-        $modelClass = $this->modelClasses[$type];
-        $modelClass::withTrashed()->findOrFail($id)->restore();
-
-        Toaster::success('Restored Successfully');
-        $this->dispatch('Data Restored');
+        try {
+            DB::transaction(function () use ($id, $type) {
+                $modelClass = $this->modelClasses[$type];
+                $model = $modelClass::withTrashed()->findOrFail($id);
+                $model->restore();
+                $this->activityLogForm->setActivityLog($model, null, 'Restored Data', 'Restore');
+                $this->activityLogForm->store();
+            });
+            Toaster::success('Restored Successfully');
+            $this->dispatch('Data Restored');
+        } catch (Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 }
