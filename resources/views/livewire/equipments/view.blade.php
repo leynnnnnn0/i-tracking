@@ -1,4 +1,6 @@
 <x-layouts.view heading="{{ ucfirst($equipment->name) }}" backLocation="/equipment">
+    <x-column-info name="Id"
+        :value="$equipment->id" />
     <x-column-info name="Name"
         :value="$equipment->name" />
     <x-column-info name="Description"
@@ -30,6 +32,6 @@
         :value="$equipment->status" />
     <x-column-info name="Responsible Person"
         :value="$equipment->personnel->full_name" />
-        <x-column-info name="Accounting Officer"
+    <x-column-info name="Accounting Officer"
         :value="$equipment->accounting_officer->full_name" />
 </x-layouts.view>
