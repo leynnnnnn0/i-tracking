@@ -16,10 +16,10 @@
 
         <!-- Filter tab -->
         <x-filter-tab>
-            <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Reported'" wire:click="setQuery('Reported')">Reported</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Reported To SPMO'" wire:click="setQuery('Reported To SPMO')">Reported To SPMO</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('All')" :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Reported')" :active="$query == 'Reported'" wire:click="setQuery('Reported')">Reported</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Reported To SPMO')" :active="$query == 'Reported To SPMO'" wire:click="setQuery('Reported To SPMO')">Reported To SPMO</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Condemned')" :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
         </x-filter-tab>
 
 
@@ -40,23 +40,23 @@
                 <x-td>{{ $report->reported_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $report->is_condemned ? 'Yes' : 'No'}}</x-td>
                 <x-td>
-                <div class="flex items-center gap-2">
-                    <x-link href="/missing-equipment/view/{{ $report->id}}">
-                        <x-bi-eye class="size-5 text-green-500" />
-                    </x-link>
-                    <x-link href="/missing-equipment/edit/{{ $report->id}}">
-                        <x-bi-pencil-square class="size-5 text-blue-500" />
-                    </x-link>
-                    @if($report->status === 'Reported to SPMO' && !$report->is_condemned)
-                    <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as condemned?')" class="hover:underline text-red-500 text-xs">
-                        Condemned
-                    </button>
-                    @endif
-                    @if($report->status === 'Reported')
-                    <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as Reported To SPMO?')" class="hover:underline text-orange-500 text-xs">
-                        Reported To SPMO
-                    </button>
-                    @endif
+                    <div class="flex items-center gap-2">
+                        <x-link href="/missing-equipment/view/{{ $report->id}}">
+                            <x-bi-eye class="size-5 text-green-500" />
+                        </x-link>
+                        <x-link href="/missing-equipment/edit/{{ $report->id}}">
+                            <x-bi-pencil-square class="size-5 text-blue-500" />
+                        </x-link>
+                        @if($report->status === 'Reported to SPMO' && !$report->is_condemned)
+                        <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as condemned?')" class="hover:underline text-red-500 text-xs">
+                            Condemned
+                        </button>
+                        @endif
+                        @if($report->status === 'Reported')
+                        <button @click="openConfirmationModal({{ $report->id }}, 'Are you sure you want to tag this item as Reported To SPMO?')" class="hover:underline text-orange-500 text-xs">
+                            Reported To SPMO
+                        </button>
+                        @endif
                     </div>
                 </x-td>
             </tr>

@@ -22,9 +22,9 @@
         <x-index-header wire:click="downloadPdf" heading="Borrowed Equipment Log" buttonName="Add new log" location="/borrowed-logs/create" />
 
         <x-filter-tab>
-            <x-filter-tab-button :active="$query === 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
-            <x-filter-tab-button :active="$query === 'Returned'" wire:click="setQuery('Returned')">Returned</x-filter-tab-button>
-            <x-filter-tab-button :active="$query === 'Not Returned'" wire:click="setQuery('Not Returned')">Not Returned</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('All')" :active="$query === 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Returned')" :active="$query === 'Returned'" wire:click="setQuery('Returned')">Returned</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Not Returned')" :active="$query === 'Not Returned'" wire:click="setQuery('Not Returned')">Not Returned</x-filter-tab-button>
         </x-filter-tab>
 
         <!-- Filter -->

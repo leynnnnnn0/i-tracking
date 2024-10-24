@@ -32,28 +32,28 @@
     <div class="space-y-3">
         <!-- Filter tab -->
         <x-filter-tab>
-            <x-filter-tab-button :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Available'" wire:click="setQuery('Available')">Available</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
-            <x-filter-tab-button :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('All')" :active="$query == 'All'" wire:click="setQuery('All')">All</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Available')" :active="$query == 'Available'" wire:click="setQuery('Available')">Available</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Borrowed')" :active="$query == 'Borrowed'" wire:click="setQuery('Borrowed')">Borrowed</x-filter-tab-button>
+            <x-filter-tab-button target="setQuery('Condemned')" :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
         </x-filter-tab>
 
         <!-- Filter -->
         <x-others-filter wire:click="resetFilter">
-            
-                <x-input wire:model.live="keyword" />
-                <x-form.filter-select placeholder="Accounting Officer"
-                    :options="$accountingOfficers"
-                    wire:model.live="accountingOfficerId" />
-                <x-form.filter-select placeholder="Responsible Person"
-                    :options="$responsiblePersons"
-                    wire:model.live="responsiblePersonId" />
-                <x-form.filter-select placeholder="Operating Unit"
-                    :options="$operatingUnits"
-                    wire:model.live="operatingUnit" />
-                <x-form.filter-select placeholder="Organization Unit"
-                    :options="$organizationUnits"
-                    wire:model.live="organizationUnit" />
+
+            <x-input wire:model.live="keyword" />
+            <x-form.filter-select placeholder="Accounting Officer"
+                :options="$accountingOfficers"
+                wire:model.live="accountingOfficerId" />
+            <x-form.filter-select placeholder="Responsible Person"
+                :options="$responsiblePersons"
+                wire:model.live="responsiblePersonId" />
+            <x-form.filter-select placeholder="Operating Unit"
+                :options="$operatingUnits"
+                wire:model.live="operatingUnit" />
+            <x-form.filter-select placeholder="Organization Unit"
+                :options="$organizationUnits"
+                wire:model.live="organizationUnit" />
         </x-others-filter>
 
         <!-- Table -->

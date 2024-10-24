@@ -1,3 +1,4 @@
+@props(['target' => null])
 <button {{ $attributes->merge(['class' => 'dark:bg-dark-primary dark:text-white font-bold flex items-center gap-2 px-4 py-1 bg-primary rounded-lg text-white hover:bg-opacity-75 transition-colors duration-300']) }} wire:loading.attr="disabled">
     {{ $slot }}
     <span wire:loading class="flex items-center justify-center">
