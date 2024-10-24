@@ -18,6 +18,11 @@ class MissingEquipment extends Component
     public $query = 'All';
     public ActivityLogForm $activityLogForm;
     public MissingEquipmentForm $form;
+    public $keyword;
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
 
     protected function getModel(): string
     {
@@ -38,6 +43,14 @@ class MissingEquipment extends Component
                 $query->where('status', $this->query);
             }
         }
+
+        if ($this->keyword) {
+            $query->whereAny(['id'], 'like', "%$this->keyword%")
+                ->orWhereHas('equipment', function ($q) {
+                    $q->where('name', 'like', "%$this->keyword%");
+                });
+        }
+
         $data = $query->latest()->paginate(10);
         return view('livewire.missing-equipment', [
             'data' => $data

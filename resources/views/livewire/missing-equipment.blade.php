@@ -22,6 +22,12 @@
             <x-filter-tab-button target="setQuery('Condemned')" :active="$query == 'Condemned'" wire:click="setQuery('Condemned')">Condemned</x-filter-tab-button>
         </x-filter-tab>
 
+        <!-- Filter -->
+        <x-others-filter wire:click="resetFilter">
+
+            <x-input wire:model.live="keyword" />
+
+        </x-others-filter>
 
         <x-table>
             <x-tr>

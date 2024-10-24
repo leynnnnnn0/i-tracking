@@ -17,13 +17,12 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
 class Equipments extends Component
 {
-    use WithPagination, WithoutUrlPagination, Deletable, HasSelectOptions;
+    use WithPagination, Deletable, HasSelectOptions;
     public ActivityLogForm $activityLogForm;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
@@ -49,6 +48,32 @@ class Equipments extends Component
         return Equipment::class;
     }
 
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedResponsiblePersonId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedAccountingOfficerId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedOperatingUnit()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedOrganizationUnit()
+    {
+        $this->resetPage();
+    }
+
+
     public function resetFilter()
     {
         $this->resetPage();
@@ -61,7 +86,6 @@ class Equipments extends Component
 
     public function downloadPdf()
     {
-
         $params = [
             'filter' => $this->query,
             'keyword' => $this->keyword,
@@ -74,7 +98,6 @@ class Equipments extends Component
         $params = array_filter($params, function ($value) {
             return $value !== null;
         });
-
 
         return redirect()->route('equipment-pdf', $params);
     }
@@ -159,7 +182,6 @@ class Equipments extends Component
 
         $equipments = $query->latest()->paginate(10);
 
-
         return view('livewire.equipments', [
             'equipments' => $equipments
         ]);
@@ -212,30 +234,9 @@ class Equipments extends Component
         }
     }
 
-    // public function updateStatus($id)
-    // {
-    //     try {
-    //         DB::transaction(function () use ($id) {
-    //             $borrowedEquipment = BorrowedEquipment::orderBy('created_at', 'desc')->where('equipment_id', $id)->first();
-    //             $before = $log;
-    //             $log->update([
-    //                 'returned_date' => Carbon::today()->format('Y-m-d')
-    //             ]);
-    //             Equipment::find($id)->update([
-    //                 'status' => 'Active'
-    //             ]);
-    //             $this->form->setActivityLog($before, $borrowedEquipment->fresh(), 'Mark Equipment as Returned', 'Update');
-    //             $this->form->store();
-    //         });
-    //         Toaster::success('Status Updated!');
-    //         $this->dispatch('Status Updated');
-    //     } catch (Exception $e) {
-    //         Toaster::error($e->getMessage());
-    //     }
-    // }
-
     public function setQuery($query)
     {
+        $this->resetPage();
         $this->query = $query;
     }
 }

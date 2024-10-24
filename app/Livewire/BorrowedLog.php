@@ -26,6 +26,11 @@ class BorrowedLog extends Component
         return BorrowedEquipment::class;
     }
 
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $query = BorrowedEquipment::query()->with('equipment');
