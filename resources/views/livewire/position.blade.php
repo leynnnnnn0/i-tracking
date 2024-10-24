@@ -23,10 +23,10 @@
             <x-td>
                 <div class="flex items-center gap-2">
                     <x-bi-trash @click="openDeleteModal({{ $position->id }})" class="cursor-pointer size-5 text-red-500" />
-                    <x-link href="/position/edit/{{ $position->id }}">
+                    <x-link href="/positions/edit/{{ $position->id }}">
                         <x-bi-pencil-square class="size-5 text-blue-500" />
                     </x-link>
-                    <x-link href="/position/view/{{ $position->id }}">
+                    <x-link href="/positions/view/{{ $position->id }}">
                         <x-bi-eye class="cursor-pointer size-5 text-green-500" />
                     </x-link>
                 </div>
