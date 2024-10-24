@@ -37,7 +37,6 @@ class PersonnelForm extends Form
         $this->date_of_birth = $personnel->date_of_birth;
         $this->phone_number = $personnel->phone_number;
         $this->email = $personnel->email;
-        $this->position = $personnel->position;
         $this->start_date = $personnel->start_date;
         $this->end_date = $personnel->end_date;
         $this->remarks = $personnel->remarks;
@@ -49,7 +48,7 @@ class PersonnelForm extends Form
         return [
             'department_id' => ['required', 'exists:departments,id'],
             'office_id' => ['required', 'exists:offices,id'],
-            'position' => ['required', 'exists:positions,id'],
+            'position_id' => ['required', 'exists:positions,id'],
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],

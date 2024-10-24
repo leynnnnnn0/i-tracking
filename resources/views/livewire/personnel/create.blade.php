@@ -1,6 +1,6 @@
 <x-layouts.create title="Personnel" :cancelLocation="route('personnel.index')" wire:click="submit">
     <x-form.select label="Department" :options="$departments" name="form.department_id" wire:model="form.department_id" />
-    <x-form.select label="Position" :options="$positions" name="form.position" wire:model="form.position" />
+    <x-form.select label="Position" :options="$positions" name="form.position_id" wire:model="form.position_id" />
     <x-form.select label="Office" :options="$offices" name="form.office_id" wire:model="form.office_id" />
     <x-form.input label="First Name" name="form.first_name" wire:model="form.first_name" />
     <x-form.input label="Middle Name" name="form.middle_name" :isRequired="false" wire:model="form.middle_name" />

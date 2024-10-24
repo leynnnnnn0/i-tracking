@@ -3,16 +3,13 @@
 namespace App\Livewire\Personnel;
 
 use App\Enum\Gender;
-use App\Enum\Position;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\PersonnelForm;
 use App\Models\Department;
 use App\Models\Office;
+use App\Models\Position;
 use App\Traits\Submittable;
-use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
 
 class Create extends Component
 {
@@ -43,7 +40,12 @@ class Create extends Component
                 'label' => $item->name
             ];
         })->toArray();
-        $this->positions = Position::values();
+        $this->positions = Position::select('name', 'id')->get()->map(function ($item) {
+            return [
+                'value' => $item->id,
+                'label' => $item->name
+            ];
+        })->toArray();
         $this->offices = Office::select('name', 'id')->get()->map(function ($item) {
             return [
                 'value' => $item->id,
