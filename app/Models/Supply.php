@@ -66,4 +66,9 @@ class Supply extends Model
             return "This item will expire " . $this->expiry_date->diffForHumans();
         }
     }
+
+    public function getformattedExpiryDateAttribute()
+    {
+        return $this->expiry_date ? $this->expiry_date->format('Y-m-d') : 'N/a';
+    }
 }

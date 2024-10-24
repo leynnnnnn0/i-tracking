@@ -17,7 +17,6 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
@@ -156,7 +155,7 @@ class PdfController extends Controller
 
     public function supplyListPdf(Request $request)
     {
-        $query = Supply::query();
+        $query = Supply::query()->with('categories');
 
         if ($request->keyword) {
             if ($request->keyword) {

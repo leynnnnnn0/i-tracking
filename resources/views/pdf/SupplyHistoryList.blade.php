@@ -11,7 +11,7 @@
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Used</th>
-                <th>Recently Added</th>
+                <th>Added</th>
                 <th>Total</th>
                 <th>Expiry Date</th>
                 <th>Is Consumable?</th>

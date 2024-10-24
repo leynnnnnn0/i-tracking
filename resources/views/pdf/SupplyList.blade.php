@@ -6,6 +6,7 @@
             <tr>
                 <th>Id</th>
                 <th>Description</th>
+                <th>Categories</th>
                 <th>Quantity</th>
                 <th>Used</th>
                 <th>Recently Added</th>
@@ -19,11 +20,14 @@
             <tr>
                 <td>{{ $supply->id }}</td>
                 <td>{{ $supply->description }}</td>
+                <td>{{ implode(' / ', $supply->categories->map(function ($item) {
+                            return $item->name;
+                    })->toArray())}}</td>
                 <td>{{ $supply->quantity }}</td>
                 <td>{{ $supply->used }}</td>
                 <td>{{ $supply->recently_added }}</td>
                 <td>{{ $supply->total }}</td>
-                <td>{{ $supply->expiry_date->format('F d, Y') }}</td>
+                <td>{{ $supply->formatted_expiry_date }}</td>
                 <td>{{ $supply->is_consumable ? 'Yes' : 'No' }}</td>
             </tr>
             @endforeach

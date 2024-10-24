@@ -118,11 +118,17 @@
                 name="borrowEquipmentForm.borrower_phone_number" wire:model="borrowEquipmentForm.borrower_phone_number" :isRequired="false" />
             <x-form.input label="Email"
                 name="borrowEquipmentForm.borrower_email" type="email" wire:model="borrowEquipmentForm.borrower_email" :isRequired="false" />
-            <x-form.input label="Start Date"
-                name="borrowEquipmentForm.start_date" type="date" wire:model="borrowEquipmentForm.start_date" />
-            <x-form.input label="End Date"
-                name="borrowEquipmentForm.end_date" type="date" wire:model="borrowEquipmentForm.end_date" />
-            <x-form.input label="Equipment Quantity" name="borrowEquipmentForm.quantity" wire:model="borrowEquipmentForm.quantity" type="number" onkeydown="return event.keyCode !== 69" :hint="$quantityHint" />
+            <x-form.date
+                label="Start Date"
+                name="borrowEquipmentForm.start_date"
+                :disable="\Carbon\CarbonInterval::days(1)->toPeriod(now()->subMonth(), now()->subDay())->toArray()"
+                wire:model.live="borrowEquipmentForm.start_date" />
+            <x-form.date
+                label="End Date"
+                name="borrowEquipmentForm.end_date"
+                :disable="\Carbon\CarbonInterval::days(1)->toPeriod(now()->subMonth(), now()->subDay())->toArray()"
+                wire:model="borrowEquipmentForm.end_date" />
+            <x-form.tsnumber label="Equipment Quantity" name="borrowEquipmentForm.quantity" wire:model="borrowEquipmentForm.quantity" :hint="$quantityHint" />
             <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
                 <button @click="showFormModal = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300 dark:text-white dark:border-white">Cancel</button>
                 <x-primary-button wire:click="submit">Submit</x-primary-button>
