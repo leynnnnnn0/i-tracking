@@ -30,6 +30,8 @@ use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Personnel\Edit as PersonnelEdit;
 use App\Livewire\Personnel\View as PersonnelView;
+use App\Livewire\Position;
+use App\Livewire\Position\Create as PositionCreate;
 use App\Livewire\ResponsiblePerson;
 use App\Livewire\ResponsiblePerson\Create as ResponsiblePersonCreate;
 use App\Livewire\Supply;
@@ -75,6 +77,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', DepartmentCreate::class)->name('create');
         Route::get('/edit/{id}', DepartmentEdit::class)->name('edit');
         Route::get('/view/{id}', DepartmentView::class)->name('view');
+    });
+
+    Route::prefix('positions')->name('positions.')->group(function() {
+        Route::get('/', Position::class)->name('index');
+        Route::get('/create', PositionCreate::class)->name('create');
+        Route::get('/edit/{id}', PositionCreate::class)->name('edit');
     });
 
 

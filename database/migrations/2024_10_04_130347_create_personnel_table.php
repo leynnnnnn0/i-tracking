@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('personnel', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('office_id')->constrained('offices');
-            $table->foreignId('department_id')->constrained('departments');
-            $table->foreignIdFor(ModelsPosition::class)->constrained();
+            $table->foreignId('office_id')->constrained('offices')->cascadeOnDelete();
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->foreignIdFor(ModelsPosition::class)->constrained()->cascadeOnDelete();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');

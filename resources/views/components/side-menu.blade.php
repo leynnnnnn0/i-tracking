@@ -61,6 +61,11 @@
         Offices
     </x-nav-link>
 
+    <x-nav-link href="/positions" :active="request()->is('positions*')">
+        <x-ri-home-office-line class="size-4" />
+        Positions
+    </x-nav-link>
+
 
 
     <span class="px-5 mt-5 text-white/50 text-xs">Others</span>

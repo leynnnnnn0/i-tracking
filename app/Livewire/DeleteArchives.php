@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Equipment;
 use App\Models\Office;
 use App\Models\Personnel;
+use App\Models\Position;
 use App\Models\ResponsiblePerson;
 use App\Models\Supply;
 use App\Models\User;
@@ -37,7 +38,8 @@ class DeleteArchives extends Component
             'categories' => Category::class,
             'accounting-officers' => AccountingOfficer::class,
             'responsible-person' => ResponsiblePerson::class,
-            'departments' => Department::class
+            'departments' => Department::class,
+            'positions' => Position::class
         ];
     }
     public function render()
