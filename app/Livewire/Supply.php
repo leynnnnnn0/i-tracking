@@ -25,6 +25,16 @@ class Supply extends Component
     public $categories;
     public $category = [];
 
+    public function updatedKeyword()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedCategory()
+    {
+        $this->resetPage();
+    }
+
     protected function getModel(): string
     {
         return ModelsSupply::class;
@@ -42,7 +52,7 @@ class Supply extends Component
 
     public function render()
     {
-        $query = ModelsSupply::query();
+        $query = ModelsSupply::query()->with('categories');
 
         if ($this->keyword) {
             $query->whereAny(['description', 'id'], 'like', '%' . $this->keyword . '%');
@@ -76,6 +86,7 @@ class Supply extends Component
 
     public function resetFilter()
     {
+        $this->resetPage();
         $this->keyword = null;
         $this->category = [];
     }

@@ -33,6 +33,12 @@ class MissingEquipment extends Component
     {
         $this->query = $query;
     }
+
+    public function resetFilter()
+    {
+        $this->keyword = null;
+        $this->query = 'All';
+    }
     public function render()
     {
         $query = ModelsMissingEquipment::query()->with('equipment');

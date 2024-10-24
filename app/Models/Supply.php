@@ -34,6 +34,13 @@ class Supply extends Model
         'total' => 'integer'
     ];
 
+    public function formattedCategories($categories)
+    {
+        return implode(' / ', $categories->map(function ($item) {
+            return $item->name;
+        })->toArray());
+    }
+
 
     public function supplyHistory()
     {

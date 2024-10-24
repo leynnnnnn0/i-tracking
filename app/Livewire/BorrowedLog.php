@@ -59,6 +59,7 @@ class BorrowedLog extends Component
 
     public function resetFilter()
     {
+        $this->resetPage();
         $this->keyword = null;
         $this->query = 'All';
     }
