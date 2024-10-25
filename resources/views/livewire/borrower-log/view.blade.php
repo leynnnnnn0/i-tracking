@@ -1,5 +1,7 @@
 <x-layouts.view heading="Borrowed Equipment" backLocation="/borrowed-logs">
+    <x-column-info name="Equipment Id" :value="$borrowedEquipment->equipment->id" />
     <x-column-info name="Equipment" :value="$borrowedEquipment->equipment->name" />
+    <x-column-info name="Borrow Log Id" :value="$borrowedEquipment->id" />
     <x-column-info name="Borrower" :value="$borrowedEquipment->full_name" />
     <x-column-info name="Phone Number" :value="$borrowedEquipment->borrower_phone_number" />
     <x-column-info name="Email" :value="$borrowedEquipment->borrower_email" />
