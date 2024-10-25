@@ -2,7 +2,6 @@
 
 namespace App\Livewire\MissingEquipment;
 
-use App\Enum\EquipmentStatus;
 use App\Enum\MissingStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\MissingEquipmentForm;
@@ -25,7 +24,16 @@ class Edit extends Component
     public function mount($id)
     {
         $this->report = MissingEquipment::findOrFail($id);
-        $this->equipments = Equipment::pluck('name', 'id');
+        $this->equipments = Equipment::select('id', 'name', 'property_number')
+            ->where('quantity', '>', 0)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => "{$item->name} (PN: {$item->property_number})"
+                ];
+            })
+            ->toArray();
         $this->statuses = MissingStatus::values();
         $this->form->setMissingEquipmentForm($this->report);
     }

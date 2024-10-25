@@ -210,7 +210,7 @@ class Equipment extends Component
     public function setTargetId($id)
     {
         $this->targetId = $id;
-        $this->equipmentsList = Equipment::where('id', $this->targetId)
+        $this->equipmentsList = ModelsEquipment::where('id', $this->targetId)
             ->get()
             ->map(function ($item) {
                 return [

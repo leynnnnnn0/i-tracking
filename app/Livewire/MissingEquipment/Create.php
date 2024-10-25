@@ -66,19 +66,5 @@ class Create extends Component
         $this->test();
     }
 
-    public function test()
-    {
-        if ($this->form->equipment_id && $this->form->quantity) {
-            $report = MissingEquipment::where('quantity', $this->form->quantity)
-                ->whereNot('is_condemned')
-                ->where('equipment_id', $this->form->equipment_id)
-                ->first();
-            if ($report) {
-                $this->dialog()->warning(
-                    'Duplicate Report Found',
-                    'A report with the same missing quantity already exists (Report ID: #' . $report->id . ').'
-                )->send();
-            }
-        }
-    }
+
 }

@@ -1,6 +1,7 @@
 <div>
     <x-layouts.view heading="Missing Equipment" backLocation="/missing-equipment" :downloadable="true" wire:click="downloadPdf">
         <x-span class="col-span-2 text-primary font-bold">About Equipment</x-span>
+        <x-column-info name="Equipment Id" :value="$equipment->equipment->id" />
         <x-column-info name="Equipment" :value="$equipment->equipment->name" />
         <x-column-info name="Equipment Accounting Officer" :value="$equipment->equipment->accounting_officer->full_name" />
         <x-column-info name="Equipment Responsible Person" :value="$equipment->equipment->personnel->full_name" />
