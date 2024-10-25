@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pdf;
 use App\Enum\EquipmentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Equipment;
+use App\Models\MissingEquipment;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -85,5 +86,31 @@ class EquipmentPdf extends Controller
             'equipments' => $equipments,
         ]);
         return $pdf->setPaper('a3', 'landscape')->download('equipments-' . Carbon::today()->format('F d, Y') . '.pdf');
+    }
+
+    public function missingEquipmentPdf(Request $request)
+    {
+        $query = MissingEquipment::query()->with('equipment');
+        if ($request->filter !== 'All') {
+            if ($request->filter === 'Condemned') {
+                $query->where('is_condemned', true);
+            } else {
+                $query->where('status', $request->filter);
+            }
+        }
+
+        if ($request->keyword) {
+            $query->whereAny(['id'], 'like', "%$request->keyword%")
+                ->orWhereHas('equipment', callback: function ($q) use ($request) {
+                    $q->where('name', 'like', "%$request->keyword%");
+                });
+        }
+
+        $reports = $query->get();
+        $pdf = Pdf::loadView('pdf.missing-equipment-list', [
+            'reports' => $reports,
+        ]);
+
+        return $pdf->setPaper('a3', 'landscape')->download('missing-equipments.pdf');
     }
 }

@@ -67,7 +67,11 @@ class MissingEquipment extends Component
 
     public function downloadPdf()
     {
-        return redirect()->route('missing-equipments-pdf');
+        $params = [
+            'filter'=> $this->query,
+            'keyword' => $this->keyword
+        ];
+        return redirect()->route('missing-equipment-reports-pdf', $params);
     }
 
     public function changeStatus($reportId)

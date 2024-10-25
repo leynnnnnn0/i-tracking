@@ -70,7 +70,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/users-pdf', 'userListPdf')->name('users-pdf');
         Route::get('/borrowed-equipments', 'borrowedEquipmentList')->name('borrowed-equipments');
         Route::get('/supplies-history-pdf', 'supplyHistoryPdf')->name('supplies-history-pdf');
-        Route::get('/missing-equipments-pdf', 'missingEquipmentPdf')->name('missing-equipments-pdf');
         Route::get('/responsible-person-pdf', 'handleEquipmentNewResponsiblePerson')->name('responsible-person-pdf');
 
         Route::get('/offices-pdf', 'officesListPdf')->name('offices-pdf');
@@ -86,7 +85,11 @@ Route::middleware('auth')->group(function () {
     Route::controller(EquipmentPdf::class)->group(function () {
         Route::get('/equipment-list-pdf', 'equipmentList')->name('equipment-list-pdf');
         Route::get('/equipment-new-responsible-person-pdf', 'newResponsiblePerson')->name('equipment-new-responsible-person-pdf');
+        Route::get('/missing-equipment-reports-pdf', 'missingEquipmentPdf')->name('missing-equipment-reports-pdf');
     });
+
+
+
     Route::get('test', [PdfController::class, 'index']);
 
 

@@ -125,20 +125,11 @@ class PdfController extends Controller
     public function missingEquipmentPdf(Request $request)
     {
         $pdf = Pdf::loadView('pdf.MissingEquipmentList', [
-            'equipments' => MissingEquipment::with('equipment')->get(),
+            'reports' => MissingEquipment::with('equipment')->get(),
         ]);
         return $pdf->setPaper([0, 0, 612, 936], 'landscape')->download('missing-equipments.pdf');
     }
 
-    public function handleEquipmentNewResponsiblePerson(Request $request)
-    {
-        $equipment = Equipment::with('personnel', 'accounting_officer')->findOrFail($request->equipment_id);
-        $pdf = Pdf::loadView('pdf.EquipmentNewResponsiblePerson', [
-            'equipment' => $equipment,
-            'previous_responsible_person' => $request->previous_responsible_person
-        ]);
-        return $pdf->setPaper('a4', 'landscape')->download('newResponsiblePerson.pdf');
-    }
 
     public function borrowedEquipmentList(Request $request)
     {
@@ -214,80 +205,6 @@ class PdfController extends Controller
             'personnels' => $personnels
         ]);
         return $pdf->setPaper('a4', 'landscape')->download('personnels-as-of-' . Carbon::today()->format('F d, Y') . '.pdf');
-    }
-
-    public function equipmentListPdf(Request $request)
-    {
-
-
-        $query = Equipment::query()
-            ->with([
-                'accounting_officer',
-                'personnel',
-                'missing_equipment_log' => function ($query) {
-                    $query->where('is_condemned', true);
-                },
-                'borrowed_log' => function ($query) {
-                    $query->whereNull('returned_date');
-                }
-            ]);
-
-        if ($request->filter === 'All') {
-            $query->where('quantity', '>', 0);
-        }
-
-
-        if ($request->filter === 'Available') {
-            $query->whereNot('status', EquipmentStatus::FULLY_BORROWED->value);
-            $query->where('quantity', '>', 0);
-        }
-
-        if ($request->filter === 'Condemned') {
-            $query->whereHas('total_missing_equipment', function ($q) {
-                $q->where('is_condemned', true);
-            });
-        }
-
-        if ($request->filter === 'Borrowed') {
-            $query->whereHas('borrowed_log', function ($q) {
-                $q->whereNull('returned_date');
-            });
-        }
-
-        if ($request->keyword) {
-            $query->whereAny(['name', 'property_number', 'id'], 'like', "%$request->keyword%");;
-        }
-
-        if ($request->accountingOfficerId) {
-            $query->where('accounting_officer_id', $request->accountingOfficerId);
-        }
-
-        if ($request->responsiblePersonId) {
-            $query->where('personnel_id', $request->responsiblePersonId);
-        }
-
-        if ($request->operatingUnit) {
-            $query->where('operating_unit_project', $request->operatingUnit);
-        }
-
-        if ($request->organizationUnit) {
-            $query->where('organization_unit', $request->organizationUnit);
-        }
-
-        $equipments = $query->latest()->get();
-        $isAccountingOfficerFiltered = null;
-        if ($request->accountingOfficerId) {
-            $isAccountingOfficerFiltered = AccountingOfficer::find($request->accountingOfficerId)->full_name;
-        }
-
-        $pdf = Pdf::loadView('pdf.EquipmentList', [
-            'data' => $equipments,
-            'isAccountingOfficerFiltered' => $isAccountingOfficerFiltered,
-            'isResponsiblePersonFiltered' => $request->responsiblePersonId ? $equipments->where('personnel_id', $request->responsiblePersonId)->first()->personnel->full_name : false,
-            'query' => $request->query
-        ]);
-
-        return $pdf->setPaper('a4', 'landscape')->download('equipments-' . Carbon::today()->format('F d, Y') . '.pdf');
     }
 
     public function index()
