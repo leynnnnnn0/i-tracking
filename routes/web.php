@@ -22,14 +22,18 @@ use App\Livewire\Department\Edit as DepartmentEdit;
 use App\Livewire\Department\View as DepartmentView;
 use App\Livewire\Equipments;
 use App\Livewire\Fund;
+use App\Livewire\Fund\Create as FundCreate;
 use App\Livewire\MissingEquipment;
 use App\Livewire\Offices;
 use App\Livewire\Offices\Create as OfficesCreate;
 use App\Livewire\Offices\Edit as OfficesEdit;
 use App\Livewire\Offices\View as OfficesView;
 use App\Livewire\OperatingUnitProject;
+use App\Livewire\OperatingUnitProject\Create as OperatingUnitProjectCreate;
 use App\Livewire\OrganizationUnit;
+use App\Livewire\OrganizationUnit\Create as OrganizationUnitCreate;
 use App\Livewire\PersonalProtectiveEquipment;
+use App\Livewire\PersonalProtectiveEquipment\Create as PersonalProtectiveEquipmentCreate;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Personnel\Edit as PersonnelEdit;
@@ -85,20 +89,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/view/{id}', DepartmentView::class)->name('view');
     });
 
-    Route::prefix('organization-units')->name('organization-units.')->group(function(){
+    Route::prefix('organization-units')->name('organization-units.')->group(function () {
         Route::get('/', OrganizationUnit::class)->name('index');
+        Route::get('/create', OrganizationUnitCreate::class)->name('create');
     });
 
-    Route::prefix('operating-units')->name('operating-units.')->group(function(){
-       Route::get('/', OperatingUnitProject::class)->name('index'); 
+    Route::prefix('operating-units')->name('operating-units.')->group(function () {
+        Route::get('/', OperatingUnitProject::class)->name('index');
+        Route::get('/create', OperatingUnitProjectCreate::class)->name('create');
     });
 
-    Route::prefix('funds')->name('funds.')->group(function(){
-       Route::get('/', Fund::class)->name('index'); 
+    Route::prefix('funds')->name('funds.')->group(function () {
+        Route::get('/', Fund::class)->name('index');
+        Route::get('/create', FundCreate::class)->name('create');
     });
 
-    Route::prefix('personal-protective-equipment')->name('personal-protective-equipment.')->group(function(){
+    Route::prefix('personal-protective-equipment')->name('personal-protective-equipment.')->group(function () {
         Route::get('/', PersonalProtectiveEquipment::class)->name('index');
+        Route::get('/create', PersonalProtectiveEquipmentCreate::class)->name('create');
     });
 
     Route::prefix('positions')->name('positions.')->group(function () {
