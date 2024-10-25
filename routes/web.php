@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Pdf\EquipmentPdf;
+use App\Http\Controllers\Pdf\SupplyPdf;
 use App\Http\Controllers\PdfController;
 use App\Livewire\AccountingOfficer;
 use App\Livewire\AccountingOfficer\Edit as AccountingOfficerEdit;
@@ -86,6 +87,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/equipment-list-pdf', 'equipmentList')->name('equipment-list-pdf');
         Route::get('/equipment-new-responsible-person-pdf', 'newResponsiblePerson')->name('equipment-new-responsible-person-pdf');
         Route::get('/missing-equipment-reports-pdf', 'missingEquipmentPdf')->name('missing-equipment-reports-pdf');
+    });
+
+    Route::controller(SupplyPdf::class)->group(function () {
+        Route::get('/supplies-list-pdf', 'supplyList')->name('supplies-list-pdf');
+        Route::get('/supply-histories-pdf', 'supplyHistory')->name('supply-histories-pdf');
     });
 
 

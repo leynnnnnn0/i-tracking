@@ -73,12 +73,11 @@ class SupplyHistory extends Component
         $params = [
             'to' => $this->to,
             'from' => $this->from,
-            'name' => $this->name
+            'name' => $this->name,
+            'category' => $this->category
         ];
-        $params = array_filter($params, function ($value) {
-            return $value !== null;
-        });
-        return redirect()->route('supplies-history-pdf', $params);
+
+        return redirect()->route('supply-histories-pdf', $params);
     }
 
     public function resetFilter()
@@ -87,6 +86,7 @@ class SupplyHistory extends Component
         $this->from = null;
         $this->to = null;
         $this->name = null;
+        $this->category = null;
     }
 
     public function filter()

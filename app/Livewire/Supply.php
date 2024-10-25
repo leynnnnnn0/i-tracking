@@ -78,10 +78,8 @@ class Supply extends Component
             'category' => $this->category,
             'keyword' => $this->keyword
         ];
-        $params = array_filter($params, function ($value) {
-            return $value !== null && $value !== '';
-        });
-        return redirect()->route('supplies-pdf', $params);
+
+        return redirect()->route('supplies-list-pdf', $params);
     }
 
     public function resetFilter()
