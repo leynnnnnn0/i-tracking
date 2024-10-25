@@ -3,13 +3,16 @@
 namespace App\Livewire\Equipments;
 
 use App\Enum\EquipmentStatus;
-use App\Enum\OperatingUnitAndProject;
-use App\Enum\OrganizationUnit;
+
 use App\Enum\Unit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
 use App\Models\AccountingOfficer;
 use App\Models\Equipment;
+use App\Models\Fund;
+use App\Models\OperatingUnitProject;
+use App\Models\OrganizationUnit;
+use App\Models\PersonalProtectiveEquipment;
 use App\Models\Personnel;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +34,9 @@ class Edit extends Component
     public $units;
 
     public $officers;
+    public $personalProtectiveEquipment;
+    public $funds;
+
 
 
 
@@ -38,14 +44,6 @@ class Edit extends Component
     {
         $this->equipment = Equipment::with('personnel', 'accounting_officer')->findOrFail($id);
 
-        $this->officers = AccountingOfficer::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->full_name
-                ];
-            })
-            ->toArray();
         $this->officers = AccountingOfficer::all()
             ->map(function ($item) {
                 return [
@@ -62,11 +60,43 @@ class Edit extends Component
                 ];
             })
             ->toArray();
+        $this->units = Unit::values();
+        $this->statuses = EquipmentStatus::values();
+        $this->organizations = OrganizationUnit::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();;
+        $this->operating_units = OperatingUnitProject::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
+        $this->funds = Fund::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
+        $this->personalProtectiveEquipment = PersonalProtectiveEquipment::all()
+            ->map(function ($item) {
+                return [
+                    'value' => $item->id,
+                    'label' => $item->name
+                ];
+            })
+            ->toArray();
 
         $this->units = Unit::values();
         $this->statuses = EquipmentStatus::values();
-        $this->organizations = OrganizationUnit::values();
-        $this->operating_units = OperatingUnitAndProject::values();
         $this->equipment = Equipment::with('responsible_person')->findOrFail($id);
         $this->form->setEquipment($this->equipment);
     }
