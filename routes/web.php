@@ -22,7 +22,7 @@ use App\Livewire\Department;
 use App\Livewire\Department\Create as DepartmentCreate;
 use App\Livewire\Department\Edit as DepartmentEdit;
 use App\Livewire\Department\View as DepartmentView;
-use App\Livewire\Equipments;
+use App\Livewire\Equipment;
 use App\Livewire\Fund;
 use App\Livewire\Fund\Create as FundCreate;
 use App\Livewire\Fund\Edit as FundEdit;
@@ -159,7 +159,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('equipment')->name('equipment.')->group(function () {
-        Route::get('/', Equipments::class)->name('index');
+        Route::get('/', Equipment::class)->name('index');
         Route::get('/create', \App\Livewire\Equipments\Create::class)->name('create');
         Route::get('/edit/{id}', \App\Livewire\Equipments\Edit::class)->name('edit');
         Route::get('/view/{id}', \App\Livewire\Equipments\View::class)->name('view');

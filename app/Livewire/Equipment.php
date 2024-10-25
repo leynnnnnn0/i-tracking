@@ -6,7 +6,7 @@ use App\Enum\EquipmentStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\AccountingOfficer;
-use App\Models\Equipment;
+use App\Models\Equipment as ModelsEquipment;
 use App\Models\OperatingUnitProject;
 use App\Models\OrganizationUnit;
 use App\Models\Personnel;
@@ -21,7 +21,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
-class Equipments extends Component
+class Equipment extends Component
 {
     use WithPagination, Deletable, HasSelectOptions;
     public ActivityLogForm $activityLogForm;
@@ -139,7 +139,7 @@ class Equipments extends Component
 
     public function render()
     {
-        $query = Equipment::query()
+        $query = ModelsEquipment::query()
             ->with([
                 'accounting_officer',
                 'personnel',
@@ -201,7 +201,7 @@ class Equipments extends Component
 
         $equipments = $query->latest()->paginate(10);
 
-        return view('livewire.equipments', [
+        return view('livewire.equipment', [
             'equipments' => $equipments
         ]);
     }
@@ -222,7 +222,7 @@ class Equipments extends Component
         $this->borrowEquipmentForm->start_date = Carbon::today()->format('Y-m-d');
 
         if ($this->borrowEquipmentForm->equipment_id) {
-            $equipment = Equipment::with(['borrowed_log' => function ($query) {
+            $equipment = ModelsEquipment::with(['borrowed_log' => function ($query) {
                 $query->whereNull('returned_date');
             }])->find($this->borrowEquipmentForm->equipment_id);
 
