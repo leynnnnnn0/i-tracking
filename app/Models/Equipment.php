@@ -96,10 +96,10 @@ class Equipment extends Model
     public function quantity($query)
     {
         return match ($query) {
-            'All' => $this->quantity,
             'Available' => $this->quantity - $this->quantity_borrowed,
             'Borrowed' => $this->borrowed_log->sum('quantity'),
-            'Condemned' => $this->missing_equipment_log->sum('quantity')
+            'Condemned' => $this->missing_equipment_log->sum('quantity'),
+            default => $this->quantity,
         };
     }
 

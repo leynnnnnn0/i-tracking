@@ -8,9 +8,11 @@ use Livewire\Component;
 class View extends Component
 {
     public $equipment;
+    public $query;
     public function mount($id)
     {
-        $this->equipment = Equipment::with('personnel', 'accounting_officer')->findOrFail($id);
+        $this->equipment = Equipment::withRelationships()->findOrFail($id);
+        $this->query = request()->query('query');
     }
     public function render()
     {

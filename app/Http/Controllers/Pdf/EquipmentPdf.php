@@ -26,23 +26,25 @@ class EquipmentPdf extends Controller
         $query = Equipment::withRelationships();
         $responsiblePerson = null;
         $accountingOfficer = null;
+        $isCondemnedFilter = false;
 
-        if ($request->query === 'All') {
+        if ($request->filter === 'All') {
             $query->where('quantity', '>', 0);
         }
 
-        if ($request->query === 'Available') {
+        if ($request->filter === 'Available') {
             $query->whereNot('status', EquipmentStatus::FULLY_BORROWED->value);
             $query->where('quantity', '>', 0);
         }
 
-        if ($request->query === 'Condemned') {
+        if ($request->filter === 'Condemned') {
+            $isCondemnedFilter = true;
             $query->whereHas('missing_equipment_log', function ($q) {
                 $q->where('is_condemned', true);
             });
         }
 
-        if ($request->query === 'Borrowed') {
+        if ($request->filter === 'Borrowed') {
             $query->whereHas('borrowed_log', function ($q) {
                 $q->whereNull('returned_date');
             });
@@ -84,6 +86,7 @@ class EquipmentPdf extends Controller
             'responsiblePerson' => $responsiblePerson ?? false,
             'accountingOfficer' => $accountingOfficer ?? false,
             'equipments' => $equipments,
+            'query' => $request->filter,
         ]);
         return $pdf->setPaper('a3', 'landscape')->download('equipments-' . Carbon::today()->format('F d, Y') . '.pdf');
     }

@@ -82,7 +82,7 @@
                 </x-td>
                 <x-td>
                     <div class="flex items-center gap-2">
-                        <x-link href="/equipment/view/{{ $equipment->id }}">
+                        <x-link href="/equipment/view/{{ $equipment->id }}?query={{$query}}">
                             <x-bi-eye class="size-5 text-green-500" />
                         </x-link>
                         <x-link href="/equipment/edit/{{ $equipment->id }}">

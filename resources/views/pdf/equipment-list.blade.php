@@ -41,7 +41,7 @@
                 <td>{{ $equipment->organization_unit->name  ?? 'N/a'}}</td>
                 <td>{{ $equipment->operating_unit_project->name ?? 'N/a' }}</td>
                 <td>{{ $equipment->property_number ?? 'N/a' }}</td>
-                <td>{{ $equipment->quantity ?? 'N/a' }}</td>
+                <td>{{ $equipment->quantity($query) ?? 'N/a' }}</td>
                 <td>{{ $equipment->unit ?? 'N/a' }}</td>
                 <td>{{ $equipment->description ?? 'N/a' }}</td>
                 <td>{{ Carbon\Carbon::parse($equipment->date_acquired)->format('F d, Y') }}</td>
@@ -50,7 +50,7 @@
                 <td>{{ $equipment->estimated_useful_time ? 'Until ' .  Carbon\Carbon::createFromFormat('Y-m', $equipment->estimated_useful_time)->format('F Y') : 'N/a'}}</td>
                 <td>{{ number_format($equipment->unit_price, 2) ?? 'N/a'}} </td>
                 <td>{{ number_format($equipment->total_amount, 2) ?? 'N/a'}} </td>
-                <td>{{ $equipment->status }}</td>
+                <td>{{ $query === 'Condemned' ? 'Condemned' : $equipment->status }}</td>
             </tr>
             @endforeach
         </tbody>
