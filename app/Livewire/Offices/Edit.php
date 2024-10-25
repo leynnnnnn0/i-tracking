@@ -19,7 +19,7 @@ class Edit extends Component
         return 'offices';
     }
 
-    protected function performStoreAction()
+    protected function getEloquentModel()
     {
         return $this->form->update($this->office);
     }

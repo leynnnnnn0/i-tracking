@@ -15,19 +15,13 @@ class Edit extends Component
     public FundForm $form;
     public ActivityLogForm $activityLogForm;
 
-    protected function getModelName(): string
+    protected function getEloquentModel()
     {
-        return 'Fund';
+        return $this->fund;
     }
-
-    protected function performStoreAction()
-    {
-        return $this->form->update($this->fund);
-    }
-
     protected function getRedirectRoute(): string
     {
-        return route('funds.index');
+        return 'funds';
     }
 
     public function mount($id)

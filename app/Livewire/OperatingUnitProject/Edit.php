@@ -15,19 +15,14 @@ class Edit extends Component
     public OperatingUnitProjectForm $form;
     public ActivityLogForm $activityLogForm;
 
-    protected function getModelName(): string
+    protected function getEloquentModel()
     {
-        return 'Operating Unit';
-    }
-
-    protected function performStoreAction()
-    {
-        return $this->form->update($this->operatingUnit);
+        return $this->operatingUnit;
     }
 
     protected function getRedirectRoute(): string
     {
-        return route('operating-units.index');
+        return 'operating-units';
     }
 
     public function mount($id)

@@ -4,22 +4,38 @@ namespace App\Livewire\User;
 
 use App\Enum\Gender;
 use App\Enum\UserRole;
-use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\UserForm;
 use App\Models\User;
-use Exception;
-use Illuminate\Support\Facades\DB;
+use App\Traits\Updatable;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
-    public ActivityLogForm $activityLogForm;
+    use Updatable;
     public UserForm $form;
     public $user;
     public $genders;
     public $roles;
     public $newPassword;
+
+    protected function afterTransaction($model)
+    {
+        if ($this->newPassword) {
+            $model->update([
+                'password' => $this->newPassword
+            ]);
+        }
+    }
+
+    protected function getRedirectRoute(): string
+    {
+        return 'users';
+    }
+
+    protected function getEloquentModel()
+    {
+        return $this->form->update($this->user);
+    }
 
     public function rules()
     {
@@ -39,27 +55,5 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.user.edit');
-    }
-
-    public function update()
-    {
-        $this->dispatch('Confirm Update');
-        $this->form->validate();
-        try {
-            DB::transaction(function () {
-                $user = $this->form->update($this->user);
-                if ($this->newPassword) {
-                    $user->update([
-                        'password' => $this->newPassword
-                    ]);
-                }
-                $this->activityLogForm->setActivityLog($this->user, $user, 'Update User', 'Update');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Updated Successfully!');
-            return $this->redirect('/users');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-        }
     }
 }

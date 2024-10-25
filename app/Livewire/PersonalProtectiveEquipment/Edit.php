@@ -15,19 +15,14 @@ class Edit extends Component
     public PersonalProtectiveEquipmentForm $form;
     public ActivityLogForm $activityLogForm;
 
-    protected function getModelName(): string
+    protected function getEloquentModel()
     {
-        return 'Personal Protective Equipment';
-    }
-
-    protected function performStoreAction()
-    {
-        return $this->form->update($this->equipment);
+        return $this->equipment;
     }
 
     protected function getRedirectRoute(): string
     {
-        return route('personal-protective-equipment.index');
+        return'personal-protective-equipment';
     }
 
     public function mount($id)

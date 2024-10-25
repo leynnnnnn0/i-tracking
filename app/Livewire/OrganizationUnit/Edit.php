@@ -15,19 +15,14 @@ class Edit extends Component
     public OrganizationUnitForm $form;
     public ActivityLogForm $activityLogForm;
 
-    protected function getModelName(): string
+    protected function getEloquentModel()
     {
-        return 'Organization Unit';
-    }
-
-    protected function performStoreAction()
-    {
-        return $this->form->update($this->organizationUnit);
+        return $this->organizationUnit;
     }
 
     protected function getRedirectRoute(): string
     {
-        return route('organization-units.index');
+        return 'organization-units';
     }
 
     public function mount($id)

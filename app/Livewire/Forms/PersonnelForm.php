@@ -2,8 +2,6 @@
 
 namespace App\Livewire\Forms;
 
-use App\Enum\Gender;
-use App\Enum\Position;
 use App\Models\Personnel;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
@@ -27,6 +25,7 @@ class PersonnelForm extends Form
 
     public function setPersonnel(Personnel $personnel)
     {
+        $this->personnel_id = $personnel->id;
         $this->department_id = $personnel->department_id;
         $this->office_id = $personnel->office_id;
         $this->position_id = $personnel->position_id;
