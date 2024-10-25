@@ -6,19 +6,27 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
-use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\DB;
+use App\Traits\Updatable;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
 
 class Edit extends Component
 {
+    use Updatable;
     public BorrowEquipmentForm $form;
     public BorrowedEquipment $borrowedEquipment;
     public ActivityLogForm $activityLogForm;
     public $equipments;
     public $quantityHint = "";
+
+    protected function getRedirectRoute(): string
+    {
+        return 'borrowed-logs';
+    }
+
+    protected function getEloquentModel()
+    {
+        return $this->form->update($this->borrowedEquipment);
+    }
 
     public function mount($id)
     {
@@ -36,32 +44,10 @@ class Edit extends Component
     public function render()
     {
 
-        // Availble quantity = quantity - borrowed equipomt 
         if ($this->form->equipment_id) {
             $equipment = Equipment::find($this->form->equipment_id);
             $this->quantityHint = "Available: " . $equipment->quantity - $equipment->quantity_borrowed;
         }
         return view('livewire.borrower-log.edit');
-    }
-
-    public function update()
-    {
-        $this->dispatch('Confirm Update');
-        $this->form->validate();
-        try {
-            DB::transaction(function () {
-                if ($this->form->is_returned) {
-                    $this->form->returned_date =  Carbon::today()->format('Y-m-d');
-                }
-                $equipment = $this->form->update($this->borrowedEquipment);
-                $this->activityLogForm->setActivityLog($this->borrowedEquipment, $equipment, 'Updated Borrow Log', 'Update');
-                $this->activityLogForm->store();
-            });
-            Toaster::success('Updated Successfully!');
-            return $this->redirect('/borrowed-logs');
-        } catch (Exception $e) {
-            Toaster::error($e->getMessage());
-            throw $e;
-        }
     }
 }

@@ -28,4 +28,5 @@ trait Updatable
     }
 
     protected function afterTransaction($model) {}
+    protected function beforeTransaction($model) {}
 }
