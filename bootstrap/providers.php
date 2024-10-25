@@ -7,4 +7,5 @@ return [
     App\Providers\AuthServiceProvider::class,
     Barryvdh\Debugbar\ServiceProvider::class,
     TallStackUi\TallStackUiServiceProvider::class,
+    OwenIt\Auditing\AuditingServiceProvider::class,
 ];

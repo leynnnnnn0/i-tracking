@@ -10,7 +10,7 @@
         },
     }">
     <section class="space-y-3">
-        <x-index-header heading="Categories" buttonName="Add New Category" location="/categories/create" wire:click="downloadPdf" />
+        <x-index-header :hasPdf="false" heading="Categories" buttonName="Add New Category" location="/categories/create" wire:click="downloadPdf" />
         <x-table>
             <x-tr>
                 <x-th>Id</x-th>

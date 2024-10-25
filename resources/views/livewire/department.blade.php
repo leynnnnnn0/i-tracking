@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Departments" buttonName="Add New Department" location="/departments/create" wire:click="downloadPdf" />
+    <x-index-header heading="Departments" buttonName="Add New Department" location="/departments/create" wire:click="downloadPdf" :hasPdf="false" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>

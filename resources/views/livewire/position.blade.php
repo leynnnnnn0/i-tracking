@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Positions" buttonName="Add New Position" location="/positions/create" />
+    <x-index-header :hasPdf="false" heading="Positions" buttonName="Add New Position" location="/positions/create" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>

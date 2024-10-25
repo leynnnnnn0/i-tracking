@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Operating Units" buttonName="Add New Operating Unit" location="/operating-units/create" wire:click="downloadPdf" />
+    <x-index-header :hasPdf="false" heading="Operating Units" buttonName="Add New Operating Unit" location="/operating-units/create" wire:click="downloadPdf" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>

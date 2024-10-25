@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\ActivityLog as ModelsActivityLog;
 use Livewire\Component;
 use Livewire\WithPagination;
+use OwenIt\Auditing\Models\Audit;
 
 class ActivityLog extends Component
 {
@@ -12,7 +13,8 @@ class ActivityLog extends Component
     public function render()
     {
         return view('livewire.activity-log', [
-            'logs' => ModelsActivityLog::with('user')->latest()->paginate(10)
+            'logs' => ModelsActivityLog::with('user')->latest()->paginate(10),
+            'audits' => Audit::all()
         ]);
     }
 }

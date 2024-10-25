@@ -9,7 +9,7 @@
             })
         },
     }">
-    <x-index-header heading="Funds" buttonName="Add New Fund" location="/funds/create" wire:click="downloadPdf" />
+    <x-index-header :hasPdf="false" heading="Funds" buttonName="Add New Fund" location="/funds/create" wire:click="downloadPdf" />
     <x-table>
         <x-tr>
             <x-th>Id</x-th>

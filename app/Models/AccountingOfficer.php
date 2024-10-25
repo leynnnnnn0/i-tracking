@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class AccountingOfficer extends Model
+class AccountingOfficer extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\AccountingOfficerFactory> */
-    use HasFactory;
-    use SoftDeletes;
-
+    use HasFactory, SoftDeletes,  \OwenIt\Auditing\Auditable;
+    
     protected $fillable = [
         'office_id',
         'first_name',
