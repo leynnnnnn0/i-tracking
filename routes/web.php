@@ -79,10 +79,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/responsible-persons-pdf', 'responsiblePersonsListPdf')->name('responsible-persons-pdf');
 
         Route::get('/missing-equipment-details-pdf/{id}', 'missingEquipmentDetailsPdf')->name('missing-equipment-details-pdf');
+
+        // newResponsiblePerson
     });
 
-    Route::get('/equipment-list-pdf', [EquipmentPdf::class, 'equipmentList'])->name('equipment-list-pdf');
-
+    Route::controller(EquipmentPdf::class)->group(function () {
+        Route::get('/equipment-list-pdf', 'equipmentList')->name('equipment-list-pdf');
+        Route::get('/equipment-new-responsible-person-pdf', 'newResponsiblePerson')->name('equipment-new-responsible-person-pdf');
+    });
     Route::get('test', [PdfController::class, 'index']);
 
 

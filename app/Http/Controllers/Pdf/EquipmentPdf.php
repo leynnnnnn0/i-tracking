@@ -11,6 +11,15 @@ use Illuminate\Http\Request;
 
 class EquipmentPdf extends Controller
 {
+    public function newResponsiblePerson(Request $request)
+    {
+        $equipment = Equipment::withRelationships()->findOrFail($request->equipment_id);
+        $pdf = Pdf::loadView('pdf.equipment-new-responsible-person', [
+            'equipment' => $equipment,
+            'previous_responsible_person' => $request->previous_responsible_person
+        ]);
+        return $pdf->setPaper('a3', 'landscape')->download('newResponsiblePerson.pdf');
+    }
     public function equipmentList(Request $request)
     {
         $query = Equipment::withRelationships();

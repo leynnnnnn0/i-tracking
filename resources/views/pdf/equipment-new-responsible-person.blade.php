@@ -1,13 +1,7 @@
 <x-layouts.pdf>
     <div class="table-header">
-        <h1>{{ $title ?? 'Report Table' }}</h1>
+        <h1>New Responsible Person Update</h1>
         <p>Generated on: {{ date('F d, Y') }}</p>
-        @if($accountingOfficer)
-        <p>Accounting Officer: {{ $accountingOfficer }}</p>
-        @endif
-        @if($responsiblePerson)
-        <p>Responsible Person: {{ $responsiblePerson }}</p>
-        @endif
     </div>
     <table class="print-table">
         <thead>
@@ -15,7 +9,8 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Accounting Officer</th>
-                <th>Responsible Person</th>
+                <th>Previous Responsible Person</th>
+                <th>New Responsible Person</th>
                 <th>Organization Unit</th>
                 <th>Operating Unit Project</th>
                 <th>Property Number</th>
@@ -32,11 +27,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($equipments as $equipment)
-            <tr>
+        <tr>
                 <td>{{ $equipment->id }}</td>
                 <td>{{ $equipment->name ?? 'N/a' }}</td>
                 <td>{{ $equipment->accounting_officer->full_name ?? 'N/a' }}</td>
+                <td>{{ $previous_responsible_person ?? 'N/a' }}</td>
                 <td>{{ $equipment->personnel->full_name ?? 'N/a' }}</td>
                 <td>{{ $equipment->organization_unit->name  ?? 'N/a'}}</td>
                 <td>{{ $equipment->operating_unit_project->name ?? 'N/a' }}</td>
@@ -52,7 +47,7 @@
                 <td>{{ number_format($equipment->total_amount, 2) ?? 'N/a'}} </td>
                 <td>{{ $equipment->status }}</td>
             </tr>
-            @endforeach
         </tbody>
     </table>
+
 </x-layouts.pdf>
