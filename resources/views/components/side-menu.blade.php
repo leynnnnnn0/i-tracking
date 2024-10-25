@@ -66,7 +66,25 @@
         Positions
     </x-nav-link>
 
+    <x-nav-link href="/organization-units" :active="request()->is('organization-units*')">
+        <x-ri-home-office-line class="size-4" />
+        Organization Units
+    </x-nav-link>
 
+    <x-nav-link href="/operating-units" :active="request()->is('operating-units*')">
+        <x-ri-home-office-line class="size-4" />
+        Operating Units
+    </x-nav-link>
+
+    <x-nav-link href="/funds" :active="request()->is('funds*')">
+        <x-ri-home-office-line class="size-4" />
+        Funds
+    </x-nav-link>
+
+    <x-nav-link href="/personal-protective-equipment" :active="request()->is('personal-protective-equipment*')">
+        <x-ri-home-office-line class="size-4" />
+        PPE
+    </x-nav-link>
 
     <span class="px-5 mt-5 text-white/50 text-xs">Others</span>
     <x-nav-link href="/delete-archives" :active="request()->is('delete-archives*')">
@@ -78,9 +96,6 @@
         <x-ri-history-fill class="size-4" />
         Activity Log
     </x-nav-link>
-
-
-
 
     @endcan
 

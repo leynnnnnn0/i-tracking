@@ -21,11 +21,15 @@ use App\Livewire\Department\Create as DepartmentCreate;
 use App\Livewire\Department\Edit as DepartmentEdit;
 use App\Livewire\Department\View as DepartmentView;
 use App\Livewire\Equipments;
+use App\Livewire\Fund;
 use App\Livewire\MissingEquipment;
 use App\Livewire\Offices;
 use App\Livewire\Offices\Create as OfficesCreate;
 use App\Livewire\Offices\Edit as OfficesEdit;
 use App\Livewire\Offices\View as OfficesView;
+use App\Livewire\OperatingUnitProject;
+use App\Livewire\OrganizationUnit;
+use App\Livewire\PersonalProtectiveEquipment;
 use App\Livewire\Personnel;
 use App\Livewire\Personnel\Create as PersonnelCreate;
 use App\Livewire\Personnel\Edit as PersonnelEdit;
@@ -79,6 +83,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', DepartmentCreate::class)->name('create');
         Route::get('/edit/{id}', DepartmentEdit::class)->name('edit');
         Route::get('/view/{id}', DepartmentView::class)->name('view');
+    });
+
+    Route::prefix('organization-units')->name('organization-units.')->group(function(){
+        Route::get('/', OrganizationUnit::class)->name('index');
+    });
+
+    Route::prefix('operating-units')->name('operating-units.')->group(function(){
+       Route::get('/', OperatingUnitProject::class)->name('index'); 
+    });
+
+    Route::prefix('funds')->name('funds.')->group(function(){
+       Route::get('/', Fund::class)->name('index'); 
+    });
+
+    Route::prefix('personal-protective-equipment')->name('personal-protective-equipment.')->group(function(){
+        Route::get('/', PersonalProtectiveEquipment::class)->name('index');
     });
 
     Route::prefix('positions')->name('positions.')->group(function () {

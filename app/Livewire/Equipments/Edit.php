@@ -130,7 +130,7 @@ class Edit extends Component
                 ]);
                 return redirect()->to(route('equipment.index') . '?' . $query);
             } else {
-                return $this->redirect('/equipment');
+                return $this->redirect('/equipment', true);
             }
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
