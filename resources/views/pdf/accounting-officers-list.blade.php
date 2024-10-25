@@ -1,7 +1,10 @@
 <x-layouts.pdf>
-    <h4 class="center">List of Accounting Officers</h4>
-    <h5 class="center">As of {{ Carbon\Carbon::today()->format('F d, Y')}}</h5>
+    <div class="table-header">
+        <h1>List of Accounting Officers</h1>
+        <p>Generated on: {{ date('F d, Y') }}</p>
+    </div>
     <table class="print-table">
+
         <thead>
             <tr>
                 <th>Id</th>

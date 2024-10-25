@@ -1,6 +1,6 @@
 <x-layouts.pdf>
     <div class="table-header">
-        <h1>{{ $title ?? 'Report Table' }}</h1>
+        <h1>Equipment List</h1>
         <p>Generated on: {{ date('F d, Y') }}</p>
         @if($accountingOfficer)
         <p>Accounting Officer: {{ $accountingOfficer }}</p>

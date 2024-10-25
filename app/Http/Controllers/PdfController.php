@@ -27,7 +27,7 @@ class PdfController extends Controller
             'equipment' => MissingEquipment::with('equipment', 'equipment.responsible_person', 'equipment.accounting_officer', 'equipment.organization_unit', 'equipment.fund', 'equipment.personal_protective_equipment', 'equipment.operating_unit_project')->findOrFail($id)
         ]);
 
-        return $pdf->setPaper('a4', 'download')->download('missing-equiment-' . Carbon::today()->format('Y-m-d') .'.pdf');
+        return $pdf->setPaper('a4', 'download')->download('missing-equiment-' . Carbon::today()->format('Y-m-d') . '.pdf');
     }
 
     public function responsiblePersonsListPdf(Request $request)
@@ -65,7 +65,7 @@ class PdfController extends Controller
 
         $officers = $query->get();
 
-        $pdf = Pdf::loadView('pdf.AccountingOfficersList', [
+        $pdf = Pdf::loadView('pdf.accounting-officers-list', [
             'officers' => $officers
         ]);
         return $pdf->setPaper('a4', 'download')->download('accounting-officers.pdf');
@@ -96,7 +96,7 @@ class PdfController extends Controller
             $query->where('role', $request->role);
         }
         $users = $query->get();
-        $pdf = Pdf::loadView('pdf.UserList', [
+        $pdf = Pdf::loadView('pdf.user-list', [
             'users' => $users
         ]);
         return $pdf->setPaper('a4', 'landscape')->download('users.pdf');
@@ -152,15 +152,10 @@ class PdfController extends Controller
     public function personnelListPdf(Request $request)
     {
         $query = Personnel::query()
-            ->with('department',);
+            ->with('office', 'department', 'position');
 
         if ($request->keyword) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('first_name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('last_name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('middle_name', 'like', '%' . $request->keyword . '%');
-            });
+            $query->whereAny(['first_name', 'middle_name', 'last_name'], 'like', '%' . $request->keyword . '%');
         }
 
         if ($request->departmentId) {
@@ -173,7 +168,7 @@ class PdfController extends Controller
 
         $personnels = $query->get();
 
-        $pdf = Pdf::loadView('pdf.PersonnelList', [
+        $pdf = Pdf::loadView('pdf.personnel-list', [
             'personnels' => $personnels
         ]);
         return $pdf->setPaper('a4', 'landscape')->download('personnels-as-of-' . Carbon::today()->format('F d, Y') . '.pdf');

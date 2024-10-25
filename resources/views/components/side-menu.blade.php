@@ -27,11 +27,6 @@
         <x-ri-history-fill class="size-4" />
         Supplies History
     </x-nav-link>
-    <x-nav-link href="/categories" :active="request()->is('categories*')">
-        <x-bi-textarea-resize class="size-4" />
-        Categories
-    </x-nav-link>
-
 
     @can('admin-access')
     <span class="px-5 mt-5 text-white/50 text-xs">People</span>
@@ -64,6 +59,11 @@
     <x-nav-link href="/positions" :active="request()->is('positions*')">
         <x-ri-home-office-line class="size-4" />
         Positions
+    </x-nav-link>
+
+    <x-nav-link href="/categories" :active="request()->is('categories*')">
+        <x-bi-textarea-resize class="size-4" />
+        Categories
     </x-nav-link>
 
     <x-nav-link href="/organization-units" :active="request()->is('organization-units*')">

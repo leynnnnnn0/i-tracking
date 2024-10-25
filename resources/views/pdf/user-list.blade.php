@@ -1,4 +1,8 @@
 <x-layouts.pdf>
+<div class="table-header">
+        <h1>Users List</h1>
+        <p>Generated on: {{ date('F d, Y') }}</p>
+    </div>
     <table class="print-table">
         <thead>
             <tr>
