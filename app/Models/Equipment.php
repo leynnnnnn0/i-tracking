@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enum\EquipmentStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -126,5 +127,23 @@ class Equipment extends Model
     public function fund()
     {
         return $this->belongsTo(Fund::class);
+    }
+
+    public function scopeWithRelationships(Builder $query)
+    {
+        $query->with([
+            'accounting_officer',
+            'personnel',
+            'personal_protective_equipment',
+            'organization_unit',
+            'operating_unit_project',
+            'fund',
+            'missing_equipment_log' => function ($query) {
+                $query->where('is_condemned', true);
+            },
+            'borrowed_log' => function ($query) {
+                $query->whereNull('returned_date');
+            }
+        ]);
     }
 }

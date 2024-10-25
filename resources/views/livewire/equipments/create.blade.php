@@ -1,4 +1,8 @@
 <x-layouts.create title="Equipment" :cancelLocation="route('equipment.index')" wire:click="submit">
+    <x-form.input label="Equipment Name"
+        name="form.name"
+        wire:model="form.name" />
+
     <x-form.tsselect :options="$officers"
         wire:model="form.accounting_officer_id"
         label="Accounting Officer"
@@ -35,18 +39,11 @@
         name="form.property_number"
         wire:model="form.property_number" />
 
-    <x-form.tsnumber label="Quantity"
-        name="form.quantity"
-        wire:model.lazy="form.quantity" />
 
     <x-form.select label="Unit"
         :options="$units"
         name="form.unit"
         wire:model="form.unit" />
-
-    <x-form.input label="Equipment Name"
-        name="form.name"
-        wire:model="form.name" />
 
     <x-form.text-area label="Description"
         name="form.description"
@@ -58,6 +55,10 @@
         wire:model="form.date_acquired" />
 
     <x-tsdate :isRequired="false" month-year-only wire:model="form.estimated_useful_time" name="form.estimated_useful_time" label="Estimated Useful Time" />
+
+    <x-form.tsnumber label="Quantity"
+        name="form.quantity"
+        wire:model.lazy="form.quantity" />
 
     <x-form.tsnumber label="Unit Price"
         name="form.unit_price"

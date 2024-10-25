@@ -95,11 +95,7 @@ class Equipments extends Component
             'accountingOfficerId' => $this->accountingOfficerId,
         ];
 
-        $params = array_filter($params, function ($value) {
-            return $value !== null;
-        });
-
-        return redirect()->route('equipment-pdf', $params);
+        return redirect()->route('equipment-list-pdf', $params);
     }
 
     public function mount()
@@ -145,7 +141,7 @@ class Equipments extends Component
             ->with([
                 'accounting_officer',
                 'personnel',
-                'ppe',
+                'personal_protective_equipment',
                 'organization_unit',
                 'operating_unit_project',
                 'fund',
@@ -178,6 +174,15 @@ class Equipments extends Component
             });
         }
 
+        
+        if ($this->organizationUnit) {
+            $query->where('organization_unit_id', $this->organizationUnit);
+        }
+
+        if ($this->operatingUnit) {
+            $query->where('operating_unit_project_id', $this->operatingUnit);
+        }
+
         if ($this->keyword) {
             $query->whereAny(['name', 'property_number', 'id'], 'like', "%$this->keyword%");
         }
@@ -190,13 +195,7 @@ class Equipments extends Component
             $query->where('accounting_officer_id', $this->accountingOfficerId);
         }
 
-        if ($this->operatingUnit) {
-            $query->where('operating_unit_project_id', $this->operatingUnit);
-        }
 
-        if ($this->organizationUnit) {
-            $query->where('organization_unit_id', $this->organizationUnit);
-        }
 
         $equipments = $query->latest()->paginate(10);
 

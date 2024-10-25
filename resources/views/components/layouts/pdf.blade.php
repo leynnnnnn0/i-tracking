@@ -172,15 +172,10 @@
     </style>
 </head>
 <body>
-    <div class="table-header">
-        <h1>{{ $title ?? 'Report Table' }}</h1>
-        <p>Generated on: {{ date('F d, Y') }}</p>
-    </div>
-
     {{ $slot }}
 
     <div class="table-footer">
-        <p>This is an official document generated from the System</p>
+        <p>This is an official document generated from the iTrack System</p>
     </div>
 </body>
 </html>
