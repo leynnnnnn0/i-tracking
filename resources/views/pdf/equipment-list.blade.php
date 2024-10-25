@@ -2,10 +2,10 @@
     <div class="table-header">
         <h1>Equipment List</h1>
         <p>Generated on: {{ date('F d, Y') }}</p>
-        @if($accountingOfficer)
+        @if($accountingOfficer && !$responsiblePerson)
         <p>Accounting Officer: {{ $accountingOfficer }}</p>
         @endif
-        @if($responsiblePerson)
+        @if($responsiblePerson && !$accountingOfficer)
         <p>Responsible Person: {{ $responsiblePerson }}</p>
         @endif
     </div>
@@ -14,8 +14,12 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                @if(!$accountingOfficer)
                 <th>Accounting Officer</th>
+                @endif
+                @if(!$responsiblePerson)
                 <th>Responsible Person</th>
+                @endif
                 <th>Organization Unit</th>
                 <th>Operating Unit Project</th>
                 <th>Property Number</th>
@@ -36,8 +40,12 @@
             <tr>
                 <td>{{ $equipment->id }}</td>
                 <td>{{ $equipment->name ?? 'N/a' }}</td>
+                @if(!$accountingOfficer)
                 <td>{{ $equipment->accounting_officer->full_name ?? 'N/a' }}</td>
+                @endif
+                @if(!$responsiblePerson)
                 <td>{{ $equipment->personnel->full_name ?? 'N/a' }}</td>
+                @endif
                 <td>{{ $equipment->organization_unit->name  ?? 'N/a'}}</td>
                 <td>{{ $equipment->operating_unit_project->name ?? 'N/a' }}</td>
                 <td>{{ $equipment->property_number ?? 'N/a' }}</td>

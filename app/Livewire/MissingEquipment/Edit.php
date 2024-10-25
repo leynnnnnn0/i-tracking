@@ -8,11 +8,7 @@ use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\Equipment;
 use App\Models\MissingEquipment;
 use App\Traits\Updatable;
-use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
-
 class Edit extends Component
 {
     use Updatable;

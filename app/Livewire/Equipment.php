@@ -176,7 +176,7 @@ class Equipment extends Component
             });
         }
 
-        
+
         if ($this->organizationUnit) {
             $query->where('organization_unit_id', $this->organizationUnit);
         }
@@ -199,7 +199,7 @@ class Equipment extends Component
 
 
 
-        $equipments = $query->latest()->paginate(10);
+        $equipments = $query->orderBy('quantity')->paginate(10);
 
         return view('livewire.equipment', [
             'equipments' => $equipments
