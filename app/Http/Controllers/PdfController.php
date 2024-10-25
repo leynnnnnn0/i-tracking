@@ -21,6 +21,15 @@ use Illuminate\Http\Request;
 class PdfController extends Controller
 {
 
+    public function missingEquipmentDetailsPdf($id)
+    {
+        $pdf = Pdf::loadView('pdf.missing-equipment', [
+            'equipment' => MissingEquipment::with('equipment', 'equipment.responsible_person', 'equipment.accounting_officer', 'equipment.organization_unit', 'equipment.fund', 'equipment.personal_protective_equipment', 'equipment.operating_unit_project')->findOrFail($id)
+        ]);
+
+        return $pdf->setPaper('a4', 'download')->download('missing-equiment-' . Carbon::today()->format('Y-m-d') .'.pdf');
+    }
+
     public function responsiblePersonsListPdf(Request $request)
     {
         $query = ResponsiblePerson::query()->with('accounting_officer');
@@ -283,8 +292,8 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf.MissingEquipmentList', [
-            'supplies' => SupplyHistory::with('supply')->get()
+        return view('pdf.missing-equipment', [
+            'equipment' => MissingEquipment::first()
         ]);
     }
 }

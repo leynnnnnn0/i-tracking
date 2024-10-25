@@ -108,7 +108,7 @@ class Equipment extends Model
     }
 
 
-    public function ppe()
+    public function personal_protective_equipment()
     {
         return $this->belongsTo(PersonalProtectiveEquipment::class);
     }

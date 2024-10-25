@@ -5,8 +5,7 @@
         wire:model.live="form.equipment_id"
         label="Equipment"
         searchable
-        placeholder="Search equipment..."
-        hint="Type at least 2 characters to search" />
+        placeholder="Search equipment..." />
 
     <x-form.select label="Status" :options="$statuses" name="form.status" wire:model.live="form.status" />
     <x-form.input label="Reported By" name="form.reported_by" wire:model="form.reported_by" />

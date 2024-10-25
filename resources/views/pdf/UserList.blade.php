@@ -1,6 +1,4 @@
 <x-layouts.pdf>
-    <h4 class="center">List of Users</h4>
-    <h5 class="center">As of {{ Carbon\Carbon::today()->format('F d, Y') }}</h5>
     <table class="print-table">
         <thead>
             <tr>

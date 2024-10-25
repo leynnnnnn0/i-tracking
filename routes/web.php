@@ -76,6 +76,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/categories-pdf', 'categoriesListPdf')->name('categories-pdf');
         Route::get('/accounting-officers-pdf', 'accountingOfficersListPdf')->name('accounting-officers-pdf');
         Route::get('/responsible-persons-pdf', 'responsiblePersonsListPdf')->name('responsible-persons-pdf');
+
+        Route::get('/missing-equipment-details-pdf/{id}', 'missingEquipmentDetailsPdf')->name('missing-equipment-details-pdf');
     });
 
     Route::get('test', [PdfController::class, 'index']);
