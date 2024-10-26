@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait HasSelectOptions
 {
-    public function scopeToSelectOptions($query, $value = 'id', $label = 'full_name', $columns = [])
+    public function scopeToSelectOptions($query, $label = 'name', $value = 'id',  $columns = [])
     {
         $columns = $columns ?: [$value, $label];
 

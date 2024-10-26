@@ -6,11 +6,8 @@ use App\Livewire\Forms\ActivityLogForm;
 use App\Models\AccountingOfficer as ModelsAccountingOfficer;
 use App\Models\Office;
 use App\Traits\Deletable;
-use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Masmerise\Toaster\Toaster;
 use TallStackUi\Traits\Interactions;
 
 class AccountingOfficer extends Component
@@ -50,14 +47,7 @@ class AccountingOfficer extends Component
 
     public function mount()
     {
-        $this->offices = Office::select('name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ];
-            });;
+        $this->offices = Office::toSelectOptions();
     }
     public function render()
     {
