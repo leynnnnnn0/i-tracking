@@ -2,7 +2,6 @@
 
 namespace App\Livewire\ActivityLog;
 
-use App\Models\ActivityLog;
 use Livewire\Component;
 use OwenIt\Auditing\Models\Audit;
 use Illuminate\Support\Str;
