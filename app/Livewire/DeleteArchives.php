@@ -61,8 +61,6 @@ class DeleteArchives extends Component
                 $modelClass = $this->modelClasses[$type];
                 $model = $modelClass::withTrashed()->findOrFail($id);
                 $model->forceDelete();
-                $this->activityLogForm->setActivityLog($model, null, 'Deleted Data Permanently', 'Delete');
-                $this->activityLogForm->store();
             });
             Toaster::success('Deleted Successfully');
             $this->dispatch('Data Deleted');
@@ -78,8 +76,6 @@ class DeleteArchives extends Component
                 $modelClass = $this->modelClasses[$type];
                 $model = $modelClass::withTrashed()->findOrFail($id);
                 $model->restore();
-                $this->activityLogForm->setActivityLog($model, null, 'Restored Data', 'Restore');
-                $this->activityLogForm->store();
             });
             Toaster::success('Restored Successfully');
             $this->dispatch('Data Restored');

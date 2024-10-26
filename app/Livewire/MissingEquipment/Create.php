@@ -6,7 +6,6 @@ use App\Enum\MissingStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\Equipment;
-use App\Models\MissingEquipment;
 use App\Traits\Submittable;
 use Carbon\Carbon;
 
@@ -60,11 +59,5 @@ class Create extends Component
             $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
         }
     }
-
-    public function updatedFormQuantity()
-    {
-        $this->test();
-    }
-
 
 }

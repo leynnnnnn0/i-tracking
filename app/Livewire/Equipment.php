@@ -20,10 +20,11 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
+use TallStackUi\Traits\Interactions;
 
 class Equipment extends Component
 {
-    use WithPagination, Deletable, HasSelectOptions;
+    use WithPagination, Deletable, HasSelectOptions, Interactions;
     public ActivityLogForm $activityLogForm;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $showDeleteModal = false;
@@ -45,9 +46,30 @@ class Equipment extends Component
 
     public $showPdfModal = false;
 
+    protected function beforeTransaction($id): bool
+    {
+        $result = ModelsEquipment::with([
+            'missing_equipment_log' => function ($query) {
+                $query->where('is_condemned', false);
+            },
+            'borrowed_log' => function ($query) {
+                $query->whereNull('returned_date');
+            }
+        ])->where('id', $id)->first();
+
+        $result = $result->missing_equipment_log->count() > 0 || $result->borrowed_log->count() > 0;
+
+        if ($result) {
+            $this->dialog()->error('Error', "Unable to delete this equipment because it has associated records in the missing equipment or borrowed logs.")->send();
+            return true;
+        }
+
+        return false;
+    }
+
     protected function getModel(): string
     {
-        return Equipment::class;
+        return ModelsEquipment::class;
     }
 
     public function updatedKeyword()
@@ -240,11 +262,7 @@ class Equipment extends Component
     {
         $this->borrowEquipmentForm->validate();
         try {
-            DB::transaction(function () {
-                $data = $this->borrowEquipmentForm->store();
-                $this->activityLogForm->setActivityLog(null, $data, "Created a borrow log", "Create");
-                $this->activityLogForm->store();
-            });
+            $this->borrowEquipmentForm->store();
             Toaster::success('Successfully Created!');
             $this->dispatch('borrowLogCreated');
         } catch (Exception $e) {

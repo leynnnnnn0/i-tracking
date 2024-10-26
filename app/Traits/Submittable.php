@@ -21,8 +21,6 @@ trait Submittable
         try {
             DB::transaction(function () {
                 $model = $this->performStoreOperation();
-                $this->activityLogForm->setActivityLog(null, $model, $this->getActivityLogMessage(), 'Create');
-                $this->activityLogForm->store();
                 $this->afterTransaction($model);
             });
             Toaster::success($this->getSuccessMessage());

@@ -15,16 +15,22 @@ trait Deletable
     public function delete($id)
     {
         try {
-            DB::transaction(function () use ($id) {
-                $model = $this->getModel()::findOrFail($id);
-                $model->delete();
-                $this->activityLogForm->setActivityLog($model, null, 'Delete ' . Str::after($this->getModel(), 'Models\\'), 'Delete');
-                $this->activityLogForm->store();
-            });
+            if ($this->beforeTransaction($id)) {
+                return;
+            }
+            $model = $this->getModel()::findOrFail($id);
+            $model->delete();
             Toaster::success('Successfully Deleted!');
             $this->dispatch('Data Deleted');
         } catch (Exception $e) {
             Toaster::error($e->getMessage());
+        } finally {
+            $this->dispatch('Data Deleted');
         }
+    }
+
+    protected function beforeTransaction($id): bool
+    {
+        return false;
     }
 }
