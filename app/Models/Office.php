@@ -11,7 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Office extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\OfficeFactory> */
-    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable, HasSelectOptions;
+    use HasFactory, SoftDeletes, HasSelectOptions, \OwenIt\Auditing\Auditable, HasSelectOptions;
     protected $fillable = [
         'id',
         'name'

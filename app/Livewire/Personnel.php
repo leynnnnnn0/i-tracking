@@ -63,30 +63,9 @@ class Personnel extends Component
 
     public function mount()
     {
-        $this->departments = Department::select('name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ];
-            });;
-        $this->positions = Position::select('name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ];
-            });;
-        $this->offices = Office::select('name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ];
-            });;
+        $this->departments = Department::toSelectOptions();
+        $this->positions = Position::toSelectOptions();
+        $this->offices = Office::toSelectOptions();
     }
 
     public function downloadPdf()

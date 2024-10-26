@@ -124,38 +124,17 @@ class Equipment extends Component
 
     public function mount()
     {
-        $this->operatingUnits = OperatingUnitProject::select('name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ];
-            });;
-        $this->organizationUnits = OrganizationUnit::select('name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ];
-            });;
-        $this->responsiblePersons = Personnel::select('first_name', 'last_name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->full_name,
-                ];
-            });
-        $this->accountingOfficers = AccountingOfficer::select('first_name', 'last_name', 'id')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->full_name,
-                ];
-            });
+        $this->operatingUnits = OperatingUnitProject::toSelectOptions();
+        $this->organizationUnits = OrganizationUnit::toSelectOptions();
+        $this->responsiblePersons = Personnel::toSelectOptions(
+            label: 'full_name',
+            columns: ['first_name', 'last_name', 'id']
+        );
+
+        $this->accountingOfficers = AccountingOfficer::toSelectOptions(
+            label: 'full_name',
+            columns: ['first_name', 'last_name', 'id']
+        );
         $this->showDeleteModal = false;
     }
 

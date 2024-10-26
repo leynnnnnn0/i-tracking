@@ -34,24 +34,9 @@ class Create extends Component
     public function mount()
     {
         $this->genders = Gender::values();
-        $this->departments = Department::select('name', 'id')->get()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        })->toArray();
-        $this->positions = Position::select('name', 'id')->get()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        })->toArray();
-        $this->offices = Office::select('name', 'id')->get()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        })->toArray();
+        $this->departments = Department::toSelectOptions();
+        $this->positions = Position::toSelectOptions();
+        $this->offices = Office::toSelectOptions();
     }
 
     public function render()

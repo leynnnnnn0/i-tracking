@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enum\EquipmentStatus;
+use App\Traits\HasSelectOptions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Equipment extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\EquipmentFactory> */
-    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, SoftDeletes, HasSelectOptions, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'personnel_id',

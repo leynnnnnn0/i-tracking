@@ -42,12 +42,7 @@ class Supply extends Component
 
     public function mount()
     {
-        $this->categories = Category::all()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        });
+        $this->categories = Category::toSelectOptions();
     }
 
     public function render()

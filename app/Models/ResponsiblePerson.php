@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasSelectOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class ResponsiblePerson extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\ResponsiblePersonFactory> */
-    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, SoftDeletes, HasSelectOptions, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'accounting_officer_id',

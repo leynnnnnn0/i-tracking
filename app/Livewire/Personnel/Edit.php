@@ -3,17 +3,14 @@
 namespace App\Livewire\Personnel;
 
 use App\Enum\Gender;
-use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\PersonnelForm;
 use App\Models\Department;
 use App\Models\Office;
 use App\Models\Personnel;
 use App\Models\Position;
 use App\Traits\Updatable;
-use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
+
 
 class Edit extends Component
 {
@@ -38,24 +35,9 @@ class Edit extends Component
     public function mount($id)
     {
         $this->genders = Gender::values();
-        $this->positions = Position::select('name', 'id')->get()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        })->toArray();
-        $this->offices = Office::select('name', 'id')->get()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        })->toArray();
-        $this->departments = Department::select('name', 'id')->get()->map(function ($item) {
-            return [
-                'value' => $item->id,
-                'label' => $item->name
-            ];
-        })->toArray();
+        $this->departments = Department::toSelectOptions();
+        $this->positions = Position::toSelectOptions();
+        $this->offices = Office::toSelectOptions();
         $this->personnel = Personnel::findOrFail($id);
         $this->form->setPersonnel($this->personnel);
     }

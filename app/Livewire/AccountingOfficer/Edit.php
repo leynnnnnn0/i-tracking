@@ -3,14 +3,11 @@
 namespace App\Livewire\AccountingOfficer;
 
 use App\Livewire\Forms\AccountingOfficerForm;
-use App\Livewire\Forms\ActivityLogForm;
 use App\Models\AccountingOfficer;
 use App\Models\Office;
 use App\Traits\Updatable;
-use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
+
 
 class Edit extends Component
 {
@@ -31,14 +28,7 @@ class Edit extends Component
 
     public function mount($id)
     {
-        $this->offices = Office::select('id', 'name')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name
-                ];
-            })->toArray();
+        $this->offices = Office::toSelectOptions();
         $this->officer = AccountingOfficer::findOrFail($id);
         $this->form->setForm($this->officer);
     }

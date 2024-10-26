@@ -15,7 +15,6 @@ class Create extends Component
 {
     use Submittable;
     public AccountingOfficerForm $form;
-    public ActivityLogForm $activityLogForm;
     public $offices;
 
     protected function performStoreOperation()
@@ -30,14 +29,7 @@ class Create extends Component
 
     public function mount()
     {
-        $this->offices = Office::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name
-                ];
-            })
-            ->toArray();
+        $this->offices = Office::toSelectOptions();
     }
     public function render()
     {

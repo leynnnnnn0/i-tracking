@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Equipments;
 
-use App\Enum\EquipmentStatus;
 use App\Enum\Unit;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\EquipmentForm;
@@ -42,56 +41,20 @@ class Create extends Component
 
     public function mount()
     {
-        $this->officers = AccountingOfficer::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->full_name
-                ];
-            })
-            ->toArray();
-        $this->persons = Personnel::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->full_name
-                ];
-            })
-            ->toArray();
         $this->units = Unit::values();
-        $this->statuses = EquipmentStatus::values();
-        $this->organizations = OrganizationUnit::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name
-                ];
-            })
-            ->toArray();;
-        $this->operating_units = OperatingUnitProject::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name
-                ];
-            })
-            ->toArray();
-        $this->funds = Fund::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name
-                ];
-            })
-            ->toArray();
-        $this->personalProtectiveEquipment = PersonalProtectiveEquipment::all()
-            ->map(function ($item) {
-                return [
-                    'value' => $item->id,
-                    'label' => $item->name
-                ];
-            })
-            ->toArray();
+
+        $this->officers = AccountingOfficer::toSelectOptions(
+            label: 'full_name',
+            columns: ['first_name', 'last_name', 'id']
+        );
+        $this->persons = Personnel::toSelectOptions(
+            label: 'full_name',
+            columns: ['first_name', 'last_name', 'id']
+        );
+        $this->organizations = OrganizationUnit::toSelectOptions();
+        $this->operating_units = OperatingUnitProject::toSelectOptions();
+        $this->funds = Fund::toSelectOptions();
+        $this->personalProtectiveEquipment = PersonalProtectiveEquipment::toSelectOptions();
     }
 
 
