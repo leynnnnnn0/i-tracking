@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\NotificationForm;
 use App\Models\BorrowedEquipment;
 use App\Models\Notification;
+use App\Models\Personnel;
 use App\Models\Supply;
 use Exception;
 use Livewire\Attributes\On;
@@ -33,11 +34,12 @@ class Navigation extends Component
                 ->get();
 
             // Personnel End Date
-            $personnel = BorrowedEquipment::where('end_date', '<=', now()->addWeek())
+            $personnel = Personnel::whereBetween('end_date', [now()->format('Y-m-d'), now()->addWeek()])
                 ->get();
 
+
             try {
-                DB::transaction(function () use ($supplies, $borrowedEquipment) {
+                DB::transaction(function () use ($supplies, $borrowedEquipment, $personnel) {
                     $supplies->each(function ($supply) {
                         $this->form->user_id = auth()->user()->id;
                         $this->form->title = $supply->notificationTitle;
@@ -49,6 +51,13 @@ class Navigation extends Component
                         $this->form->user_id = auth()->user()->id;
                         $this->form->title = $equipment->notificationTitle;
                         $this->form->message = $equipment->notificationMessage;
+                        $this->form->store();
+                    });
+
+                    $personnel->each(function ($person) {
+                        $this->form->user_id = auth()->user()->id;
+                        $this->form->title = $person->notificationTitle;
+                        $this->form->message = $person->notificationMessage;
                         $this->form->store();
                     });
                 });

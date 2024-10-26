@@ -69,4 +69,14 @@ class Personnel extends Model implements Auditable
     {
         return $this->belongsTo(Position::class);
     }
+
+    public function getNotificationTitleAttribute()
+    {
+        return  "Personnel: {$this->full_name} (Id: {$this->id}).";
+    }
+
+    public function getNotificationMessageAttribute()
+    {
+        return "The end date will be {$this->end_date->diffForHumans()}.";
+    }
 }
