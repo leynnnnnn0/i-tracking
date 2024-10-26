@@ -6,7 +6,7 @@
     <x-form.tsselect :options="$officers"
         wire:model="form.accounting_officer_id"
         label="Accounting Officer"
-        name="form.accounting_officer_id" />
+        name="form.accounting_officer_id"/>
 
     <x-form.tsselect :options="$persons"
         wire:model="form.personnel_id"

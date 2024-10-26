@@ -3,12 +3,15 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\NotificationForm;
+use App\Models\BorrowedEquipment;
 use App\Models\Notification;
 use App\Models\Supply;
 use Exception;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class Navigation extends Component
 {
@@ -18,31 +21,41 @@ class Navigation extends Component
     #[On('notification_marked')]
     public function mount()
     {
-        $supplies = Supply::where('total', '<', 10)
-            ->orWhere('expiry_date', '<=', now()->addMonth())
-            ->get();
+        if (!session()->has('notificationSet')) {
+            // Supplies
+            DB::table('notifications')->delete();
+            $supplies = Supply::where('total', '<', 10)
+                ->orWhere('expiry_date', '<=', now()->addWeek())
+                ->get();
 
+            // Borrow Return
+            $borrowedEquipment = BorrowedEquipment::whereNull('returned_date')->where('end_date', '<=', now()->addDay())
+                ->get();
 
-        try {
-            $supplies->each(function ($supply) {
-                $this->form->user_id = auth()->user()->id;
-                $this->form->title = $supply->notificationTitle;
-                $this->form->message = $supply->notificationMessage;
+            // Personnel End Date
+            $personnel = BorrowedEquipment::where('end_date', '<=', now()->addWeek())
+                ->get();
 
+            try {
+                DB::transaction(function () use ($supplies, $borrowedEquipment) {
+                    $supplies->each(function ($supply) {
+                        $this->form->user_id = auth()->user()->id;
+                        $this->form->title = $supply->notificationTitle;
+                        $this->form->message = $supply->notificationMessage;
+                        $this->form->store();
+                    });
 
-                // Notification::firstOrCreate($this->form->all());
-
-                $notification = Notification::where([
-                    'user_id' => $this->form->user_id,
-                    'title' => $this->form->title,
-                    'message' => $this->form->message,
-                ])->first();
-
-                if (!$notification)
-                    $this->form->store();
-            });
-        } catch (Exception $e) {
-            dd($e);
+                    $borrowedEquipment->each(function ($equipment) {
+                        $this->form->user_id = auth()->user()->id;
+                        $this->form->title = $equipment->notificationTitle;
+                        $this->form->message = $equipment->notificationMessage;
+                        $this->form->store();
+                    });
+                });
+                Session::put('notificationSet', true);
+            } catch (Exception $e) {
+                dd($e);
+            }
         }
 
 

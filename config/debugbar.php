@@ -102,7 +102,7 @@ return [
      | So if you want syntax highlighting, set it to true.
      | jQuery is set to not conflict with existing jQuery scripts.
      |
-     */
+w     */
 
     'include_vendors' => true,
 

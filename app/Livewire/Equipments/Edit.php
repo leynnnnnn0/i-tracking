@@ -79,9 +79,7 @@ class Edit extends Component
         $this->previous_responsible_person = $this->equipment->personnel->full_name;
         try {
             DB::transaction(function () {
-                $equipment = $this->form->update($this->equipment);
-                $this->activityLogForm->setActivityLog($this->equipment, $equipment, 'Update Equipment', 'Update');
-                $this->activityLogForm->store();
+                $this->form->update($this->equipment);
                 $this->equipment = $this->equipment->fresh();
                 $this->dispatch('Equipment Updated');
             });

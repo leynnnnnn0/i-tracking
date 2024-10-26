@@ -53,4 +53,20 @@ class BorrowedEquipment extends Model implements Auditable
     {
         return "$this->borrower_first_name $this->borrower_last_name";
     }
+
+    public function getNotificationTitleAttribute()
+    {
+        return  "Return Reminder: {$this->equipment->name} (PN: {$this->equipment->property_number}).";
+    }
+
+    public function getNotificationMessageAttribute()
+    {
+        if ($this->end_date < now()->format('Y-m-d')) {
+            return "This equipment's return date has already passed.";
+        } else if ($this->end_date->format('Y-m-d') === today()->format('Y-m-d')) {
+            return "This equipment's return date is today.";
+        } else {
+            return "The equipment is scheduled for return in {$this->end_date->diffForHumans()}.";
+        }
+    }
 }

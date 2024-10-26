@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Notification extends Model implements Auditable
+class Notification extends Model
 {
     /** @use HasFactory<\Database\Factories\NotificationFactory> */
-    use HasFactory, \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',

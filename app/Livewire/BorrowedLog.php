@@ -16,7 +16,6 @@ use Masmerise\Toaster\Toaster;
 class BorrowedLog extends Component
 {
     use WithPagination, Deletable;
-    public ActivityLogForm $activityLogForm;
     public BorrowEquipmentForm $borrowEquipmentForm;
     public $keyword;
     public $query = 'All';
@@ -85,8 +84,6 @@ class BorrowedLog extends Component
                 $this->borrowEquipmentForm->is_returned = true;
                 $this->borrowEquipmentForm->returned_date = Carbon::today()->format('Y-m-d');
                 $this->borrowEquipmentForm->update($borrowedEquipment);
-                $this->activityLogForm->setActivityLog($borrowedEquipment, $borrowedEquipment->fresh(), 'Mark Borrowed Item as Returned', 'Update');
-                $this->activityLogForm->store();
             });
             $this->dispatch('Mark As Returned');
             Toaster::success('Mark as Returned Successfully');
