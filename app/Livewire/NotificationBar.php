@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Notification;
-use App\Models\Supply;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -13,7 +12,7 @@ class NotificationBar extends Component
     #[On('notification_marked')]
     public function mount()
     {
-        // $this->notifications = Notification::where('is_read', false)->get();
+        $this->notifications = Notification::where('is_read', false)->get();
     }
     public function render()
     {

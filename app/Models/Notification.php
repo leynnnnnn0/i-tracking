@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Notification extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\NotificationFactory> */
-    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'user_id',

@@ -8,7 +8,7 @@
         <x-title>Notifications</x-title>
         @if($notifications)
         @foreach ($notifications as $notification)
-        <x-notification-container :identification="$notification->title" :message="$notification->message" wire:click="markAsRead({{ $notification->id }})">
+        <x-notification-container :identification="$notification->title" :message="$notification->message" wire:click="markAsRead({{ $notification->id }})" target="markAsRead({{$notification->id}})">
         </x-notification-container>
         @endforeach
         @endif
