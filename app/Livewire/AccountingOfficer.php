@@ -11,14 +11,27 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
+use TallStackUi\Traits\Interactions;
 
 class AccountingOfficer extends Component
 {
-    use WithPagination, Deletable;
+    use WithPagination, Deletable, Interactions;
     public $keyword;
     public $offices;
     public $office;
     public ActivityLogForm $activityLogForm;
+
+    protected function beforeTransaction($id): bool
+    {
+        $result = ModelsAccountingOfficer::with('equipment')->findOrFail($id);
+        $result = $result->equipment->count() > 0;
+        if ($result) {
+            $this->dialog()->error('Error', 'This accounting officer cannot be deleted because they have assigned equipment.')->send();
+            return true;
+        }
+        return false;
+    }
+
 
     public function updatedKeyword()
     {

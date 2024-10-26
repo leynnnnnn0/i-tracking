@@ -11,10 +11,11 @@ use App\Models\Position;
 use App\Traits\Deletable;
 use Livewire\Component;
 use Livewire\WithPagination;
+use TallStackUi\Traits\Interactions;
 
 class Personnel extends Component
 {
-    use WithPagination, Deletable;
+    use WithPagination, Deletable, Interactions;
     public ActivityLogForm $activityLogForm;
     public $keyword;
     public $departments;
@@ -23,6 +24,17 @@ class Personnel extends Component
     public $departmentId;
     public $positionId;
     public $officeId;
+
+    protected function beforeTransaction($id): bool
+    {
+        $result = ModelsPersonnel::with('equipments')->findOrFail($id);
+        $result = $result->equipments->count() > 0;
+        if ($result) {
+            $this->dialog()->error('Error', 'This staff member cannot be deleted because they have assigned equipment.')->send();
+            return true;
+        }
+        return false;
+    }
 
     public function updatedKeyword()
     {

@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class SupplyHistory extends Model implements Auditable
 {
     /** @use HasFactory<\Database\Factories\SupplyHistoryFactory> */
-    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'supply_id',
