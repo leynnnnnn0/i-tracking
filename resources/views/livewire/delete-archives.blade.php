@@ -24,7 +24,7 @@
         <x-plain-heading>Delete Archives</x-plain-heading>
         <x-table>
             <x-tr>
-                <x-th>Id</x-th>
+                <x-th>Model Id</x-th>
                 <x-th>Type</x-th>
                 <x-th>Name</x-th>
                 <x-th>Deleted At</x-th>
