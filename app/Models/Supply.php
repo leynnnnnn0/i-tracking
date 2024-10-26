@@ -6,14 +6,13 @@ use App\Traits\Deletable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Supply extends Model
+class Supply extends Model implements Auditable
 {
-    use SoftDeletes;
-    /** @use HasFactory<\Database\Factories\SupplyFactory> */
-    use HasFactory;
 
-    use SoftDeletes;
+    /** @use HasFactory<\Database\Factories\SupplyFactory> */
+    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'description',

@@ -4,13 +4,14 @@ namespace App\Livewire\ActivityLog;
 
 use App\Models\ActivityLog;
 use Livewire\Component;
+use OwenIt\Auditing\Models\Audit;
 
 class View extends Component
 {
-    public $log;
+    public $audit;
     public function mount($id)
     {
-        $this->log = ActivityLog::with('user')->findOrFail($id);
+        $this->audit = Audit::with('user')->findOrFail($id);
     }
     public function render()
     {
