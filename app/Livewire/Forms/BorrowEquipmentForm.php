@@ -9,6 +9,7 @@ use Livewire\Form;
 
 class BorrowEquipmentForm extends Form
 {
+    public $total_quantity_returned_copy;
     public $currentQuantity;
     public $equipment_id;
     public $borrower_first_name;
@@ -83,6 +84,7 @@ class BorrowEquipmentForm extends Form
         $this->total_quantity_returned = $borrowedEquipment->total_quantity_returned;
         $this->total_quantity_lost = $borrowedEquipment->total_quantity_lost;
         $this->total_quantity_returned = $borrowedEquipment->total_quantity_returned;
+        $this->total_quantity_returned_copy = $borrowedEquipment->total_quantity_returned;
     }
 
 
@@ -98,13 +100,28 @@ class BorrowEquipmentForm extends Form
         $equipment = $borrowedEquipment->equipment;
         if ($this->status === 'partially_returned') {
             $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->quantity_returned;
-            // dd($totalBorrowedQuantity);
+
             $totalAvailableQuantity = $equipment->quantity_available + $this->quantity_returned;
             $equipment->update([
                 'quantity_borrowed' => $totalBorrowedQuantity,
                 'quantity_available' => $totalAvailableQuantity
             ]);
-            $equipment->save();
+        } else if ($this->status === 'returned') {
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - ($this->quantity - $this->total_quantity_returned_copy);
+   
+            $totalAvailableQuantity = $equipment->quantity_available + ($this->quantity - $this->total_quantity_returned_copy);
+            
+
+            $status = EquipmentStatus::ACTIVE->value;
+            if($totalBorrowedQuantity > 0)
+                $status = EquipmentStatus::PARTIALLY_BORROWED->value;
+
+            $equipment->update([
+                'quantity_borrowed' => $totalBorrowedQuantity,
+                'quantity_available' => $totalAvailableQuantity,
+                'status' => $status
+            ]);
+ 
         } else {
             $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
             $equipmentAvailableQuantity = $equipment->quantity - $totalBorrowedQuantity;

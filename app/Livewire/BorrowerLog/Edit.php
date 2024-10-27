@@ -26,8 +26,8 @@ class Edit extends Component
         $form = $this->form;
         if ($form->status === 'partially_returned') {
             $form->total_quantity_returned += $form->quantity_returned;
-        }
-        if ($form->status === 'returned') {
+        } else if ($form->status === 'returned') {
+            $form->total_quantity_returned = $form->quantity;
             $form->returned_date = date('Y-m-d');
         }
     }
