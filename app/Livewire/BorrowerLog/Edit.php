@@ -43,6 +43,11 @@ class Edit extends Component
             $this->validateOnly('reportedBy');
             $form->quantity_missing = $form->quantity;
             $form->total_quantity_missing = $form->quantity;
+        } else if ($form->status === BorrowStatus::RETURNED_WITH_MISSING->value) {
+            $this->validateOnly('reportedBy');
+            $form->quantity_returned = $form->quantity - $form->quantity_missing;
+            $form->total_quantity_returned += $form->quantity_returned;
+            $form->total_quantity_missing += $form->quantity_missing;
         }
     }
 

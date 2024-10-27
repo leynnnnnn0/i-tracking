@@ -140,30 +140,27 @@ class BorrowEquipmentForm extends Form
             $status = EquipmentStatus::ACTIVE->value;
             if ($totalBorrowedQuantity > 0)
                 $status = EquipmentStatus::PARTIALLY_BORROWED->value;
-                $equipment->update([
-                    'quantity_borrowed' => $totalBorrowedQuantity,
-                    'quantity_missing' => $totalMissingQuantity,
-                    'status' => $status
-                ]);
-            
+            $equipment->update([
+                'quantity_borrowed' => $totalBorrowedQuantity,
+                'quantity_missing' => $totalMissingQuantity,
+                'status' => $status
+            ]);
+        } else if ($this->status === BorrowStatus::RETURNED_WITH_MISSING->value) {
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - ($this->quantity_missing + $this->quantity_returned);
+            $totalAvailableQuantity = $equipment->quantity_available + $this->quantity_returned;
+            $totalMissingQuantity = $equipment->quantity_missing + $this->quantity_missing;
 
-        } else {
-            $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
-            $equipmentAvailableQuantity = $equipment->quantity - $totalBorrowedQuantity;
-            if ($totalBorrowedQuantity === $equipment->quantity) {
-                $equipment->update([
-                    'quantity_borrowed' => $totalBorrowedQuantity,
-                    'quantity_available' => $equipmentAvailableQuantity,
-                    'status' => EquipmentStatus::FULLY_BORROWED->value
-                ]);
-            } else {
-                $equipment->update([
-                    'quantity_borrowed' => $totalBorrowedQuantity,
-                    'quantity_available' => $equipmentAvailableQuantity,
-                    'status' => EquipmentStatus::PARTIALLY_BORROWED->value
-                ]);
-            }
-        }
+
+            $status = EquipmentStatus::ACTIVE->value;
+            if ($totalBorrowedQuantity > 0)
+                $status = EquipmentStatus::PARTIALLY_BORROWED->value;
+            $equipment->update([
+                'quantity_borrowed' => $totalBorrowedQuantity,
+                'quantity_available' => $totalAvailableQuantity,
+                'quantity_missing' => $totalMissingQuantity,
+                'status' => $status
+            ]);
+        } 
         // Checking if the borrowed equipment log status is already returned
         // if ($borrowedEquipment->returned_date) {
         //     $quantityBorrowed = $equipment->quantity_borrowed - $borrowedEquipment->quantity;
