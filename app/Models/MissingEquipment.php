@@ -14,6 +14,7 @@ class MissingEquipment extends Model implements Auditable
     use HasFactory, SoftDeletes, HasSelectOptions, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
+        'borrowed_equipment_id',
         'equipment_id',
         'quantity',
         'status',

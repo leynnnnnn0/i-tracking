@@ -82,28 +82,32 @@ class BorrowEquipmentForm extends Form
     public function updateEquipmentStatus(BorrowedEquipment $borrowedEquipment)
     {
         $equipment = $borrowedEquipment->equipment;
+        // Checking if the borrowed equipment log status is already returned
         if ($borrowedEquipment->returned_date) {
             $quantityBorrowed = $equipment->quantity_borrowed - $borrowedEquipment->quantity;
+            $equipmentAvailableQuantity = $equipment->quantity_available + $borrowedEquipment->quantity;
             $status = EquipmentStatus::ACTIVE->value;
             if ($quantityBorrowed > 0) {
                 $status = EquipmentStatus::PARTIALLY_BORROWED->value;
             }
             $equipment->update([
                 'quantity_borrowed' => $quantityBorrowed,
+                'quantity_available' => $equipmentAvailableQuantity,
                 'status' => $status
             ]);
         } else {
-            // add borrowed equipment quantity to equipment borrowed quantity
             $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
-            // if total total quantity borrowed is equals to equipment quantity mark equipment as fully borrowed else partially borrowed
+            $equipmentAvailableQuantity = $equipment->quantity - $totalBorrowedQuantity;
             if ($totalBorrowedQuantity === $equipment->quantity) {
                 $equipment->update([
                     'quantity_borrowed' => $totalBorrowedQuantity,
+                    'quantity_available' => $equipmentAvailableQuantity,
                     'status' => EquipmentStatus::FULLY_BORROWED->value
                 ]);
             } else {
                 $equipment->update([
                     'quantity_borrowed' => $totalBorrowedQuantity,
+                    'quantity_available' => $equipmentAvailableQuantity,
                     'status' => EquipmentStatus::PARTIALLY_BORROWED->value
                 ]);
             }

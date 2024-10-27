@@ -16,7 +16,15 @@
     <x-column-info name="Property Number"
         :value="$equipment->property_number" />
     <x-column-info name="Quantity"
-        :value="$equipment->quantity($query)" />
+        :value="$equipment->quantity" />
+    <x-column-info name="Quantity Available"
+        :value="$equipment->quantity_available" />
+        <x-column-info name="Quantity Borrowed"
+        :value="$equipment->quantity_borrowed" />
+    <x-column-info name="Quantity Missing"
+        :value="$equipment->quantity_missing" />
+    <x-column-info name="Quantity Codemned"
+        :value="$equipment->quantity_condemned" />
     <x-column-info name="Unit"
         :value="$equipment->unit" />
     <x-column-info name="Date Acquired"

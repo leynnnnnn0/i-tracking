@@ -12,12 +12,11 @@ trait Submittable
 {
     abstract protected function performStoreOperation();
     abstract protected function getModelName(): string;
-    
+
 
     public function submit()
     {
         $this->form->validate();
-        $this->beforeTransaction();
         try {
             DB::transaction(function () {
                 $model = $this->performStoreOperation();
@@ -40,16 +39,10 @@ trait Submittable
         return Str::kebab($modelName) . '.index';
     }
 
-    protected function getActivityLogMessage(): string
-    {
-        return 'Create ' . ucfirst($this->getModelName());
-    }
-
     protected function getSuccessMessage(): string
     {
         return 'New ' . ucfirst($this->getModelName()) . ' Created!';
     }
 
-    protected function afterTransaction($model){}
-    protected function beforeTransaction(){}
+    protected function afterTransaction($model) {}
 }

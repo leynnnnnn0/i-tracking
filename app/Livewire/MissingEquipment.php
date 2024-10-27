@@ -78,22 +78,20 @@ class MissingEquipment extends Component
     {
         try {
             DB::transaction(function () use ($reportId) {
-                $before = ModelsMissingEquipment::findOrFail($reportId);
-                if ($before->status === 'Reported to SPMO') {
-                    $before->update([
+                $model = ModelsMissingEquipment::findOrFail($reportId);
+                $equipment = $model->equipment;
+                if ($model->status === 'Reported to SPMO') {
+                    $model->update([
                         'is_condemned' => true,
                     ]);
-                    $this->form->setMissingEquipmentForm($before);
-                    $this->form->condemned($before->equipment_id);
+                    $this->form->setMissingEquipmentForm($model);
+                    $this->form->condemned($model->equipment_id);
                 }
-                if ($before->status === 'Reported') {
-                    $before->update([
+                if ($model->status === 'Reported') {
+                    $model->update([
                         'status' => 'Reported to SPMO',
                     ]);
                 }
-                $after = $before->fresh();
-                $this->activityLogForm->setActivityLog($before, $after, 'Tag Missing Equipment as ' . $after->status, 'Update');
-                $this->activityLogForm->store();
             });
             Toaster::success('Updated Successfully');
         } catch (InsufficientQuantityException $ie) {

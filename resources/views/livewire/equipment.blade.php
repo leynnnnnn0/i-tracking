@@ -90,7 +90,9 @@
                         </x-link>
                         <x-bi-trash @click="openDeleteModal({{ $equipment->id }})" class="cursor-pointer size-5 text-red-500" />
                         @if($equipment->quantity > $equipment->quantity_borrowed)
-                        <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">Borrow</x-text-button>
+                        <x-text-button @click="openFormModal({{ $equipment->id }})" class="text-orange-500">
+                            Borrow
+                        </x-text-button>
                         @endif
                     </div>
                 </x-td>
@@ -108,8 +110,8 @@
     @if ($equipmentsList)
     <template x-if="showFormModal">
         <x-form-modal heading="Borrow Equipment Form">
-            <x-form.select label="Equipment"
-                name="borrowEquipmentForm.equipment_id" :options="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" disabled />
+            <x-form.select disabled label="Equipment"
+                name="borrowEquipmentForm.equipment_id" :options="$equipmentsList" wire:model="borrowEquipmentForm.equipment_id" />
             <x-form.input label="Borrower First Name"
                 name="borrowEquipmentForm.borrower_first_name" wire:model="borrowEquipmentForm.borrower_first_name" />
             <x-form.input label="Borrower Last Name"

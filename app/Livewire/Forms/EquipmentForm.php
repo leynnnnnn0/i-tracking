@@ -19,7 +19,10 @@ class EquipmentForm extends Form
     public $operating_unit_project_id;
     public $property_number;
     public $quantity;
+    public $quantity_available;
     public $quantity_borrowed = 0;
+    public $quantity_missing = 0;
+    public $quantity_condemned = 0;
     public $unit;
     public $name;
     public $description;
@@ -39,7 +42,11 @@ class EquipmentForm extends Form
             'fund_id' => ['required', 'exists:funds,id'],
             'personal_protective_equipment_id' => ['required', 'exists:personal_protective_equipment,id'],
             'property_number' => ['required', Rule::unique('equipment')->ignore($this->equipment_id)],
-            'quantity' => ['required', 'integer', 'min:1'],
+            'quantity' => ['required', 'integer', 'min:0'],
+            'quantity_avaiable' => ['required', 'integer', 'min:0'],
+            'quantity_missing' => ['nullable', 'integer', 'min:0'],
+            'quantity_borrowed' => ['nullable', 'integer', 'min:0'],
+            'quantity_condemned' => ['nullable', 'integer', 'min:0'],
             'unit' => ['required', 'string', 'min:1'],
             'name' => ['required', 'min:2'],
             'description' => ['nullable', 'string'],

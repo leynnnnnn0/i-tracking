@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\MissingStatus;
+use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('missing_equipment', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('borrowed_equipment_id')->nullable()->constrained('borrowed_equipment');
             $table->foreignIdFor(Equipment::class)->constrained();
             $table->enum('status', MissingStatus::values());
             $table->integer('quantity');

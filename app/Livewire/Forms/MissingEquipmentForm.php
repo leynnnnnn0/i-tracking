@@ -12,6 +12,7 @@ use Livewire\Form;
 
 class MissingEquipmentForm extends Form
 {
+    public $borrowed_equipment_id;
     public $report_id;
     public $equipment_id;
     public $status = 'Reported';
@@ -24,6 +25,7 @@ class MissingEquipmentForm extends Form
 
     public function setMissingEquipmentForm(MissingEquipment $missingEquipment)
     {
+        $this->borrowed_equipment_id = $missingEquipment->borrowed_equipment_id;
         $this->report_id = $missingEquipment->id;
         $this->equipment_id = $missingEquipment->equipment_id;
         $this->status = $missingEquipment->status;
@@ -36,6 +38,7 @@ class MissingEquipmentForm extends Form
     public function rules()
     {
         return [
+            'borrowed_equipment_id' => ['sometimes', 'nullable', 'exists:borrowed_equipment,id'],
             'equipment_id' => ['required', 'exists:equipment,id'],
             'status' => ['required', 'string', Rule::in(MissingStatus::values())],
             'quantity' => [
@@ -61,7 +64,15 @@ class MissingEquipmentForm extends Form
     }
     public function store()
     {
-        return MissingEquipment::create($this->all());
+        $missingEquipment =  MissingEquipment::create($this->all());
+        $equipment = $missingEquipment->equipment;
+        $missingEquipmentQuantity = $equipment->quantity_missing + $missingEquipment->quantity;
+        $equipmentQuantityAvailable = $equipment->quantity_available - $missingEquipmentQuantity;
+        $equipment->update([
+            'quantity_available' => $equipmentQuantityAvailable,
+            'quantity_missing' => $missingEquipmentQuantity,
+        ]);
+        return $missingEquipment;
     }
 
     public function update(MissingEquipment $missingEquipment)
@@ -73,12 +84,18 @@ class MissingEquipmentForm extends Form
     public function condemned($equipment_id)
     {
         $equipment = Equipment::findOrFail($equipment_id);
-        $equipmentQuantityLeft = (int) $equipment->quantity - (int) $this->quantity;
-        if ($equipmentQuantityLeft < 0) {
-            throw new InsufficientQuantityException();
-        }
+        $totalQuantityMissing = $equipment->quantity_missing - $this->quantity;
+        $totalQuantityCondemned = $equipment->quantity_condemned + $this->quantity;
         $equipment->update([
-            'quantity' => (int) $equipment->quantity - (int) $this->quantity,
+            'quantity_missing' => $totalQuantityMissing,
+            'quantity_condemned' => $totalQuantityCondemned
         ]);
+        // $equipmentQuantityLeft = (int) $equipment->quantity - (int) $this->quantity;
+        // if ($equipmentQuantityLeft < 0) {
+        //     throw new InsufficientQuantityException();
+        // }
+        // $equipment->update([
+        //     'quantity' => (int) $equipment->quantity - (int) $this->quantity,
+        // ]);
     }
 }

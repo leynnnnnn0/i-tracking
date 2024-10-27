@@ -24,6 +24,9 @@
                 <th>Operating Unit Project</th>
                 <th>Property Number</th>
                 <th>Quantity</th>
+                <th>Quantity Available</th>
+                <th>Quantity Missing</th>
+                <th>Quantity Condemned</th>
                 <th>Unit</th>
                 <th>Description</th>
                 <th>Date Acquired</th>
@@ -32,7 +35,6 @@
                 <th>Estimated Useful Time</th>
                 <th>Unit Price</th>
                 <th>Total Amount</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -49,7 +51,10 @@
                 <td>{{ $equipment->organization_unit->name  ?? 'N/a'}}</td>
                 <td>{{ $equipment->operating_unit_project->name ?? 'N/a' }}</td>
                 <td>{{ $equipment->property_number ?? 'N/a' }}</td>
-                <td>{{ $equipment->quantity($query) ?? 'N/a' }}</td>
+                <td>{{ $equipment->quantity ?? 'N/a' }}</td>
+                <td>{{ $equipment->quantity_available ?? 'N/a' }}</td>
+                <td>{{ $equipment->quantity_missing ?? 'N/a' }}</td>
+                <td>{{ $equipment->quantity_condemned ?? 'N/a' }}</td>
                 <td>{{ $equipment->unit ?? 'N/a' }}</td>
                 <td>{{ $equipment->description ?? 'N/a' }}</td>
                 <td>{{ Carbon\Carbon::parse($equipment->date_acquired)->format('F d, Y') }}</td>
@@ -58,7 +63,6 @@
                 <td>{{ $equipment->estimated_useful_time ? 'Until ' .  Carbon\Carbon::createFromFormat('Y-m', $equipment->estimated_useful_time)->format('F Y') : 'N/a'}}</td>
                 <td>{{ number_format($equipment->unit_price, 2) ?? 'N/a'}} </td>
                 <td>{{ number_format($equipment->total_amount, 2) ?? 'N/a'}} </td>
-                <td>{{ $query === 'Condemned' ? 'Condemned' : $equipment->status }}</td>
             </tr>
             @endforeach
         </tbody>

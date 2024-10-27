@@ -2,23 +2,56 @@
 
 namespace App\Livewire;
 
-use App\Livewire\Forms\ActivityLogForm;
+use App\Enum\MissingStatus;
 use App\Livewire\Forms\BorrowEquipmentForm;
+use App\Livewire\Forms\MissingEquipmentForm;
 use App\Models\BorrowedEquipment;
+use App\Models\Equipment;
 use App\Traits\Deletable;
+use App\Traits\Submittable;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
 class BorrowedLog extends Component
 {
-    use WithPagination, Deletable;
+    use WithPagination, Deletable, Submittable;
     public BorrowEquipmentForm $borrowEquipmentForm;
+    public MissingEquipmentForm $form;
     public $keyword;
     public $query = 'All';
+    public $statuses;
+    public $equipmentList;
+
+    protected function performStoreOperation()
+    {
+        return $this->form->store();
+    }
+
+    protected function getModelName(): string
+    {
+        return 'Missing Equipment Report';
+    }
+
+    #[On('set-target-log-id')]
+    public function setTargetLogId($targetLogId)
+    {
+        $log = BorrowedEquipment::findOrFail($targetLogId);
+        $this->equipmentList = Equipment::toSelectOptions();
+        $this->form->equipment_id = $log->equipment_id;
+        $this->form->quantity = $log->quantity;
+        $this->form->borrowed_equipment_id = $targetLogId;
+        $this->form->reported_date = today()->format('Y-m-d');
+    }
+
+    public function mount()
+    {
+        $this->statuses = MissingStatus::values();
+    }
 
     protected function getModel(): string
     {

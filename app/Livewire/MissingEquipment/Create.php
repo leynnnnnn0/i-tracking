@@ -56,8 +56,7 @@ class Create extends Component
     public function updatedFormEquipmentId()
     {
         if ($this->form->equipment_id) {
-            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity')->find($this->form->equipment_id)->quantity;
+            $this->quantityHint = "Equipment quantity: " . Equipment::select('quantity_available')->find($this->form->equipment_id)->quantity_available;
         }
     }
-
 }

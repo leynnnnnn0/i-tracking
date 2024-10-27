@@ -2,6 +2,11 @@
         showDeleteModal: false,
         showConfirmationModal: false,
         targetId: null,
+        showReportForm: false,
+        openReportForm(id){
+            this.showReportForm = true;
+            Livewire.dispatch('set-target-log-id', [id])
+        },
         openConfirmationModal(id) {
         this.showConfirmationModal = true;
         this.targetId = id;
@@ -73,6 +78,12 @@
                             Returned
                         </x-text-button>
                         @endif
+
+                        @if(!$log->is_returned)
+                        <x-text-button @click="openReportForm({{ $log->id }})" class="text-red-500">
+                            Missing
+                        </x-text-button>
+                        @endif
                     </div>
                 </x-td>
             </tr>
@@ -91,6 +102,27 @@
     <template x-if="showConfirmationModal">
         <x-confirmation-modal message="Are you sure you want to mark this as returned?" @click="$wire.returned(targetId)" />
     </template>
+
+
+
+    @if($equipmentList)
+    <template x-if="showReportForm">
+        <x-form-modal heading="Missing Equipment Report">
+            <x-form.select disabled label="Equipment" :options="$equipmentList" name="form.equipment_id" wire:model.live="form.equipment_id" />
+            <x-form.select label="Status" :options="$statuses" name="form.status" wire:model.live="form.status" />
+            <x-form.input label="Reported By" name="form.reported_by" wire:model="form.reported_by" />
+            <x-form.date label="Reported Date" name="form.reported_date" wire:model="form.reported_date" />
+            <x-form.text-area label="Description" name="form.description" wire:model="form.description" :isRequired="false" />
+            <x-form.tsnumber label="Missing Equipment Quantity" name="form.quantity" wire:model="form.quantity" />
+            <section class="mt-5 flex items-center justify-end gap-3 col-span-2">
+                <button @click="showReportForm = false" class="px-4 py-1 border border-gray-500 rounded-lg text-black hover:bg-opacity-75 transition-colors duration-300 dark:text-white dark:border-white">Cancel</button>
+                <x-primary-button wire:click="submit">Submit</x-primary-button>
+            </section>
+        </x-form-modal>
+    </template>
+    @endif
+</div>
+
 
 
 

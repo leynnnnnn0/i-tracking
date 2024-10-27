@@ -1,5 +1,5 @@
 <x-layouts.edit title="Borrowed Equipment" cancelLocation="/borrowed-logs" wire:click="update">
-    <x-form.select label="Equipment" name="form.equipment_id" :options="$equipments" wire:model="form.equipment_id" />
+    <x-form.select label="Equipment" name="form.equipment_id" :options="$equipments" wire:model="form.equipment_id" disabled/>
     <x-form.tsnumber label="Equipment Quantity" name="form.quantity" wire:model.live="form.quantity" :hint="$quantityHint" />
     <x-form.input label="Borrower First Name" name="form.borrower_first_name" wire:model="form.borrower_first_name" />
     <x-form.input label="Borrower Last Name" name="form.borrower_last_name" wire:model="form.borrower_last_name" />

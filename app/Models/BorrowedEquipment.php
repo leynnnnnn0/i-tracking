@@ -13,6 +13,7 @@ class BorrowedEquipment extends Model implements Auditable
     use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
+        'borrowed_equipment_id',
         'equipment_id',
         'quantity',
         'borrower_first_name',
@@ -57,6 +58,11 @@ class BorrowedEquipment extends Model implements Auditable
     public function getNotificationTitleAttribute()
     {
         return  "Return Reminder: {$this->equipment->name} (PN: {$this->equipment->property_number}).";
+    }
+
+    public function missing_equipment()
+    {
+        return $this->hasOne(MissingEquipment::class);
     }
 
     public function getNotificationMessageAttribute()

@@ -14,7 +14,6 @@ use App\Traits\Deletable;
 use App\Traits\HasSelectOptions;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;

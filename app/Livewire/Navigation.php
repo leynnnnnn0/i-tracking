@@ -13,6 +13,7 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Masmerise\Toaster\Toaster;
 
 class Navigation extends Component
 {
@@ -63,7 +64,7 @@ class Navigation extends Component
                 });
                 Session::put('notificationSet', true);
             } catch (Exception $e) {
-                dd($e);
+                Toaster::error($e->getMessage());
             }
         }
 

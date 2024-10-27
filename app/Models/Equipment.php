@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Arr;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Equipment extends Model implements Auditable
@@ -25,7 +24,10 @@ class Equipment extends Model implements Auditable
         'personal_protective_equipment_id',
         'property_number',
         'quantity',
+        'quantity_available',
         'quantity_borrowed',
+        'quantity_missing',
+        'quantity_condemned',
         'unit',
         'name',
         'description',
@@ -97,9 +99,9 @@ class Equipment extends Model implements Auditable
     public function quantity($query)
     {
         return match ($query) {
-            'Available' => $this->quantity - $this->quantity_borrowed,
-            'Borrowed' => $this->borrowed_log->sum('quantity'),
-            'Condemned' => $this->missing_equipment_log->sum('quantity'),
+            'Available' => $this->quantity_available,
+            'Borrowed' => $this->quantity_borrowed,
+            'Condemned' => $this->quantity_condemned,
             default => $this->quantity,
         };
     }
@@ -147,6 +149,4 @@ class Equipment extends Model implements Auditable
             }
         ]);
     }
-
-
 }
