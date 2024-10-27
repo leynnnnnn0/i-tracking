@@ -76,6 +76,9 @@ class EquipmentForm extends Form
         $this->fund_id = $equipment->fund_id;
         $this->property_number = $equipment->property_number;
         $this->quantity = $equipment->quantity;
+        $this->quantity_available = $equipment->quantity_available;
+        $this->quantity_missing = $equipment->quantity_missing;
+        $this->quantity_condemned = $equipment->quantity_condemned;
         $this->unit = $equipment->unit;
         $this->name = $equipment->name;
         $this->description = $equipment->description;

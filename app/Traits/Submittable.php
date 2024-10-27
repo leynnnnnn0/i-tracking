@@ -16,7 +16,7 @@ trait Submittable
 
     public function submit()
     {
-        $this->form->validate();
+
         try {
             DB::transaction(function () {
                 $model = $this->performStoreOperation();

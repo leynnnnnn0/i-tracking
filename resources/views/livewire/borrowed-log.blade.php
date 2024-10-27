@@ -48,7 +48,7 @@
                 <x-th>Borrower</x-th>
                 <x-th>Start Date</x-th>
                 <x-th>End Date</x-th>
-                <x-th>Is Returned?</x-th>
+                <x-th>Status</x-th>
                 <x-th>Actions</x-th>
             </x-tr>
             @foreach ($logs as $log)
@@ -59,7 +59,7 @@
                 <x-td>{{ $log->full_name }}</x-td>
                 <x-td>{{ $log->start_date->format('F d, Y')}}</x-td>
                 <x-td>{{ $log->end_date->format('F d, Y')}}</x-td>
-                <x-td>{{ $log->is_returned ? 'Yes' : 'No' }}</x-td>
+                <x-td>{{ Str::headline($log->status )}}</x-td>
                 <x-td>
                     <div class="flex items-center gap-2">
                         <x-link href="/borrowed-logs/view/{{ $log->id }}">

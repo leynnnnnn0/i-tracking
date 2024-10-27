@@ -90,6 +90,7 @@ class MissingEquipmentForm extends Form
             'quantity_missing' => $totalQuantityMissing,
             'quantity_condemned' => $totalQuantityCondemned
         ]);
+        
         // $equipmentQuantityLeft = (int) $equipment->quantity - (int) $this->quantity;
         // if ($equipmentQuantityLeft < 0) {
         //     throw new InsufficientQuantityException();

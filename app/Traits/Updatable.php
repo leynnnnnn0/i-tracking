@@ -14,6 +14,7 @@ trait Updatable
     public function update()
     {
         $this->dispatch('Confirm Update');
+        $this->beforeTransaction();
         $this->form->validate();
         try {
             DB::transaction(function () {
@@ -28,5 +29,5 @@ trait Updatable
     }
 
     protected function afterTransaction($model) {}
-    protected function beforeTransaction($model) {}
+    protected function beforeTransaction() {}
 }

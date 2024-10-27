@@ -20,6 +20,12 @@ class BorrowEquipmentForm extends Form
     public $is_returned = false;
     public $quantity;
     public $returned_date;
+    public $quantity_returned = 0;
+    public $quantity_lost = 0;
+    public $total_quantity_returned = 0;
+    public $total_quantity_lost = 0;
+
+    public $status = 'borrowed';
 
     public function rules()
     {
@@ -53,6 +59,9 @@ class BorrowEquipmentForm extends Form
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date', 'after:start_date'],
             'is_returned' => ['boolean'],
+            'status' => ['required'],
+            'quantity_returned' => ['nullable', 'min:0'],
+            'quantity_lost' => ['nullable', 'min:0']
         ];
     }
 
@@ -69,6 +78,11 @@ class BorrowEquipmentForm extends Form
         $this->end_date = $borrowedEquipment->end_date->format('Y-m-d');
         $this->returned_date = $borrowedEquipment->returned_date;
         $this->is_returned = $borrowedEquipment->is_returned;
+        $this->status = $borrowedEquipment->status;
+        $this->total_quantity_lost = $borrowedEquipment->total_quantity_lost;
+        $this->total_quantity_returned = $borrowedEquipment->total_quantity_returned;
+        $this->total_quantity_lost = $borrowedEquipment->total_quantity_lost;
+        $this->total_quantity_returned = $borrowedEquipment->total_quantity_returned;
     }
 
 
@@ -82,19 +96,15 @@ class BorrowEquipmentForm extends Form
     public function updateEquipmentStatus(BorrowedEquipment $borrowedEquipment)
     {
         $equipment = $borrowedEquipment->equipment;
-        // Checking if the borrowed equipment log status is already returned
-        if ($borrowedEquipment->returned_date) {
-            $quantityBorrowed = $equipment->quantity_borrowed - $borrowedEquipment->quantity;
-            $equipmentAvailableQuantity = $equipment->quantity_available + $borrowedEquipment->quantity;
-            $status = EquipmentStatus::ACTIVE->value;
-            if ($quantityBorrowed > 0) {
-                $status = EquipmentStatus::PARTIALLY_BORROWED->value;
-            }
+        if ($this->status === 'partially_returned') {
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->quantity_returned;
+            // dd($totalBorrowedQuantity);
+            $totalAvailableQuantity = $equipment->quantity_available + $this->quantity_returned;
             $equipment->update([
-                'quantity_borrowed' => $quantityBorrowed,
-                'quantity_available' => $equipmentAvailableQuantity,
-                'status' => $status
+                'quantity_borrowed' => $totalBorrowedQuantity,
+                'quantity_available' => $totalAvailableQuantity
             ]);
+            $equipment->save();
         } else {
             $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
             $equipmentAvailableQuantity = $equipment->quantity - $totalBorrowedQuantity;
@@ -112,12 +122,26 @@ class BorrowEquipmentForm extends Form
                 ]);
             }
         }
+        // Checking if the borrowed equipment log status is already returned
+        // if ($borrowedEquipment->returned_date) {
+        //     $quantityBorrowed = $equipment->quantity_borrowed - $borrowedEquipment->quantity;
+        //     $equipmentAvailableQuantity = $equipment->quantity_available + $borrowedEquipment->quantity;
+        //     $status = EquipmentStatus::ACTIVE->value;
+        //     if ($quantityBorrowed > 0) {
+        //         $status = EquipmentStatus::PARTIALLY_BORROWED->value;
+        //     }
+        //     $equipment->update([
+        //         'quantity_borrowed' => $quantityBorrowed,
+        //         'quantity_available' => $equipmentAvailableQuantity,
+        //         'status' => $status
+        //     ]);
+        // } 
     }
 
     public function update(BorrowedEquipment $borrowedEquipment)
     {
         $borrowedEquipment->update($this->all());
         $this->updateEquipmentStatus($borrowedEquipment);
-        return $borrowedEquipment->fresh();
+        return $borrowedEquipment;
     }
 }
