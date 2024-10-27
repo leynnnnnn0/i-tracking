@@ -8,11 +8,21 @@
     <x-form.date label="Start Date" name="form.start_date" wire:model="form.start_date" />
     <x-form.date label="End Date" name="form.end_date" wire:model="form.end_date" />
     <x-form.select label="Status" name="form.status" :options="$statuses" wire:model.live="form.status" />
-    @if ($form->status === 'partially_returned' || $form->status === 'partially_returned_with_loss')
+    @if ($form->status === 'partially_returned' || $form->status === 'partially_returned_with_missing')
     <x-form.tsnumber disabled label="Total Returned Quantity" name="form.total_quantity_returned" wire:model.live="form.total_quantity_returned" />
     <x-form.tsnumber label="Return Quantity" name="form.quantity_returned" wire:model.live="form.quantity_returned" />
     @endif
-    @if ($form->status === 'partially_lost' || $form->status == 'returned_with_loss' || $form->status === 'partially_returned_with_loss')
-    <x-form.tsnumber label="Lost Quantity" name="form.quantity_lost" wire:model.live="form.quantity_lost" />
+    @if ($form->status === 'partially_missing' || $form->status == 'returned_with_missing' || $form->status === 'partially_returned_with_missing')
+    <x-form.tsnumber disabled label="Total Missing Quantity" name="form.total_quantity_missing" wire:model.live="form.total_quantity_missing" />
+    <x-form.tsnumber label="Missing Quantity" name="form.quantity_missing" wire:model.live="form.quantity_missing" />
     @endif
+
+    @if ($form->status === 'partially_missing' || $form->status == 'returned_with_missing' || $form->status === 'partially_returned_with_missing' || $form->status === 'missing')
+    <section class="pb-5 border-b border-gray-300 col-span-2">
+        <h1 class="text-gray-700 font-bold text-lg dark:text-white">Missing Equipment Details</h1>
+        <p class="text-gray-600 text-xs dark:text-white">Please input all the required fields.</p>
+    </section>
+    <x-form.input label="Reported by" name="reportedBy" wire:model="reportedBy" />
+    @endif
+
 </x-layouts.edit>

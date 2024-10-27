@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enum\BorrowStatus;
 use App\Enum\EquipmentStatus;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
@@ -10,6 +11,7 @@ use Livewire\Form;
 class BorrowEquipmentForm extends Form
 {
     public $total_quantity_returned_copy;
+    public $total_quantity_missing_copy;
     public $currentQuantity;
     public $equipment_id;
     public $borrower_first_name;
@@ -22,9 +24,9 @@ class BorrowEquipmentForm extends Form
     public $quantity;
     public $returned_date;
     public $quantity_returned = 0;
-    public $quantity_lost = 0;
+    public $quantity_missing = 0;
     public $total_quantity_returned = 0;
-    public $total_quantity_lost = 0;
+    public $total_quantity_missing = 0;
 
     public $status = 'borrowed';
 
@@ -62,7 +64,7 @@ class BorrowEquipmentForm extends Form
             'is_returned' => ['boolean'],
             'status' => ['required'],
             'quantity_returned' => ['nullable', 'min:0'],
-            'quantity_lost' => ['nullable', 'min:0']
+            'quantity_missing' => ['nullable', 'min:0']
         ];
     }
 
@@ -80,11 +82,12 @@ class BorrowEquipmentForm extends Form
         $this->returned_date = $borrowedEquipment->returned_date;
         $this->is_returned = $borrowedEquipment->is_returned;
         $this->status = $borrowedEquipment->status;
-        $this->total_quantity_lost = $borrowedEquipment->total_quantity_lost;
+        $this->total_quantity_missing = $borrowedEquipment->total_quantity_missing;
         $this->total_quantity_returned = $borrowedEquipment->total_quantity_returned;
-        $this->total_quantity_lost = $borrowedEquipment->total_quantity_lost;
+        $this->total_quantity_missing = $borrowedEquipment->total_quantity_missing;
         $this->total_quantity_returned = $borrowedEquipment->total_quantity_returned;
         $this->total_quantity_returned_copy = $borrowedEquipment->total_quantity_returned;
+        $this->total_quantity_missing_copy = $borrowedEquipment->total_quantity_missing;
     }
 
 
@@ -108,12 +111,12 @@ class BorrowEquipmentForm extends Form
             ]);
         } else if ($this->status === 'returned') {
             $totalBorrowedQuantity = $equipment->quantity_borrowed - ($this->quantity - $this->total_quantity_returned_copy);
-   
+
             $totalAvailableQuantity = $equipment->quantity_available + ($this->quantity - $this->total_quantity_returned_copy);
-            
+
 
             $status = EquipmentStatus::ACTIVE->value;
-            if($totalBorrowedQuantity > 0)
+            if ($totalBorrowedQuantity > 0)
                 $status = EquipmentStatus::PARTIALLY_BORROWED->value;
 
             $equipment->update([
@@ -121,7 +124,29 @@ class BorrowEquipmentForm extends Form
                 'quantity_available' => $totalAvailableQuantity,
                 'status' => $status
             ]);
- 
+        } else if ($this->status === BorrowStatus::PARTIALLY_MISSING->value) {
+            // Add the qunatity missing to equipment quantiy missing 
+            $totalMissingQuantity  = $equipment->quantity_missing + $this->quantity_missing;
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->quantity_missing;
+            $equipment->update([
+                'quantity_missing' => $totalMissingQuantity,
+                'quantity_borrowed' => $totalBorrowedQuantity
+            ]);
+        } else if ($this->status === BorrowStatus::MISSING->value) {
+            // Total quantity missing of the equioment will be current missing + quantiy of borrowed equipment 
+            $totalMissingQuantity = $equipment->quantity_missing + ($this->quantity - $this->total_quantity_missing_copy);
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - ($this->quantity - $this->total_quantity_missing_copy);
+
+            $status = EquipmentStatus::ACTIVE->value;
+            if ($totalBorrowedQuantity > 0)
+                $status = EquipmentStatus::PARTIALLY_BORROWED->value;
+                $equipment->update([
+                    'quantity_borrowed' => $totalBorrowedQuantity,
+                    'quantity_missing' => $totalMissingQuantity,
+                    'status' => $status
+                ]);
+            
+
         } else {
             $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
             $equipmentAvailableQuantity = $equipment->quantity - $totalBorrowedQuantity;

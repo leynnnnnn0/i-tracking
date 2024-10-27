@@ -24,9 +24,9 @@ class BorrowedEquipment extends Model implements Auditable
         'end_date',
         'returned_date',
         'quantity_returned',
-        'quantity_lost',
+        'quantity_missing',
         'total_quantity_returned',
-        'total_quantity_lost',
+        'total_quantity_missing',
         'status'
     ];
 

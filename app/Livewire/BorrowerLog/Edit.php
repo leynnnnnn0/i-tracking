@@ -3,13 +3,16 @@
 namespace App\Livewire\BorrowerLog;
 
 use App\Enum\BorrowStatus;
+use App\Enum\MissingStatus;
 use App\Livewire\Forms\ActivityLogForm;
 use App\Livewire\Forms\BorrowEquipmentForm;
 use App\Models\BorrowedEquipment;
 use App\Models\Equipment;
+use App\Models\MissingEquipment;
 use App\Traits\Updatable;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Rule;
 
 class Edit extends Component
 {
@@ -20,6 +23,10 @@ class Edit extends Component
     public $equipments;
     public $quantityHint = "";
     public $statuses;
+    #[Rule('required')]
+    public $reportedBy;
+
+    // Missing Equipmen Details
 
     protected function beforeTransaction()
     {
@@ -29,6 +36,26 @@ class Edit extends Component
         } else if ($form->status === 'returned') {
             $form->total_quantity_returned = $form->quantity;
             $form->returned_date = date('Y-m-d');
+        } else if ($form->status === 'partially_missing') {
+            $this->validateOnly('reportedBy');
+            $form->total_quantity_missing += $form->quantity_missing;
+        } else if ($form->status === BorrowStatus::MISSING->value) {
+            $this->validateOnly('reportedBy');
+            $form->quantity_missing = $form->quantity;
+            $form->total_quantity_missing = $form->quantity;
+        }
+    }
+
+    protected function afterTransaction($model)
+    {
+        if ($this->form->status === 'partially_missing' || $this->form->status == 'returned_with_missing' || $this->form->status === 'partially_returned_with_missing' || $this->form->status = 'missing') {
+            MissingEquipment::create([
+                'equipment_id' => $model->equipment_id,
+                'reported' => MissingStatus::REPORTED->value,
+                'reported_by' => $this->reportedBy,
+                'reported_date' => date('Y-m-d'),
+                'quantity' => $model->quantity_missing,
+            ]);
         }
     }
 

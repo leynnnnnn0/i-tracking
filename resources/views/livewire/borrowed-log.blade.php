@@ -72,18 +72,6 @@
                         @if($log->is_returned)
                         <x-bi-trash @click="openDeleteModal({{ $log->id }})" class="cursor-pointer size-5 text-red-500" />
                         @endif
-
-                        @if(!$log->is_returned)
-                        <x-text-button @click="openConfirmationModal({{ $log->id }})" class="text-green-500">
-                            Returned
-                        </x-text-button>
-                        @endif
-
-                        @if(!$log->is_returned)
-                        <x-text-button @click="openReportForm({{ $log->id }})" class="text-red-500">
-                            Missing
-                        </x-text-button>
-                        @endif
                     </div>
                 </x-td>
             </tr>

@@ -171,9 +171,7 @@ class Equipment extends Component
         }
 
         if ($this->query === 'Borrowed') {
-            $query->whereHas('borrowed_log', function ($q) {
-                $q->whereNull('returned_date');
-            });
+            $query->where('quantity_borrowed', '>', 0);
         }
 
 
