@@ -160,7 +160,23 @@ class BorrowEquipmentForm extends Form
                 'quantity_missing' => $totalMissingQuantity,
                 'status' => $status
             ]);
-        } 
+        } else {
+            $totalBorrowedQuantity = $equipment->quantity_borrowed - $this->currentQuantity + $borrowedEquipment->quantity;
+            $equipmentAvailableQuantity = $equipment->quantity - $totalBorrowedQuantity;
+            if ($totalBorrowedQuantity === $equipment->quantity) {
+                $equipment->update([
+                    'quantity_borrowed' => $totalBorrowedQuantity,
+                    'quantity_available' => $equipmentAvailableQuantity,
+                    'status' => EquipmentStatus::FULLY_BORROWED->value
+                ]);
+            } else {
+                $equipment->update([
+                    'quantity_borrowed' => $totalBorrowedQuantity,
+                    'quantity_available' => $equipmentAvailableQuantity,
+                    'status' => EquipmentStatus::PARTIALLY_BORROWED->value
+                ]);
+            }
+        }
         // Checking if the borrowed equipment log status is already returned
         // if ($borrowedEquipment->returned_date) {
         //     $quantityBorrowed = $equipment->quantity_borrowed - $borrowedEquipment->quantity;
